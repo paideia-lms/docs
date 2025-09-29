@@ -1,49 +1,78 @@
-# Paideia Starter Kit: Basics
+# Paideia LMS Documentation
 
-[![Built with Paideia](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
+[![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
 
-```
-pnpm create astro@latest -- --template starlight
-```
+**Documentation for Paideia LMS - A modern, lightweight Learning Management System built with Bun and React Router v7.**
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+This documentation site provides comprehensive guides, API references, and development information for Paideia LMS.
 
-## 🚀 Project Structure
+## 📖 About Paideia LMS
 
-Inside of your Astro + Paideia project, you'll see the following folders and files:
+Paideia LMS is a modern alternative to traditional LMS platforms like Moodle, designed for extreme ease of management and deployment as a single executable. Built from the ground up with modern web technologies, it focuses on simplicity, performance, and developer experience while maintaining powerful LMS capabilities.
+
+### Key Features
+- **📚 Course Management**: Create and manage courses with assignments, quizzes, content, and grading
+- **👥 User Management**: Comprehensive user creation and role-based access control
+- **🔐 Authentication & Security**: Built-in authentication system with Payload CMS
+- **💾 Data Management**: PostgreSQL database with MinIO S3-compatible storage
+- **🔄 Modern Architecture**: Single executable deployment with lightweight performance
+
+### Tech Stack
+- **[Bun](https://bun.sh)** - Fast JavaScript runtime and bundler
+- **[React Router v7](https://reactrouter.com/)** - Modern React framework
+- **[Elysia](https://elysiajs.com)** - High-performance web framework
+- **[Payload CMS](https://payloadcms.com/)** - Headless CMS and authentication
+- **[PostgreSQL](https://postgresql.org/)** & **[MinIO](https://min.io/)** - Database and storage
+
+## 🚀 Documentation Structure
+
+This documentation site is built with Astro and Starlight. The structure includes:
 
 ```
 .
-├── public/
+├── public/                 # Static assets
 ├── src/
-│   ├── assets/
+│   ├── assets/            # Images and media
 │   ├── content/
-│   │   └── docs/
-│   └── content.config.ts
-├── astro.config.mjs
+│   │   └── docs/          # Documentation content
+│   │       ├── guides/    # Implementation guides
+│   │       └── reference/ # API references
+│   └── content.config.ts  # Content configuration
+├── astro.config.mjs       # Astro configuration
 ├── package.json
 └── tsconfig.json
 ```
 
-Paideia looks for `.md` or `.mdx` files in the `src/content/docs/` directory. Each file is exposed as a route based on its file name.
+Documentation is written in `.md` or `.mdx` files in the `src/content/docs/` directory. Each file becomes a route based on its file name.
 
-Images can be added to `src/assets/` and embedded in Markdown with a relative link.
+## 🧞 Development Commands
 
-Static assets, like favicons, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
+All commands are run from the root of the documentation project:
 
 | Command                   | Action                                           |
 | :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+| `bun install`            | Installs dependencies                            |
+| `bun dev`                | Starts local dev server at `localhost:4321`     |
+| `bun build`              | Build your production site to `./dist/`         |
+| `bun preview`            | Preview your build locally, before deploying    |
+| `bun astro ...`          | Run CLI commands like `astro add`, `astro check`|
+| `bun astro -- --help`    | Get help using the Astro CLI                    |
 
-## 👀 Want to learn more?
+## 🔗 Links
 
-Check out [Paideia’s docs](https://starlight.astro.build/), read [the Astro documentation](https://docs.astro.build), or jump into the [Astro Discord server](https://astro.build/chat).
+- **[Paideia LMS Repository](https://github.com/hananoshikayomaru/paideia)** - Main project repository
+- **[Starlight Documentation](https://starlight.astro.build/)** - Documentation framework
+- **[Astro Documentation](https://docs.astro.build)** - Static site generator
+- **[Contributing Guide](./src/content/docs/guides/development-guide.md)** - How to contribute to Paideia LMS
+
+## 📝 Contributing to Documentation
+
+To contribute to this documentation:
+
+1. Fork the repository
+2. Create a new branch for your changes
+3. Edit or add `.md` files in `src/content/docs/`
+4. Test locally with `bun dev`
+5. Submit a pull request
+
+For contributing to the main Paideia LMS project, see the [Development Guide](./src/content/docs/guides/development-guide.md).
