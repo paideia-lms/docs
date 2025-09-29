@@ -5,10 +5,9 @@ import starlight from "@astrojs/starlight";
 // https://astro.build/config
 export default defineConfig({
   site: "https://paideia-lms.github.io",
-  base: "/",
   integrations: [
     starlight({
-      title: "My Docs",
+      title: "Paideia LMS Docs",
       social: [
         {
           icon: "github",
@@ -22,6 +21,20 @@ export default defineConfig({
           items: [
             // Each item here is one entry in the navigation menu.
             { label: "Example Guide", slug: "guides/example" },
+            { label: "Home", slug: "guides/home" },
+            { label: "Getting Started", slug: "guides/getting-started" },
+            { label: "Development Guide", slug: "guides/development-guide" },
+            { label: "Deployment", slug: "guides/deployment" },
+            {
+              label: "Database and Migrations",
+              slug: "guides/database-and-migrations",
+            },
+            { label: "Authentication", slug: "guides/authentication" },
+            {
+              label: "Architecture Overview",
+              slug: "guides/architecture-overview",
+            },
+            { label: "API Documentation", slug: "guides/api-documentation" },
           ],
         },
         {
