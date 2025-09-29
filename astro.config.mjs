@@ -5,7 +5,7 @@ import starlight from "@astrojs/starlight";
 // https://astro.build/config
 export default defineConfig({
   site: "https://paideia-lms.github.io",
-  base: "/docs",
+  base: "/",
   integrations: [
     starlight({
       title: "My Docs",
