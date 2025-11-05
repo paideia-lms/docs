@@ -9,7 +9,7 @@ export default {
 	'guides.userRoles': 'User and roles',
 	'guides.ui': 'User modules',
 	'guides.content': 'Courses',
-	'guides.serverRendering': 'Server rendering',
+	'guides.enrolments': 'Enrolments',
 	'guides.upgrade': 'Upgrade',
 	'guides.upgrade.major': 'Major upgrade guides',
 	'guides.recipes': 'How-to recipes',

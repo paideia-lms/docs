@@ -3,7 +3,6 @@ title: 导入参考
 description: 学习如何导入不同的文件类型到你的 Astro 项目中。
 i18nReady: true
 ---
-import RecipeLinks from "~/components/RecipeLinks.astro";
 import ReadMore from '~/components/ReadMore.astro'
 
 Astro 无需配置即支持大多数静态资源。你可以在项目的任何地方使用 `import` 语句（包括 Astro frontmatter 脚本），Astro 将在最终构建中内置优化后的静态资源副本。在 CSS 和 `<style>` 标签中也可以使用 `@import`。
@@ -380,5 +379,3 @@ const mime = new util.MIMEType(Astro.props.mimeType)
 :::note[插件配置]
 请参阅插件的文档以了解配置选项以及如何正确安装它。
 :::
-
-<RecipeLinks slugs={["zh-cn/recipes/add-yaml-support"]} />

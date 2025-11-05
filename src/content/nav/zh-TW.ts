@@ -11,7 +11,7 @@ export default navDictionary({
 	'guides.userRoles': '用戶與角色',
 	'guides.ui': '用戶模組',
 	'guides.content': '課程',
-	'guides.serverRendering': '伺服器算繪',
+	'guides.enrolments': '註冊',
 	'guides.upgrade': '升級',
 	'guides.upgrade.major': '主要版本升級指南',
 	'guides.recipes': '操作指南',

@@ -57,31 +57,29 @@ export const sidebar = [
 					'basics/course-overview',
 				],
 			}),
-			group('guides.serverRendering', {
+			group('guides.enrolments', {
 				items: [
-					'guides/on-demand-rendering',
-					'guides/server-islands',
-					'guides/actions',
-					'guides/sessions',
+					'guides/enrolments-overview',
+					'guides/enrolments-overview/groups',
 				],
 			}),
 			group('guides.upgrade', {
 				items: [
 					'upgrade',
-					group('guides.upgrade.major', {
-						collapsed: true,
-						items: [
-							'guides/upgrade-to/v5',
-							'guides/upgrade-to/v4',
-							'guides/upgrade-to/v3',
-							'guides/upgrade-to/v2',
-							'guides/upgrade-to/v1',
-						],
-					}),
+					// group('guides.upgrade.major', {
+					// 	collapsed: true,
+					// 	items: [
+					// 		'guides/upgrade-to/v5',
+					// 		'guides/upgrade-to/v4',
+					// 		'guides/upgrade-to/v3',
+					// 		'guides/upgrade-to/v2',
+					// 		'guides/upgrade-to/v1',
+					// 	],
+					// }),
 				],
 			}),
-			'guides/troubleshooting',
-			group('guides.recipes', { collapsed: true, autogenerate: { directory: 'recipes' } }),
+			// 'guides/troubleshooting',
+			// group('guides.recipes', { collapsed: true, autogenerate: { directory: 'recipes' } }),
 			'contribute',
 		],
 	}),

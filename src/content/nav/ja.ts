@@ -11,7 +11,7 @@ export default navDictionary({
 	'guides.userRoles': 'ユーザーとロール',
 	'guides.ui': 'ユーザーモジュール',
 	'guides.content': 'コース',
-	'guides.serverRendering': 'サーバーサイドレンダリング',
+	'guides.enrolments': '登録',
 	'guides.upgrade': 'アップグレード',
 	'guides.upgrade.major': 'メジャーアップグレードガイド',
 	'guides.recipes': '実装レシピ',

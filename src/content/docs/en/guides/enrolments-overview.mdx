@@ -1,0 +1,107 @@
+---
+title: Enrolments Overview
+description: Learn how enrolments connect users to courses in Paideia LMS.
+i18nReady: true
+---
+
+Enrolments are the mechanism that connects users to courses in Paideia LMS. Each enrolment record establishes a user's relationship with a specific course and defines their permissions within that course.
+
+## What are Enrolments?
+
+When a user is enrolled in a course, they gain access to that course's content and activities. The enrolment record stores important information about this relationship, including:
+
+- **User** - The person who is enrolled
+- **Course** - The course they are enrolled in
+- **Role** - What the user can do in the course (see Course Roles below)
+- **Status** - Whether the enrolment is active, inactive, completed, or dropped
+- **Enrolment date** - When the user was enrolled
+- **Completion date** - When the user completed the course (if applicable)
+- **Groups** - Any groups or cohorts the user belongs to within the course
+
+The system ensures that each user can only be enrolled once in any given course, preventing duplicate enrolments.
+
+## Course Roles
+
+Paideia LMS defines **four distinct enrolment roles** that determine what users can do within a specific course:
+
+| Role | Description |
+|------|-------------|
+| **Student** | Standard learner role for course participants |
+| **Teacher** | Primary instructor with full course control |
+| **Teaching Assistant (TA)** | Support role with limited instructor permissions |
+| **Manager** | Administrative support role |
+
+### Student
+
+The standard learner role for course participants. Students can:
+
+- View course content
+- Submit assignments
+- Take quizzes
+- Participate in discussions
+
+### Teacher
+
+The primary instructor with full course control. Teachers can:
+
+- Manage all course content
+- Grade student work
+- Manage enrolments
+- Access course settings
+
+### Teaching Assistant (TA)
+
+A support role with limited instructor permissions. Teaching Assistants can:
+
+- Grade student work
+- View course settings
+- Assist with course management tasks
+
+### Manager
+
+An administrative support role. Managers can:
+
+- Manage enrolments
+- Access course settings
+- View reports and analytics
+
+## Enrollment Status
+
+Enrolments can have different statuses depending on the user's current state in the course:
+
+- **Active** (default) - The user is actively enrolled and participating
+- **Inactive** - The enrolment is temporarily paused
+- **Completed** - The user has successfully completed the course
+- **Dropped** - The user has withdrawn from the course
+
+## Enrollment Management
+
+Enrolments can be created and managed by users with appropriate permissions. Typically, course teachers and administrators can:
+
+- Add new users to courses
+- Change user roles within a course
+- Update enrolment status
+- Remove users from courses
+- Assign users to groups or cohorts
+
+## Group Membership
+
+Enrolments can be associated with groups within a course, enabling organizational structures like sections, teams, or cohorts. This allows for better course organization and group-based activities.
+
+## Enrollment Interface
+
+The enrolment management interface provides a clear view of all course participants, showing:
+
+- User details (name, email)
+- Current role and status
+- Last access information
+- Options to edit or manage enrolments
+
+Administrators and teachers can easily add new enrolments, modify existing ones, and manage course participants from this interface.
+
+:::note
+The enrolment system is distinct from system-wide user roles. A user might have the system role of `instructor` (allowing them to create courses) while being enrolled as a `student` in specific courses. Conversely, a user with the system role of `student` could be enrolled as a `teacher` in courses they instruct.
+
+**The enrolment role always takes precedence for course-specific permissions**, meaning that within a course, the enrolment role determines what the user can do, regardless of their system-wide role.
+:::
+
