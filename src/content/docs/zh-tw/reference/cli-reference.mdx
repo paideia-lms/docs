@@ -1,0 +1,332 @@
+---
+title: CLI 命令
+description: Paideia LMS 命令列介面命令的完整參考。
+i18nReady: true
+---
+
+您可以使用 Paideia LMS 提供的命令列介面（CLI）來執行伺服器、管理資料庫遷移以及從終端視窗執行管理任務。
+
+## 概述
+
+Paideia LMS 是一個**雙模式二進位檔案**，既可以作為 Web 伺服器，也可以作為命令列介面。預設情況下，不帶任何參數執行 `paideia` 會啟動伺服器。通過執行 `paideia <command>` 可以使用 CLI 命令。
+
+### 執行 Paideia
+
+**啟動伺服器（預設行為）**:
+
+```bash
+# 啟動伺服器（預設行為）
+paideia
+
+# 或顯式指定
+paideia server
+```
+
+**取得說明**:
+
+```bash
+# 顯示說明資訊和可用命令
+paideia help
+```
+
+終端將顯示以下訊息：
+
+```
+╔═══════════════════════════════════════════════════════╗
+║                                                       ║
+║      ██████╗  █████╗ ██╗██████╗ ██████╗██╗ █████╗     ║
+║      ██╔══██╗██╔══██╗██║██╔══██╗██╔═══╝██║██╔══██╗    ║
+║      ██████╔╝███████║██║██║  ██║██████╗██║███████║    ║
+║      ██╔═══╝ ██╔══██║██║██║  ██║██╔═══╝██║██╔══██║    ║
+║      ██║     ██║  ██║██║██████╔╝██████╗██║██║  ██║    ║
+║      ╚═╝     ╚═╝  ╚═╝╚═╝╚═════╝ ╚═════╝╚═╝╚═╝  ╚═╝    ║
+║                                                       ║
+║               Learning Management System              ║
+║                                                       ║
+╚═══════════════════════════════════════════════════════╝
+
+Paideia LMS - 0.5.4
+                                   Paideia CLI Commands                                   
+┌────────────────────────┬───────────────────────────────────────────────────────────────┐
+│ Command                │ Description                                                   │
+├────────────────────────┼───────────────────────────────────────────────────────────────┤
+│ paideia help           │ Show help                                                     │
+│ paideia server         │ Start the Paideia server                                      │
+│ paideia migrate status │ Show migration status                                         │
+│ paideia migrate up     │ Run pending migrations                                        │
+│ paideia migrate fresh  │ Drop all database entities and re-run migrations from scratch │
+│ paideia migrate dump   │ Dump database to SQL file                                     │
+└────────────────────────┴───────────────────────────────────────────────────────────────┘
+```
+
+## 伺服器命令
+
+### `paideia server`
+
+啟動 Paideia LMS Web 伺服器。這是不帶任何參數執行 `paideia` 時的預設行為。
+
+```bash
+# 啟動伺服器
+paideia server
+
+# 或簡單執行（預設行為）
+paideia
+```
+
+伺服器將啟動並監聽配置的端口（預設：後端 `3001`，前端 `3000`）。伺服器將一直執行，直到使用 `Ctrl+C` 停止。
+
+### `paideia help`
+
+顯示 ASCII 徽標、介紹和可用命令。這提供了 Paideia LMS 功能和所有 CLI 命令的概述。
+
+```bash
+paideia help
+```
+
+### `paideia version`
+
+顯示 Paideia LMS 版本號。
+
+```bash
+paideia version
+```
+
+## 遷移命令
+
+Paideia LMS 提供了一套完整的資料庫遷移命令，用於管理資料庫架構並執行管理任務。
+
+### `paideia migrate status`
+
+顯示所有資料庫遷移的當前狀態。這將顯示哪些遷移已執行，哪些待處理。
+
+```bash
+paideia migrate status
+```
+
+**輸出範例**:
+
+```
+Migration Name                    Status
+────────────────────────────────────────
+1234567890_initial_schema        ✅ Applied
+1234567891_add_users_table       ✅ Applied
+1234567892_add_courses_table     ⏳ Pending
+```
+
+### `paideia migrate up`
+
+執行所有待處理的遷移。這將套用尚未執行的任何遷移。
+
+```bash
+paideia migrate up
+```
+
+**使用場景**:
+- 更新 Paideia LMS 後套用資料庫架構變更
+- 在生產環境中執行新遷移
+- 拉取程式碼變更後更新資料庫結構
+
+### `paideia migrate fresh`
+
+刪除所有資料庫實體並從頭重新執行所有遷移。這是一個破壞性操作，將刪除所有資料和架構，然後重建所有內容。
+
+```bash
+# 全新遷移（將提示確認）
+paideia migrate fresh
+
+# 或使用強制標誌跳過確認
+paideia migrate fresh --force-accept-warning
+```
+
+**使用場景**:
+- 開發期間完全重置資料庫
+- 從乾淨的資料庫開始
+- 從頭重建資料庫
+
+:::caution[破壞性操作]
+`migrate fresh` 命令將**刪除資料庫中的所有資料**。在生產環境中執行此命令之前，請確保已備份。
+:::
+
+### `paideia migrate dump`
+
+將整個資料庫轉儲到 SQL 檔案。這將建立資料庫的備份，可以在以後恢復。
+
+```bash
+# 使用自動產生的檔案名轉儲
+paideia migrate dump
+
+# 使用自訂檔案名轉儲
+paideia migrate dump -o my-backup.sql
+
+# 或使用長格式
+paideia migrate dump --output my-backup.sql
+```
+
+**輸出位置**: 所有轉儲檔案都儲存到專案根目錄的 `paideia_data/` 目錄中。如果目錄不存在，將自動建立。
+
+**檔案名格式**: 如果未指定檔案名，轉儲檔案將命名為 `paideia-dump-{timestamp}.sql`。
+
+**使用場景**:
+- 在重大變更之前建立資料庫備份
+- 匯出資料庫以遷移到另一台伺服器
+- 建立災難恢復備份
+- 通過 cron 作業或腳本自動備份
+
+**輸出範例**:
+
+```bash
+paideia migrate dump
+
+# ✅ 資料庫轉儲完成: paideia_data/paideia-dump-2025-11-02T10-30-45-123Z.sql
+```
+
+## 命令標誌
+
+### 全域標誌
+
+所有命令都支援以下全域標誌：
+
+#### `--help` 或 `-h`
+
+顯示指定命令的說明資訊。
+
+```bash
+paideia migrate --help
+```
+
+### 遷移命令標誌
+
+#### `--force-accept-warning`
+
+跳過破壞性操作的確認提示。請謹慎使用。
+
+**適用於**:
+- `paideia migrate fresh`
+
+**範例**:
+
+```bash
+paideia migrate fresh --force-accept-warning
+```
+
+#### `-o` 或 `--output`（用於 migrate dump）
+
+指定資料庫轉儲的自訂輸出檔案名。檔案名相對於 `paideia_data/` 目錄。
+
+**範例**:
+
+```bash
+paideia migrate dump -o backup-before-update.sql
+# 輸出: paideia_data/backup-before-update.sql
+```
+
+## 最佳實踐
+
+### 資料庫遷移
+
+1. **始終先備份**: 在生產環境中執行遷移之前建立資料庫轉儲
+   ```bash
+   paideia migrate dump -o backup-before-migration.sql
+   paideia migrate up
+   ```
+
+2. **檢查狀態**: 在套用遷移之前和之後驗證遷移狀態
+   ```bash
+   paideia migrate status
+   ```
+
+3. **在開發環境中測試**: 始終先在開發環境中測試遷移
+
+4. **謹慎使用 Fresh**: 僅在開發環境中使用 `migrate fresh`
+
+### 資料庫備份
+
+1. **定期備份**: 安排定期資料庫轉儲
+   ```bash
+   # 每日備份的 cron 作業範例
+   0 2 * * * cd /path/to/paideia && paideia migrate dump -o daily-$(date +\%Y-\%m-\%d).sql
+   ```
+
+2. **在重大變更之前**: 始終在以下操作之前轉儲：
+   - 執行遷移
+   - 更新 Paideia LMS
+   - 進行重大架構變更
+
+3. **儲存**: 將轉儲檔案移動到外部儲存（S3 等）以長期保留
+
+4. **測試**: 定期測試恢復過程以確保備份有效
+
+### 檔案組織
+
+- **轉儲位置**: 所有資料庫轉儲自動儲存到 `paideia_data/` 目錄
+- **目錄建立**: 如果 `paideia_data/` 目錄不存在，將自動建立
+- **Git 忽略**: `paideia_data/` 目錄自動被 git 忽略
+- **Docker 忽略**: `paideia_data/` 目錄從 Docker 建置中排除
+
+## 退出代碼
+
+Paideia CLI 命令返回適當的退出代碼：
+
+- **0**: 命令成功完成
+- **1**: 命令失敗並出現錯誤
+
+這允許輕鬆整合到腳本和自動化工具中：
+
+```bash
+#!/bin/bash
+if paideia migrate up; then
+    echo "遷移套用成功"
+else
+    echo "遷移失敗"
+    exit 1
+fi
+```
+
+## 編譯二進位檔案支援
+
+所有 CLI 命令都可以與編譯的單二進位檔案部署無縫配合：
+
+1. **開發**: 直接執行命令
+   ```bash
+   bun server/index.ts migrate status
+   ```
+
+2. **生產**: 編譯為單二進位檔案並執行
+   ```bash
+   bun build server/index.ts --compile --outfile paideia
+   ./paideia migrate status
+   ```
+
+CLI 模式可以與編譯的二進位檔案配合使用，因為：
+- 遷移在編譯時捆綁到二進位檔案中
+- 遷移實用程式沒有檔案系統依賴
+- 所有命令在編譯和非編譯模式下工作方式相同
+
+## 故障排除
+
+### 常見問題
+
+**遷移命令不工作**:
+
+- 確保您在正確的專案目錄中
+- 檢查資料庫連接是否正確配置
+- 驗證 `DATABASE_URL` 環境變數是否已設置
+
+**轉儲命令失敗**:
+
+- 檢查您在專案目錄中是否有寫入權限
+- 確保有足夠的磁碟空間
+- 驗證資料庫連接是否處於活動狀態
+
+**伺服器無法啟動**:
+
+- 檢查所需端口是否已被使用
+- 驗證環境變數是否正確設置
+- 檢查日誌以獲取特定錯誤訊息
+
+## 相關文檔
+
+- [配置參考](/zh-tw/reference/configuration-reference/) - 環境變數和配置選項
+- [安裝和設置](/zh-tw/install-and-setup/) - 初始設置和配置
+- [資料庫管理](/zh-tw/guides/backend/) - 資料庫管理和管理
+
