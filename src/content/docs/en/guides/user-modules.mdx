@@ -1,0 +1,55 @@
+---
+title: User Modules Overview
+description: An introduction to activity modules in Paideia LMS.
+i18nReady: true
+---
+
+import ModulesNav from '~/components/ModulesNav.astro';
+import ReadMore from '~/components/ReadMore.astro';
+
+Paideia LMS has a comprehensive activity module system that allows instructors to create engaging and interactive learning experiences. The system supports **five distinct module types** organized into two categories: informative (read-only) modules and interactive modules.
+
+## Module Types
+
+There are five activity module types defined in the `activity-modules` collection:
+
+### Informative (Read-Only) Modules
+
+These modules present content without requiring user interaction or submissions:
+
+- **`page`** - Static instructional content using rich text HTML
+- **`whiteboard`** - Drawing and diagramming content stored as Excalidraw JSON
+
+<ModulesNav category="informative" />
+
+### Interactive Modules
+
+These modules require user participation and track submissions:
+
+- **`assignment`** - File/text submissions with attempt tracking
+- **`quiz`** - Assessments with auto-grading capabilities
+- **`discussion`** - Threaded forum discussions for student engagement
+
+<ModulesNav category="interactive" />
+
+## Module Status
+
+All modules progress through three statuses:
+
+1. **`draft`** - Default initial state; visible only to creator and granted users
+2. **`published`** - Ready for student access; visible to enrolled students
+3. **`archived`** - No longer active but preserved; hidden from students
+
+## Creating Modules
+
+Modules can be created by users with the appropriate permissions:
+- System-wide `admin`, `instructor`, and `content-manager` roles can create activity modules
+- Course `teacher` and `manager` roles can create modules within their courses
+
+When a module is first created, it starts in the `draft` status, allowing you to refine the content before making it available to students. Once ready, you can publish the module, which makes it visible to enrolled students. Modules can be archived when they're no longer needed but should be preserved for record-keeping purposes.
+
+## Module Organization
+
+Modules are organized within courses and can be arranged in a specific order. Instructors can reorder modules to control the learning sequence, ensuring students progress through content in a logical order.
+
+<ReadMore>Learn more about each module type in their respective documentation pages.</ReadMore>

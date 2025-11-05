@@ -44,7 +44,12 @@ export const sidebar = [
 			}),
 			group('guides.ui', {
 				items: [
-					'guides/framework-components',
+					'guides/user-modules',
+					'guides/user-modules/page',
+					'guides/user-modules/whiteboard',
+					'guides/user-modules/assignment',
+					'guides/user-modules/quiz',
+					'guides/user-modules/discussion',
 				],
 			}),
 			group('guides.content', {

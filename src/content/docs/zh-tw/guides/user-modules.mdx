@@ -1,0 +1,55 @@
+---
+title: 用戶模組概覽
+description: 介紹 Paideia LMS 中的活動模組。
+i18nReady: true
+---
+
+import ModulesNav from '~/components/ModulesNav.astro';
+import ReadMore from '~/components/ReadMore.astro';
+
+Paideia LMS 擁有一個全面的活動模組系統，允許講師創建引人入勝和互動的學習體驗。該系統支持**五種不同的模組類型**，分為兩類：資訊性（只讀）模組和互動式模組。
+
+## 模組類型
+
+在 `activity-modules` 集合中定義了五種活動模組類型：
+
+### 資訊性（只讀）模組
+
+這些模組呈現內容，不需要用戶交互或提交：
+
+- **`page`** - 使用富文本 HTML 的靜態教學內容
+- **`whiteboard`** - 以 Excalidraw JSON 格式存儲的繪圖和圖表內容
+
+<ModulesNav category="informative" />
+
+### 互動式模組
+
+這些模組需要用戶參與並跟蹤提交：
+
+- **`assignment`** - 帶有嘗試跟蹤的文件/文本提交
+- **`quiz`** - 具有自動評分功能的評估
+- **`discussion`** - 用於學生參與的線程式論壇討論
+
+<ModulesNav category="interactive" />
+
+## 模組狀態
+
+所有模組都經歷三種狀態：
+
+1. **`draft`** - 默認初始狀態；僅對創建者和授權用戶可見
+2. **`published`** - 已準備好供學生訪問；對註冊學生可見
+3. **`archived`** - 不再活躍但已保存；對學生隱藏
+
+## 創建模組
+
+具有適當權限的用戶可以創建模組：
+- 系統級 `admin`、`instructor` 和 `content-manager` 角色可以創建活動模組
+- 課程 `teacher` 和 `manager` 角色可以在其課程中創建模組
+
+模組首次創建時，處於 `draft` 狀態，允許您在向學生提供內容之前完善內容。準備就緒後，您可以發布模組，使其對註冊學生可見。當模組不再需要時，可以將其歸檔，但應保留用於記錄保存目的。
+
+## 模組組織
+
+模組在課程內組織，可以按特定順序排列。講師可以重新排序模組以控制學習順序，確保學生按邏輯順序學習內容。
+
+<ReadMore>在各自的文檔頁面中了解更多關於每種模組類型的信息。</ReadMore>

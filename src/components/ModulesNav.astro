@@ -1,0 +1,81 @@
+---
+import CardsNav from './NavGrid/CardsNav.astro';
+import { getLanguageFromURL } from '~/util/path-utils';
+import type { LogoKey } from '~/data/logos';
+
+interface Props {
+	category?: 'informative' | 'interactive';
+}
+
+const lang = getLanguageFromURL(Astro.url.pathname);
+const { category } = Astro.props as Props;
+
+const modules = [
+	{
+		title: 'Page',
+		description: 'Static instructional content using rich text HTML',
+		href: `/${lang}/guides/user-modules/page/`,
+		type: 'informative',
+		logo: 'user-module-page' as LogoKey,
+	},
+	{
+		title: 'Whiteboard',
+		description: 'Drawing and diagramming content stored as Excalidraw JSON',
+		href: `/${lang}/guides/user-modules/whiteboard/`,
+		type: 'informative',
+		logo: 'user-module-whiteboard' as LogoKey,
+	},
+	{
+		title: 'Assignment',
+		description: 'File/text submissions with attempt tracking',
+		href: `/${lang}/guides/user-modules/assignment/`,
+		type: 'interactive',
+		logo: 'user-module-assignment' as LogoKey,
+	},
+	{
+		title: 'Quiz',
+		description: 'Assessments with auto-grading capabilities',
+		href: `/${lang}/guides/user-modules/quiz/`,
+		type: 'interactive',
+		logo: 'user-module-quiz' as LogoKey,
+	},
+	{
+		title: 'Discussion',
+		description: 'Threaded forum discussions for student engagement',
+		href: `/${lang}/guides/user-modules/discussion/`,
+		type: 'interactive',
+		logo: 'user-module-discussion' as LogoKey,
+	},
+];
+
+const informativeModules = modules.filter((m) => m.type === 'informative');
+const interactiveModules = modules.filter((m) => m.type === 'interactive');
+
+const informativeLinks = informativeModules.map((module) => ({
+	title: module.title,
+	description: module.description,
+	href: module.href,
+	logo: module.logo,
+}));
+
+const interactiveLinks = interactiveModules.map((module) => ({
+	title: module.title,
+	description: module.description,
+	href: module.href,
+	logo: module.logo,
+}));
+
+const links = category === 'informative' 
+	? informativeLinks 
+	: category === 'interactive' 
+	? interactiveLinks 
+	: [...informativeLinks, ...interactiveLinks];
+---
+
+<CardsNav minimal links={links} class="modules-nav" />
+
+<style>
+	.modules-nav {
+		margin-bottom: 2rem;
+	}
+</style>

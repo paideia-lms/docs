@@ -1,0 +1,55 @@
+---
+title: 用户模块概览
+description: 介绍 Paideia LMS 中的活动模块。
+i18nReady: true
+---
+
+import ModulesNav from '~/components/ModulesNav.astro';
+import ReadMore from '~/components/ReadMore.astro';
+
+Paideia LMS 拥有一个全面的活动模块系统，允许讲师创建引人入胜和互动的学习体验。该系统支持**五种不同的模块类型**，分为两类：信息性（只读）模块和交互式模块。
+
+## 模块类型
+
+在 `activity-modules` 集合中定义了五种活动模块类型：
+
+### 信息性（只读）模块
+
+这些模块呈现内容，不需要用户交互或提交：
+
+- **`page`** - 使用富文本 HTML 的静态教学内容
+- **`whiteboard`** - 以 Excalidraw JSON 格式存储的绘图和图表内容
+
+<ModulesNav category="informative" />
+
+### 交互式模块
+
+这些模块需要用户参与并跟踪提交：
+
+- **`assignment`** - 带有尝试跟踪的文件/文本提交
+- **`quiz`** - 具有自动评分功能的评估
+- **`discussion`** - 用于学生参与的线程式论坛讨论
+
+<ModulesNav category="interactive" />
+
+## 模块状态
+
+所有模块都经历三种状态：
+
+1. **`draft`** - 默认初始状态；仅对创建者和授权用户可见
+2. **`published`** - 已准备好供学生访问；对注册学生可见
+3. **`archived`** - 不再活跃但已保存；对学生隐藏
+
+## 创建模块
+
+具有适当权限的用户可以创建模块：
+- 系统级 `admin`、`instructor` 和 `content-manager` 角色可以创建活动模块
+- 课程 `teacher` 和 `manager` 角色可以在其课程中创建模块
+
+模块首次创建时，处于 `draft` 状态，允许您在向学生提供内容之前完善内容。准备就绪后，您可以发布模块，使其对注册学生可见。当模块不再需要时，可以将其归档，但应保留用于记录保存目的。
+
+## 模块组织
+
+模块在课程内组织，可以按特定顺序排列。讲师可以重新排序模块以控制学习顺序，确保学生按逻辑顺序学习内容。
+
+<ReadMore>在各自的文档页面中了解更多关于每种模块类型的信息。</ReadMore>
