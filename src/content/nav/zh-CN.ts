@@ -12,6 +12,8 @@ export default navDictionary({
 	'guides.ui': '用户模块',
 	'guides.content': '课程',
 	'guides.enrolments': '注册',
+	'guides.gradebook': '成绩册',
+	'guides.notes': '笔记',
 	'guides.upgrade': '升级',
 	'guides.upgrade.major': '主版本升级指南',
 	'guides.recipes': '操作方案',

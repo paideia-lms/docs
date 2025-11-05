@@ -38,9 +38,7 @@ export const sidebar = [
 	group('guides', {
 		items: [
 			group('guides.userRoles', {
-				items: [
-					'basics/user-overview',
-				],
+				items: ['basics/user-overview'],
 			}),
 			group('guides.ui', {
 				items: [
@@ -53,15 +51,16 @@ export const sidebar = [
 				],
 			}),
 			group('guides.content', {
-				items: [
-					'basics/course-overview',
-				],
+				items: ['basics/course-overview', 'basics/adding-modules-to-courses'],
 			}),
 			group('guides.enrolments', {
-				items: [
-					'guides/enrolments-overview',
-					'guides/enrolments-overview/groups',
-				],
+				items: ['guides/enrolments-overview', 'guides/enrolments-overview/groups'],
+			}),
+			group('guides.gradebook', {
+				items: ['guides/gradebook-overview'],
+			}),
+			group('guides.notes', {
+				items: ['concepts/notes'],
 			}),
 			group('guides.upgrade', {
 				items: [

@@ -12,6 +12,8 @@ export default navDictionary({
 	'guides.ui': 'ユーザーモジュール',
 	'guides.content': 'コース',
 	'guides.enrolments': '登録',
+	'guides.gradebook': '成績簿',
+	'guides.notes': 'ノート',
 	'guides.upgrade': 'アップグレード',
 	'guides.upgrade.major': 'メジャーアップグレードガイド',
 	'guides.recipes': '実装レシピ',

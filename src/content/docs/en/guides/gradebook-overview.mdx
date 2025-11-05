@@ -1,0 +1,106 @@
+---
+title: Gradebook Overview
+description: Learn how gradebooks track and calculate grades in Paideia LMS courses.
+i18nReady: true
+---
+import ReadMore from '~/components/ReadMore.astro';
+
+:::note
+Paideia LMS gradebook borrows many ideas from Moodle's gradebook system, making it powerful and flexible while being simpler to use. The system supports complex weighting schemes while maintaining an intuitive interface.
+:::
+
+Each course in Paideia LMS has a gradebook by default. The gradebook provides a centralized system for tracking, organizing, and calculating student grades throughout the course.
+
+## What is a Gradebook?
+
+A gradebook is a structured collection of graded items organized into categories. It automatically calculates final grades based on weighted averages, making it easy to track student performance across all course activities.
+
+## Gradebook Structure
+
+Gradebooks are organized hierarchically using categories and items:
+
+### Gradebook Categories
+
+Categories organize gradebook items hierarchically, allowing you to group related graded components together. Categories can be nested to create multi-level organization structures.
+
+Each category can have:
+- **Name and description** - To identify the category
+- **Weight** - Percentage contribution to the final grade (0-100)
+- **Sort order** - To control how categories are displayed
+
+Categories can contain both subcategories and gradebook items, allowing for flexible organization. For example, you might have a "Homework" category containing multiple assignments, or a "Exams" category with midterm and final exam items.
+
+### Gradebook Items
+
+Gradebook items represent individual graded components in your course. Each item can be:
+
+- **Linked to an activity module** - Automatically pulls grades from assignments, quizzes, or discussions
+- **A standalone manual entry** - Created directly in the gradebook for manual grading
+
+Each item has:
+- **Name and description** - To identify the graded component
+- **Category** - Optional parent category for organization
+- **Weight** - Percentage within its category (0-100)
+- **Grade range** - Minimum and maximum possible grades (default 0-100)
+- **Extra credit** - Option to mark items as extra credit
+
+Items can be organized within categories to create a logical grading structure that reflects your course organization.
+
+## Grade Calculation
+
+Final grades are calculated automatically using a weighted average system:
+
+1. **Item grades** are calculated from base grades plus any adjustments
+2. **Effective weight** is calculated by multiplying item weight by category weight (if categorized)
+3. **Final grade** is the sum of weighted scores divided by total weight
+
+The system supports:
+- **Weighted categories** - Different categories contribute different amounts to the final grade
+- **Weighted items** - Items within categories have different weights
+- **Grade adjustments** - Bonus points, penalties, late deductions, and other adjustments
+- **Grade overrides** - Manual grade overrides that completely replace calculated grades
+
+## Integration with Activity Modules
+
+Gradebook items can be linked to activity modules (assignments, quizzes, and discussions). When students submit work:
+
+- **Assignment submissions** automatically create grade entries
+- **Quiz submissions** automatically create grade entries with calculated scores
+- **Discussion submissions** can be linked for grading
+
+This integration ensures that grades are automatically tracked as students complete course activities, while still allowing manual grade entries for items not linked to modules.
+
+## Grade Management
+
+The gradebook provides several features for managing student grades:
+
+### Grade Adjustments
+
+Grades can be adjusted with various types of modifications:
+- **Bonus points** - Extra credit additions
+- **Penalties** - Point deductions
+- **Late deductions** - Penalties for late submissions
+- **Participation bonuses** - Rewards for participation
+- **Curve adjustments** - Statistical adjustments
+- **Other adjustments** - Custom modifications
+
+Each adjustment includes a reason and can be activated or deactivated as needed.
+
+### Grade Overrides
+
+Instructors can override calculated grades with manual entries. This is useful for:
+- Special circumstances requiring instructor discretion
+- Correcting calculation errors
+- Adjusting grades based on additional factors
+
+When a grade is overridden, it completely replaces the calculated grade.
+
+### Grade Status
+
+Grades can have different statuses:
+- **Draft** - Grade entry is in progress
+- **Graded** - Grade has been finalized
+- **Returned** - Grade has been returned to the student
+
+<ReadMore>Learn more about [courses](/en/basics/course-overview/) and [activity modules](/en/guides/user-modules/).</ReadMore>
+
