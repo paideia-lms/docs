@@ -48,7 +48,6 @@ export default defineConfig({
 				PageSidebar: './src/components/starlight/PageSidebar.astro',
 				Footer: './src/components/starlight/Footer.astro',
 				SiteTitle: './src/components/starlight/SiteTitle.astro',
-				Search: './src/components/starlight/Search.astro',
 				Sidebar: './src/components/starlight/Sidebar.astro',
 				MobileMenuFooter: './src/components/starlight/MobileMenuFooter.astro',
 				PageTitle: './src/components/starlight/PageTitle.astro',
@@ -66,7 +65,7 @@ export default defineConfig({
 			],
 			// DeepWiki badge HTML (rendered in SiteTitle component):
 			// <a href="https://deepwiki.com/paideia-lms/Paideia"><img src="https://deepwiki.com/badge.svg" alt="Ask DeepWiki"></a>
-			pagefind: false,
+			pagefind: true,
 			head: [
 				// Add ICO favicon fallback for Safari.
 				{

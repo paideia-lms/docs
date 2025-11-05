@@ -22,7 +22,7 @@ const categories = [
 
 /**
  * @param url URL for the current page.
- * @returns The category for the current page as used by Algolia DocSearch to group search results.
+ * @returns The category for the current page.
  */
 export function getPageCategory(url: { pathname: string }) {
 	const langAgnosticPath = url.pathname.replace(/\/\w\w(-\w\w)?\//, '');

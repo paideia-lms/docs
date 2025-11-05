@@ -47,8 +47,8 @@ function updateHead(context: APIContext) {
 	head.push({ tag: 'meta', attrs: { name: 'twitter:image', content: canonicalImageSrc.href } });
 	head.push({ tag: 'meta', attrs: { name: 'twitter:site', content: 'paideialms' } });
 
-	// Algolia docsearch language facet
-	head.push({ tag: 'meta', attrs: { name: 'docsearch:language', content: lang } });
+	// Pagefind language metadata (not needed but kept for reference)
+	// head.push({ tag: 'meta', attrs: { name: 'pagefind:language', content: lang } });
 
 	// Fathom analytics
 	head.push({
