@@ -19,6 +19,10 @@ jobs:
     steps:
       - name: Checkout your repository using git
         uses: actions/checkout@v4
+      - name: Install D2 CLI
+        run: |
+          curl -fsSL https://d2lang.com/install.sh | sh -s -- --version latest
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
       - name: Install, build, and upload your site
         uses: withastro/action@v3
         with:
