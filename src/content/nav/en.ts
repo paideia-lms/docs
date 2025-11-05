@@ -7,7 +7,7 @@ export default {
 
 	guides: 'Concepts and learnings',
 	'guides.userRoles': 'User and roles',
-	'guides.ui': 'Build your UI',
+	'guides.ui': 'User modules',
 	'guides.content': 'Add content to your site',
 	'guides.serverRendering': 'Server rendering',
 	'guides.upgrade': 'Upgrade',

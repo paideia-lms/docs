@@ -44,12 +44,6 @@ export const sidebar = [
 			}),
 			group('guides.ui', {
 				items: [
-					'basics/astro-components',
-					'basics/layouts',
-					'guides/styling',
-					'guides/fonts',
-					'guides/syntax-highlighting',
-					'guides/client-side-scripts',
 					'guides/framework-components',
 				],
 			}),
