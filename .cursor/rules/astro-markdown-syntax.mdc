@@ -1,0 +1,360 @@
+---
+alwaysApply: true
+---
+
+
+[Skip to content](https://starlight.astro.build/guides/authoring-content/#_top)
+
+Starlight supports the full range of [Markdown](https://daringfireball.net/projects/markdown/) syntax in `.md` files as well as frontmatter [YAML](https://dev.to/paulasantamaria/introduction-to-yaml-125f) to define metadata such as a title and description.
+
+Please be sure to check the [MDX docs](https://mdxjs.com/docs/what-is-mdx/#markdown) or [Markdoc docs](https://markdoc.dev/docs/syntax) if using those file formats, as Markdown support and usage can differ.
+
+You can customize individual pages in Starlight by setting values in their frontmatter. Frontmatter is set at the top of your files between `---` separators:
+
+```md
+---
+title: My page title
+---
+
+Page content follows the second \`---\`.
+```
+
+Every page must include at least a `title`. See the [frontmatter reference](https://starlight.astro.build/reference/frontmatter/) for all available fields and how to add custom fields.
+
+Text can be **bold**, *italic*, or ~~strikethrough~~.
+
+```md
+Text can be **bold**, _italic_, or ~~strikethrough~~.
+```
+
+You can [link to another page](https://starlight.astro.build/getting-started/).
+
+```md
+You can [link to another page](/getting-started/).
+```
+
+You can highlight `inline code` with backticks.
+
+```md
+You can highlight \`inline code\` with backticks.
+```
+
+Images in Starlight use [Astro’s built-in optimized asset support](https://docs.astro.build/en/guides/images/).
+
+Markdown and MDX support the Markdown syntax for displaying images that includes alt-text for screen readers and assistive technology.
+
+![An illustration of planets and stars featuring the word “astro”](https://raw.githubusercontent.com/withastro/docs/main/public/default-og-image.png)
+
+```md
+![An illustration of planets and stars featuring the word “astro”](https://raw.githubusercontent.com/withastro/docs/main/public/default-og-image.png)
+```
+
+Relative image paths are also supported for images stored locally in your project.
+
+```md
+![A rocketship in space](../../assets/images/rocket.svg)
+```
+
+You can structure content using a heading. Headings in Markdown are indicated by a number of `#` at the start of the line.
+
+Starlight is configured to automatically use your page title as a top-level heading and will include an “Overview” heading at top of each page’s table of contents. We recommend starting each page with regular paragraph text content and using on-page headings from `<h2>` and down:
+
+```md
+---
+title: Markdown Guide
+description: How to use Markdown in Starlight
+---
+
+This page describes how to use Markdown in Starlight.
+
+## Inline Styles
+
+## Headings
+```
+
+Using headings in Markdown will automatically give you anchor links so you can link directly to certain sections of your page:
+
+```md
+---
+title: My page of content
+description: How to use Starlight's built-in anchor links
+---
+
+## Introduction
+
+I can link to [my conclusion](#conclusion) lower on the same page.
+
+## Conclusion
+```
+
+Level 2 (`<h2>`) and Level 3 (`<h3>`) headings will automatically appear in the page table of contents.
+
+Learn more about how Astro processes heading `id` s in [the Astro Documentation](https://docs.astro.build/en/guides/markdown-content/#heading-ids)
+
+Asides (also known as “admonitions” or “callouts”) are useful for displaying secondary information alongside a page’s main content.
+
+Starlight provides a custom Markdown syntax for rendering asides. Aside blocks are indicated using a pair of triple colons `:::` to wrap your content, and can be of type `note`, `tip`, `caution` or `danger`.
+
+You can nest any other Markdown content types inside an aside, but asides are best suited to short and concise chunks of content.
+
+```md
+:::note
+Starlight is a documentation website toolkit built with [Astro](https://astro.build/). You can get started with this command:
+
+\`\`\`sh
+npm create astro@latest -- --template starlight
+\`\`\`
+
+:::
+```
+
+You can specify a custom title for the aside in square brackets following the aside type, e.g. `:::tip[Did you know?]`.
+
+```md
+:::tip[Did you know?]
+Astro helps you build faster websites with [“Islands Architecture”](https://docs.astro.build/en/concepts/islands/).
+:::
+```
+
+You can specify a custom icon for the aside in curly brackets following the aside type or [custom title](https://starlight.astro.build/guides/authoring-content/#custom-aside-titles), e.g. `:::tip{icon="heart"}` or `:::tip[Did you know?]{icon="heart"}` respectively. The icon name must be set to the name of [one of Starlight’s built-in icons](https://starlight.astro.build/reference/icons/#all-icons).
+
+```md
+:::tip{icon="heart"}
+Astro helps you build faster websites with [“Islands Architecture”](https://docs.astro.build/en/concepts/islands/).
+:::
+```
+
+Caution and danger asides are helpful for drawing a user’s attention to details that may trip them up. If you find yourself using these a lot, it may also be a sign that the thing you are documenting could benefit from being redesigned.
+
+```md
+:::caution
+If you are not sure you want an awesome docs site, think twice before using [Starlight](/).
+:::
+
+:::danger
+Your users may be more productive and find your product easier to use thanks to helpful Starlight features.
+
+- User-configurable colour theme
+- [i18n support](/guides/i18n/)
+
+:::
+```
+
+> This is a blockquote, which is commonly used when quoting another person or document.
+> 
+> Blockquotes are indicated by a `>` at the start of each line.
+
+```md
+> This is a blockquote, which is commonly used when quoting another person or document.
+>
+> Blockquotes are indicated by a \`>\` at the start of each line.
+```
+
+A code block is indicated by a block with three backticks ` ``` ` at the start and end. You can indicate the programming language being used after the opening backticks.
+
+```js
+// Javascript code with syntax highlighting.
+var fun = function lang(l) {
+  dateformat.i18n = require('./lang/' + l);
+  return true;
+};
+```
+
+```md
+\`\`\`js
+// Javascript code with syntax highlighting.
+var fun = function lang(l) {
+  dateformat.i18n = require('./lang/' + l);
+  return true;
+};
+\`\`\`
+```
+
+Starlight uses [Expressive Code](https://expressive-code.com/) to extend formatting possibilities for code blocks. Expressive Code’s text markers and window frames plugins are enabled by default. Code block rendering can be configured using Starlight’s [`expressiveCode` configuration option](https://starlight.astro.build/reference/configuration/#expressivecode).
+
+You can highlight specific lines or parts of your code blocks using [Expressive Code text markers](https://expressive-code.com/key-features/text-markers/) on the opening line of your code block. Use curly braces (`{ }`) to highlight entire lines, and quotation marks to highlight strings of text.
+
+There are three highlighting styles: neutral for calling attention to code, green for indicating inserted code, and red for indicating deleted code. Both text and entire lines can be marked using the default marker, or in combination with `ins=` and `del=` to produce the desired highlighting.
+
+Expressive Code provides several options for customizing the visual appearance of your code samples. Many of these can be combined, for highly illustrative code samples. Please explore the [Expressive Code documentation](https://expressive-code.com/key-features/text-markers/#configuration) for the extensive options available. Some of the most common examples are shown below:
+
+- [Mark entire lines & line ranges using the `{ }` marker](https://expressive-code.com/key-features/text-markers/#marking-full-lines--line-ranges):
+	```js
+	function demo() {
+	  // This line (#2) and the next one are highlighted
+	  return 'This is line #3 of this snippet';
+	}
+	```
+	- [Markdown/MDX](https://starlight.astro.build/guides/authoring-content/#tab-panel-113)
+	- [Markdoc](https://starlight.astro.build/guides/authoring-content/#tab-panel-114)
+	```md
+	\`\`\`js {2-3}
+	function demo() {
+	  // This line (#2) and the next one are highlighted
+	  return 'This is line #3 of this snippet';
+	}
+	\`\`\`
+	```
+- [Mark selections of text using the `" "` marker or regular expressions](https://expressive-code.com/key-features/text-markers/#marking-individual-text-inside-lines):
+	```js
+	function demo() {
+	  return 'Even regular expressions are supported';
+	}
+	```
+	- [Markdown/MDX](https://starlight.astro.build/guides/authoring-content/#tab-panel-115)
+	- [Markdoc](https://starlight.astro.build/guides/authoring-content/#tab-panel-116)
+- [Mark text or lines as inserted or deleted with `ins` or `del`](https://expressive-code.com/key-features/text-markers/#selecting-inline-marker-types-mark-ins-del):
+	```js
+	function demo() {
+	  console.log('These are inserted and deleted marker types');
+	  // The return statement uses the default marker type
+	  return true;
+	}
+	```
+	- [Markdown/MDX](https://starlight.astro.build/guides/authoring-content/#tab-panel-117)
+	- [Markdoc](https://starlight.astro.build/guides/authoring-content/#tab-panel-118)
+	```md
+	\`\`\`js "return true;" ins="inserted" del="deleted"
+	function demo() {
+	  console.log('These are inserted and deleted marker types');
+	  // The return statement uses the default marker type
+	  return true;
+	}
+	\`\`\`
+	```
+- [Combine syntax highlighting with `diff` -like syntax](https://expressive-code.com/key-features/text-markers/#combining-syntax-highlighting-with-diff-like-syntax):
+	```js
+	function thisIsJavaScript() {
+	  // This entire block gets highlighted as JavaScript,
+	  // and we can still add diff markers to it!
+	  console.log('Old code to be removed')
+	  console.log('New and shiny code!')
+	}
+	```
+	- [Markdown/MDX](https://starlight.astro.build/guides/authoring-content/#tab-panel-119)
+	- [Markdoc](https://starlight.astro.build/guides/authoring-content/#tab-panel-120)
+	```md
+	\`\`\`diff lang="js"
+	  function thisIsJavaScript() {
+	    // This entire block gets highlighted as JavaScript,
+	    // and we can still add diff markers to it!
+	-   console.log('Old code to be removed')
+	+   console.log('New and shiny code!')
+	  }
+	\`\`\`
+	```
+
+Code blocks can be rendered inside a window-like frame. A frame that looks like a terminal window will be used for shell scripting languages (e.g. `bash` or `sh`). Other languages display inside a code editor-style frame if they include a title.
+
+A code block’s optional title can be set either with a `title="..."` attribute following the code block’s opening backticks and language identifier, or with a file name comment in the first lines of the code.
+
+- [Add a file name tab with a comment](https://expressive-code.com/key-features/frames/#code-editor-frames)
+	```js
+	console.log('Hello World!');
+	```
+	- [Markdown/MDX](https://starlight.astro.build/guides/authoring-content/#tab-panel-121)
+	- [Markdoc](https://starlight.astro.build/guides/authoring-content/#tab-panel-122)
+	```md
+	\`\`\`js
+	// my-test-file.js
+	console.log('Hello World!');
+	\`\`\`
+	```
+- [Add a title to a Terminal window](https://expressive-code.com/key-features/frames/#terminal-frames)
+	```bash
+	npm install
+	```
+	- [Markdown/MDX](https://starlight.astro.build/guides/authoring-content/#tab-panel-123)
+	- [Markdoc](https://starlight.astro.build/guides/authoring-content/#tab-panel-124)
+	```md
+	\`\`\`bash title="Installing dependencies…"
+	npm install
+	\`\`\`
+	```
+- [Disable window frames with `frame="none"`](https://expressive-code.com/key-features/frames/#overriding-frame-types)
+	```bash
+	echo "This is not rendered as a terminal despite using the bash language"
+	```
+	- [Markdown/MDX](https://starlight.astro.build/guides/authoring-content/#tab-panel-125)
+	- [Markdoc](https://starlight.astro.build/guides/authoring-content/#tab-panel-126)
+	```md
+	\`\`\`bash frame="none"
+	echo "This is not rendered as a terminal despite using the bash language"
+	\`\`\`
+	```
+
+Details (also known as “disclosures” or “accordions”) are useful to hide content that is not immediately relevant. Users can click a short summary to expand and view the full content.
+
+Use the standard HTML [`<details>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details) and [`<summary>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/summary) elements in your Markdown content to create a disclosure widget.
+
+You can nest any other Markdown syntax inside a `<details>` element.
+
+Where and when is the Andromeda constellation most visible?
+
+The [Andromeda constellation](https://en.wikipedia.org/wiki/Andromeda_\(constellation\)) is most visible in the night sky during the month of November at latitudes between `+90°` and `−40°`.
+
+```md
+<details>
+<summary>Where and when is the Andromeda constellation most visible?</summary>
+
+The [Andromeda constellation](<https://en.wikipedia.org/wiki/Andromeda_(constellation)>) is most visible in the night sky during the month of November at latitudes between \`+90°\` and \`−40°\`.
+
+</details>
+```
+
+Starlight supports all other Markdown authoring syntax, such as lists and tables. See the [Markdown Cheat Sheet from The Markdown Guide](https://www.markdownguide.org/cheat-sheet/) for a quick overview of all the Markdown syntax elements.
+
+Starlight uses Astro’s Markdown and MDX renderer built on remark and rehype. You can add support for custom syntax and behavior by adding `remarkPlugins` or `rehypePlugins` in your Astro config file. See [“Markdown Plugins”](https://docs.astro.build/en/guides/markdown-content/#markdown-plugins) in the Astro docs to learn more.
+
+Starlight supports authoring content in Markdoc using the experimental [Astro Markdoc integration](https://docs.astro.build/en/guides/integrations-guide/markdoc/) and the Starlight Markdoc preset.
+
+Start a new Starlight project with Markdoc pre-configured using `create astro`:
+
+- [npm](https://starlight.astro.build/guides/authoring-content/#tab-panel-127)
+- [pnpm](https://starlight.astro.build/guides/authoring-content/#tab-panel-128)
+- [Yarn](https://starlight.astro.build/guides/authoring-content/#tab-panel-129)
+
+```sh
+npm create astro@latest -- --template starlight/markdoc
+```
+
+If you already have a Starlight site and want to add Markdoc, follow these steps.
+
+1. Add Astro’s Markdoc integration:
+	- [npm](https://starlight.astro.build/guides/authoring-content/#tab-panel-130)
+	- [pnpm](https://starlight.astro.build/guides/authoring-content/#tab-panel-131)
+	- [Yarn](https://starlight.astro.build/guides/authoring-content/#tab-panel-132)
+	```sh
+	npx astro add markdoc
+	```
+2. Install the Starlight Markdoc preset:
+	- [npm](https://starlight.astro.build/guides/authoring-content/#tab-panel-133)
+	- [pnpm](https://starlight.astro.build/guides/authoring-content/#tab-panel-134)
+	- [Yarn](https://starlight.astro.build/guides/authoring-content/#tab-panel-135)
+	```sh
+	npm install @astrojs/starlight-markdoc
+	```
+3. Create a Markdoc configuration file at `markdoc.config.mjs` and use the Starlight Markdoc preset:
+	```js
+	import { defineMarkdocConfig } from '@astrojs/markdoc/config';
+	import starlightMarkdoc from '@astrojs/starlight-markdoc';
+	export default defineMarkdocConfig({
+	  extends: [starlightMarkdoc()],
+	});
+	```
+
+To learn more about the Markdoc syntax and features, see the [Markdoc documentation](https://markdoc.dev/docs/syntax) or the [Astro Markdoc integration guide](https://docs.astro.build/en/guides/integrations-guide/markdoc/).
+
+The `starlightMarkdoc()` preset accepts the following configuration options:
+
+**type:**`boolean`  
+**default:**`true`
+
+Controls whether or not headings are rendered with a clickable anchor link. Equivalent to the [`markdown.headingLinks`](https://starlight.astro.build/reference/configuration/#markdown) option, which applies to Markdown and MDX files.
+
+```js
+export default defineMarkdocConfig({
+  // Disable the default heading anchor link support
+  extends: [starlightMarkdoc({ headingLinks: false })],
+});
+```
