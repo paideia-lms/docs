@@ -10,7 +10,7 @@ export default navDictionary({
 	guides: '概念与学习',
 	'guides.userRoles': '用户和角色',
 	'guides.ui': '用户模块',
-	'guides.content': '向你的网站添加内容',
+	'guides.content': '课程',
 	'guides.serverRendering': '服务端渲染',
 	'guides.upgrade': '升级',
 	'guides.upgrade.major': '主版本升级指南',

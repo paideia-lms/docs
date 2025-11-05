@@ -10,7 +10,7 @@ export default navDictionary({
 	guides: '概念と学習',
 	'guides.userRoles': 'ユーザーとロール',
 	'guides.ui': 'ユーザーモジュール',
-	'guides.content': 'コンテンツの追加',
+	'guides.content': 'コース',
 	'guides.serverRendering': 'サーバーサイドレンダリング',
 	'guides.upgrade': 'アップグレード',
 	'guides.upgrade.major': 'メジャーアップグレードガイド',

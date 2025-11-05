@@ -54,11 +54,7 @@ export const sidebar = [
 			}),
 			group('guides.content', {
 				items: [
-					'guides/markdown-content',
-					'guides/content-collections',
-					'guides/images',
-					'guides/data-fetching',
-					'guides/astro-db',
+					'basics/course-overview',
 				],
 			}),
 			group('guides.serverRendering', {

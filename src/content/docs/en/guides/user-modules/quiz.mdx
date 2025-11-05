@@ -10,46 +10,152 @@ The **Quiz** module is an interactive activity module that allows instructors to
 
 ## Overview
 
+Quiz modules enable instructors to create assessments with **10 distinct question types**, **7 scoring configurations**, and support for both single-page quizzes and multi-section exams. The system uses TypeScript discriminated unions extensively for type safety and stores all configuration in a `rawQuizConfig` JSON field.
+
 Quiz modules are interactive modules that require user participation and track submissions. They support:
 
-- **Multiple question types**: Multiple choice, true/false, short answer, essay, and more
+- **10 question types**: From informative articles to interactive whiteboards
+- **7 scoring configurations**: Simple, weighted, rubric, manual, partial match, ranking, and matrix scoring
+- **Two quiz architectures**: Regular quizzes and container (nested) quizzes for multi-section exams
+- **Visual quiz builder**: Drag-and-drop interface for creating quizzes
 - **Auto-grading**: Automatic scoring for objective questions
-- **Question banks**: Create reusable question libraries
-- **Randomization**: Randomize questions and answer choices
 - **Timed assessments**: Set time limits for quizzes
 - **Attempt tracking**: Monitor student attempts and performance
+
+## Quiz Architecture
+
+Quizzes support two distinct structures that are mutually exclusive:
+
+### Regular Quiz
+
+Contains a `pages` array directly with questions organized across multiple pages:
+
+- Single continuous quiz experience with one optional global timer
+- Linear navigation through pages
+- Questions are organized into pages for better organization and user experience
+
+### Container Quiz (Nested)
+
+Contains a `nestedQuizzes` array for multi-section exams:
+
+- Each nested quiz has independent timer and grading configuration
+- Sequential or free-order access control via `sequentialOrder` boolean
+- Allows instructors to create complex exams with multiple sections
+- Each section can have its own settings, timing, and scoring
+
+## Question Types
+
+The system supports **10 question types** with distinct input mechanisms:
+
+### Informative
+
+- **`article`** - Rich text content (TipTap editor) for providing context or instructions
+
+### Single-Select
+
+- **`multiple-choice`** - Radio buttons with options for selecting one correct answer
+
+### Text Input
+
+- **`short-answer`** - Single-line text input for brief responses
+- **`long-answer`** - Multi-line textarea for longer written responses
+
+### Multi-Input
+
+- **`fill-in-the-blank`** - Multiple inline text inputs for completing sentences
+- **`choice`** - Checkbox group for multiple selections
+
+### Ordering
+
+- **`ranking`** - Drag-and-drop list using `@dnd-kit` for arranging items in order
+
+### Matrix
+
+- **`single-selection-matrix`** - Radio buttons in table layout for selecting one option per row
+- **`multiple-selection-matrix`** - Select dropdowns per row for multiple selections in a matrix format
+
+### Drawing
+
+- **`whiteboard`** - Excalidraw canvas with auto-save for drawing-based responses
+
+## Scoring System
+
+Quizzes support **7 scoring configurations** using discriminated unions:
+
+### Simple
+
+All-or-nothing points for questions like multiple choice and short answer. The student either gets full points or zero points based on correctness.
+
+### Weighted
+
+Partial credit with three modes:
+- **All-or-nothing**: Full points or zero (like Simple but with weight multipliers)
+- **Partial-with-penalty**: Partial credit with penalties for incorrect answers
+- **Partial-no-penalty**: Partial credit without penalties
+
+### Rubric
+
+Links to a rubric for manual grading. Used for subjective questions that require instructor evaluation.
+
+### Manual
+
+Instructor assigns points manually after reviewing the student's response. No automatic scoring is applied.
+
+### Partial Match
+
+Text matching with configurable threshold and case sensitivity. Useful for short answer questions where exact matches aren't required.
+
+### Ranking
+
+Points awarded based on correct order:
+- **Exact order**: Full points only if all items are in the correct order
+- **Partial credit per position**: Points awarded for each correctly positioned item
+
+### Matrix
+
+Points per row with configurable modes:
+- Each row can have its own scoring configuration
+- Supports both single-selection and multiple-selection matrices
+- Flexible scoring based on row-level correctness
+
+## Visual Quiz Builder
+
+Instructors create quizzes using a drag-and-drop interface:
+
+### Regular Quiz Builder
+
+Single scrollable list with page breaks:
+- Questions and page breaks can be reordered via drag handles
+- Inline editing of prompts, options, and scoring
+- Visual organization of questions into pages
+
+### Container Quiz Builder
+
+Tab navigation for nested quizzes:
+- Create and manage multiple nested quizzes (sections)
+- Each tab represents a different section of the exam
+- Configure independent settings for each nested quiz
+
+### Builder Features
+
+- **Drag-and-drop reordering**: Easily rearrange questions and pages
+- **Inline editing**: Edit question content, options, and settings directly
+- **Real-time preview**: See how the quiz will appear to students
+- **Question type selection**: Choose from all 10 question types
+- **Scoring configuration**: Configure scoring for each question type
 
 ## Creating a Quiz Module
 
 To create a quiz module:
 
-1. Navigate to your course
+1. Navigate to your course or module library
 2. Click "Add Module" or "Create Activity"
 3. Select "Quiz" from the module types
-4. Enter a title and description
-5. Configure quiz settings (timing, attempts, grading)
-6. Add questions to your quiz
-7. Save as draft or publish when ready
-
-## Question Types
-
-Quiz modules support various question types:
-
-### Objective Questions (Auto-graded)
-
-- **Multiple Choice**: Select one correct answer from multiple options
-- **Multiple Select**: Select multiple correct answers
-- **True/False**: Choose true or false
-- **Matching**: Match items from two columns
-- **Ordering**: Arrange items in the correct order
-- **Fill in the Blank**: Type the missing word or phrase
-- **Short Answer**: Brief text responses (can be auto-graded with keywords)
-
-### Subjective Questions (Manual grading)
-
-- **Essay**: Long-form written responses
-- **File Upload**: Submit files as answers
-- **Audio/Video**: Record audio or video responses
+4. Choose between Regular Quiz or Container Quiz (for multi-section exams)
+5. Use the visual quiz builder to add questions and configure settings
+6. Configure scoring for each question using the appropriate scoring type
+7. Set timing and attempt limits if needed
+8. Save as draft or publish when ready
 
 ## Quiz Settings
 
@@ -57,7 +163,8 @@ When creating a quiz, you can configure:
 
 ### Timing
 
-- **Time limit**: Set a maximum time for completing the quiz
+- **Time limit**: Set a maximum time for completing the quiz (global timer for regular quizzes)
+- **Nested quiz timers**: Each nested quiz in a container quiz has its own independent timer
 - **Time warnings**: Notify students when time is running out
 - **Auto-submit**: Automatically submit when time expires
 - **Open/Close dates**: Control when the quiz is available
@@ -69,39 +176,11 @@ When creating a quiz, you can configure:
 - **Single attempt**: Students can only take the quiz once
 - **Attempt scoring**: Keep highest, latest, or average score
 
-### Grading
+### Access Control
 
-- **Points per question**: Assign point values to questions
-- **Total points**: Set the total possible points
-- **Passing grade**: Define minimum passing score
-- **Grade visibility**: Control when grades are visible to students
-- **Feedback**: Provide immediate or delayed feedback
-
-### Display Options
-
-- **Question order**: Randomize question order
-- **Answer order**: Randomize answer choices
-- **One question per page**: Show questions one at a time
-- **Navigation**: Allow or restrict navigation between questions
-- **Review**: Allow students to review their answers
-
-## Question Banks
-
-Create reusable question banks:
-
-- **Organize questions**: Group questions by topic or difficulty
-- **Random selection**: Randomly select questions from banks
-- **Share questions**: Share question banks across courses
-- **Import/Export**: Import questions from files or export for backup
-
-## Auto-Grading
-
-Quiz modules automatically grade:
-
-- **Objective questions**: Multiple choice, true/false, matching, etc.
-- **Keyword matching**: Short answer questions with keyword matching
-- **Immediate feedback**: Show results immediately after submission
-- **Partial credit**: Award partial credit for partially correct answers
+For container quizzes:
+- **Sequential order**: Force students to complete sections in order (`sequentialOrder: true`)
+- **Free order**: Allow students to access sections in any order (`sequentialOrder: false`)
 
 ## Module Status
 
@@ -115,12 +194,12 @@ Quiz modules follow the standard module lifecycle:
 
 When creating quiz modules:
 
-- **Write clear questions** that are unambiguous
-- **Use appropriate question types** for the content being assessed
-- **Set realistic time limits** that allow students to complete all questions
-- **Provide feedback** to help students learn from mistakes
-- **Review auto-graded questions** to ensure accuracy
-- **Use question banks** for reusable content
-- **Test your quiz** before publishing to students
+- **Choose the right architecture**: Use regular quizzes for simple assessments and container quizzes for multi-section exams
+- **Select appropriate question types**: Match question types to the learning objectives being assessed
+- **Configure scoring carefully**: Choose the scoring configuration that best fits each question type
+- **Use the visual builder**: Take advantage of the drag-and-drop interface for efficient quiz creation
+- **Set realistic time limits**: Allow students enough time to complete all questions thoughtfully
+- **Test your quiz**: Preview and test the quiz before publishing to students
+- **Review scoring settings**: Ensure auto-grading configurations are correct for objective questions
 
 <ReadMore>Learn more about [module statuses](/en/guides/user-modules/#module-status) and [module management](/en/guides/user-modules/).</ReadMore>
