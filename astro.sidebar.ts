@@ -112,34 +112,34 @@ export const sidebar = [
 	group('integrations', {
 		items: [
 			'guides/integrations-guide',
-			group('integrations.ui', {
-				items: [
-					'guides/integrations-guide/alpinejs',
-					'guides/integrations-guide/preact',
-					'guides/integrations-guide/react',
-					'guides/integrations-guide/solid-js',
-					'guides/integrations-guide/svelte',
-					'guides/integrations-guide/vue',
-				],
-			}),
-			group('integrations.adapters', {
-				items: [
-					'guides/integrations-guide/cloudflare',
-					'guides/integrations-guide/netlify',
-					'guides/integrations-guide/node',
-					'guides/integrations-guide/vercel',
-				],
-			}),
-			group('integrations.other', {
-				items: [
-					'guides/integrations-guide/db',
-					'guides/integrations-guide/markdoc',
-					'guides/integrations-guide/mdx',
-					'guides/integrations-guide/partytown',
-					'guides/integrations-guide/sitemap',
-				],
-			}),
-			'reference/publish-to-npm',
+			// group('integrations.ui', {
+			// 	items: [
+			// 		'guides/integrations-guide/alpinejs',
+			// 		'guides/integrations-guide/preact',
+			// 		'guides/integrations-guide/react',
+			// 		'guides/integrations-guide/solid-js',
+			// 		'guides/integrations-guide/svelte',
+			// 		'guides/integrations-guide/vue',
+			// 	],
+			// }),
+			// group('integrations.adapters', {
+			// 	items: [
+			// 		'guides/integrations-guide/cloudflare',
+			// 		'guides/integrations-guide/netlify',
+			// 		'guides/integrations-guide/node',
+			// 		'guides/integrations-guide/vercel',
+			// 	],
+			// }),
+			// group('integrations.other', {
+			// 	items: [
+			// 		'guides/integrations-guide/db',
+			// 		'guides/integrations-guide/markdoc',
+			// 		'guides/integrations-guide/mdx',
+			// 		'guides/integrations-guide/partytown',
+			// 		'guides/integrations-guide/sitemap',
+			// 	],
+			// }),
+			// 'reference/publish-to-npm',
 		],
 	}),
 
