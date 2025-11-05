@@ -8,7 +8,7 @@ export default navDictionary({
 	'start.migrate': '遷移到 Paideia',
 
 	guides: '概念與學習',
-	'guides.routing': '路由與導覽',
+	'guides.userRoles': '用戶與角色',
 	'guides.ui': '建構 UI',
 	'guides.content': '加入內容到網站',
 	'guides.serverRendering': '伺服器算繪',

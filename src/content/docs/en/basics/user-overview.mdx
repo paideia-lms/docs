@@ -1,0 +1,52 @@
+---
+title: User Overview
+description: An introduction to user roles and permissions in Paideia LMS.
+i18nReady: true
+---
+
+Paideia LMS has a comprehensive user management system with **two distinct role systems**: system-wide roles and course-specific enrollment roles. This dual role system allows for flexible permissions across the platform.
+
+## System-Wide Roles
+
+There are six system-wide user roles defined in the `users` collection:
+
+1. **`admin`** - Full platform access, can manage all users and system settings
+2. **`content-manager`** - Can create courses and manage content
+3. **`analytics-viewer`** - View-only access to reports and analytics
+4. **`instructor`** - Can create courses and activity modules
+5. **`student`** - Default role for new users
+6. **`guest`** - *(coming soon)* Limited access for unauthenticated users
+
+These roles control platform-level permissions. For example:
+- Only `admin` and `content-manager` can create courses
+- `admin`, `instructor`, and `content-manager` can create activity modules
+- `admin` users have override permissions across all courses regardless of enrollment
+
+## Course Enrollment Roles
+
+Within courses, users have separate enrollment-specific roles:
+
+1. **`student`** - Enrolled learner in a course
+2. **`teacher`** - Course instructor with full course management
+3. **`ta`** - Teaching assistant with limited instructor permissions
+4. **`manager`** - Course manager role
+5. **`guest`** - *(coming soon)* Limited course access for unauthenticated users
+
+These enrollment roles determine what users can do within specific courses:
+- `teacher` and `manager` roles can see course settings and participants
+- All enrolled users can view course content
+- System-wide `admin` users have override permissions regardless of enrollment
+
+## User Entity
+
+The `User` entity is stored in the `users` collection with fields including:
+
+- **Basic profile**: `firstName`, `lastName`, `bio`, `email`
+- **System role**: `role` (one of the six system-wide roles)
+- **Authentication**: `password`, `sessions`
+- **Preferences**: `theme`, `avatar`
+
+## Flexible Permissions
+
+The dual role system allows flexible permissions: a user might be a system-wide `instructor` (able to create courses) while being enrolled as a `student` in specific courses. This design allows users to have different roles in different contexts, providing maximum flexibility for educational institutions.
+

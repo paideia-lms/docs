@@ -8,7 +8,7 @@ export default navDictionary({
 	'start.migrate': 'Paideiaへの移行',
 
 	guides: '概念と学習',
-	'guides.routing': 'ルーティングとナビゲーション',
+	'guides.userRoles': 'ユーザーとロール',
 	'guides.ui': 'UIの構築',
 	'guides.content': 'コンテンツの追加',
 	'guides.serverRendering': 'サーバーサイドレンダリング',

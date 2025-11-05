@@ -37,15 +37,9 @@ export const sidebar = [
 	// Guides tab
 	group('guides', {
 		items: [
-			group('guides.routing', {
+			group('guides.userRoles', {
 				items: [
-					'basics/astro-pages',
-					'guides/routing',
-					'guides/endpoints',
-					'guides/middleware',
-					'guides/internationalization',
-					'guides/prefetch',
-					'guides/view-transitions',
+					'basics/user-overview',
 				],
 			}),
 			group('guides.ui', {

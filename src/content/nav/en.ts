@@ -6,7 +6,7 @@ export default {
 	'start.migrate': 'Migrate to Paideia',
 
 	guides: 'Concepts and learnings',
-	'guides.routing': 'Routing and navigation',
+	'guides.userRoles': 'User and roles',
 	'guides.ui': 'Build your UI',
 	'guides.content': 'Add content to your site',
 	'guides.serverRendering': 'Server rendering',
