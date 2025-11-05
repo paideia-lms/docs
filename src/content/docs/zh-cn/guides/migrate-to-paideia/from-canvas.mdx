@@ -1,0 +1,107 @@
+---
+title: 从 Canvas 迁移
+description: 将现有的 Canvas 安装迁移到 Paideia LMS 的提示
+sidebar:
+  label: Canvas
+type: migration
+stub: true
+framework: Canvas
+i18nReady: true
+---
+
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+[Canvas](https://www.instructure.com/canvas) 是一个基于云的学习管理系统，使用 Ruby on Rails 构建。
+
+## Canvas 和 Paideia LMS 的主要相似之处
+
+Canvas 和 Paideia LMS 有一些相似之处，可以帮助你迁移课程和内容：
+
+- Canvas 和 Paideia LMS 都是功能完整的学习管理系统，具有课程管理、用户管理、作业、测验和成绩簿。
+
+- 两者都支持通过模块、页面和作业组织课程内容。
+
+- 两者都包括用户角色和权限（管理员、讲师、学生、助教等）。
+
+- 两者都支持各种活动类型，包括作业、测验、讨论、页面和文件。
+
+- 两者都有内置的 LTI 支持，用于第三方集成。
+
+## Canvas 和 Paideia LMS 的主要区别
+
+当你从 Canvas 迁移到 Paideia LMS 时，你会注意到一些重要的差异：
+
+- **部署:** Canvas 是由 Instructure 管理的基于云的 SaaS 平台，而 Paideia LMS 部署为单个二进制文件，你可以自主托管。这让你完全控制你的数据和基础设施。
+
+- **技术栈:** Canvas 使用 Ruby on Rails 构建并在云基础设施上运行，而 Paideia LMS 使用现代技术（Bun、React Router v7、Elysia、TypeScript）以获得更好的性能和可维护性。
+
+- **成本:** Canvas 需要付费订阅，而 Paideia LMS 是免费和开源的（AGPL-3.0），允许你自主托管而无需许可费用。
+
+- **自定义:** Canvas 的自定义选项有限且品牌限制较多，而 Paideia LMS 的现代代码库使其易于自定义和扩展。
+
+- **数据所有权:** 使用 Canvas 时，你的数据存储在 Instructure 的服务器上。使用 Paideia LMS 时，你可以完全控制你的数据，并可以在自己的基础设施上托管。
+
+- **数据库:** Canvas 使用其专有的数据库基础设施，而 Paideia LMS 专门使用 PostgreSQL，这提供了更好的性能和可扩展性。
+
+## 从 Canvas 迁移到 Paideia LMS
+
+要将你的 Canvas 安装迁移到 Paideia LMS，请按照以下步骤操作：
+
+1. **导出你的 Canvas 数据:**
+   - 使用 Canvas API 或导出工具导出课程内容（课程、模块、页面、作业）
+   - 通过 Canvas API 导出用户账户和注册数据
+   - 导出成绩簿数据和评估结果
+   - 导出讨论论坛和提交
+   - 下载课程文件和媒体资源
+
+2. **安装 Paideia LMS:**
+   - 下载适用于你平台的 Paideia LMS 二进制文件
+   - 设置 PostgreSQL 数据库
+   - 配置 S3 兼容存储
+   - 启动 Paideia LMS 服务器
+
+3. **导入你的数据:**
+   - 使用 Paideia LMS 导入工具迁移课程
+   - 导入用户账户并设置注册
+   - 传输成绩簿数据
+   - 迁移讨论论坛和活动提交
+   - 上传课程文件和媒体资源
+
+4. **配置你的 LMS:**
+   - 设置用户角色和权限
+   - 配置课程类别和组织
+   - 自定义外观和品牌
+   - 根据需要设置 LTI 集成
+
+## 迁移注意事项
+
+从 Canvas 迁移到 Paideia LMS 时，请记住：
+
+- **Canvas 应用:** Canvas 特定的应用和插件在 Paideia LMS 中不起作用。检查你需要的功能是否在 Paideia LMS 中作为内置功能提供。如果需要自定义功能，Paideia LMS 的现代代码库更容易扩展。
+
+- **主题:** Canvas 主题与 Paideia LMS 不兼容。Paideia LMS 使用 React 与 Mantine 组件，开箱即用地提供现代、可自定义的 UI，并具有完整的品牌控制。
+
+- **SpeedGrader:** Canvas 的 SpeedGrader 功能在 Paideia LMS 的评分界面中有对应的功能。查看 Paideia LMS 文档以了解评分工作流程。
+
+- **LTI 集成:** 两个平台都支持 LTI，因此你可能能够重用一些 LTI 集成。检查兼容性并根据需要进行调整。
+
+- **Canvas Commons:** 通过 Canvas Commons 共享的内容需要单独导出和导入。考虑使用标准导出格式以获得更好的兼容性。
+
+- **API 访问:** Canvas 使用 REST API 进行数据访问。Paideia LMS 也提供 API，但结构可能不同。查看 Paideia LMS API 文档以了解迁移脚本。
+
+- **成绩簿:** Canvas 的成绩簿功能在 Paideia LMS 中都有对应的功能。查看 Paideia LMS 成绩簿文档以了解功能对等性。
+
+## 社区资源
+
+<CardGrid>
+
+  <LinkCard title="从 Canvas 迁移到现代 LMS 平台" href="#"/>
+
+  <LinkCard title="LMS 迁移最佳实践" href="#"/>
+
+</CardGrid>
+
+:::note[有想要分享的资源吗？]
+如果你找到（或制作）了一个关于将 Canvas 安装转换为 Paideia LMS 的有用的视频或博客文章，请将其 [添加到这个列表中](https://github.com/withastro/docs/edit/main/src/content/docs/zh-cn/guides/migrate-to-paideia/from-canvas.mdx)！
+:::
+

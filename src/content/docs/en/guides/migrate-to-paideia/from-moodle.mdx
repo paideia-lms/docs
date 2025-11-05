@@ -1,0 +1,93 @@
+---
+title: Migrating from Moodle
+description: Tips for migrating an existing Moodle installation to Paideia LMS
+sidebar:
+  label: Moodle
+type: migration
+stub: true
+framework: Moodle
+i18nReady: true
+---
+
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+[Moodle](https://moodle.org) is an open-source learning management system built with PHP.
+
+## Key Similarities between Moodle and Paideia LMS
+
+Moodle and Paideia LMS share some similarities that will help you migrate your courses and content:
+
+- Both Moodle and Paideia LMS are feature-complete learning management systems with course management, user management, assignments, quizzes, and gradebooks.
+
+- Both support course content organization with sections, categories, and modules.
+
+- Both include user roles and permissions (admin, instructor, student, etc.).
+
+- Both support various activity types including assignments, quizzes, discussions, and pages.
+
+## Key Differences between Moodle and Paideia LMS
+
+When you migrate from Moodle to Paideia LMS, you will notice several important differences:
+
+- **Deployment:** Moodle requires PHP, a web server, and a database, while Paideia LMS deploys as a single binary. This makes installation and updates much simpler.
+
+- **Technology Stack:** Moodle is built with PHP and older technologies, while Paideia LMS uses modern technologies (Bun, React Router v7, Elysia, TypeScript) for better performance and maintainability.
+
+- **Plugin Architecture:** Moodle relies heavily on plugins for functionality, which can lead to compatibility issues and management overhead. Paideia LMS includes all essential features built-in, eliminating the need for plugins.
+
+- **User Interface:** Moodle uses its own templating system, while Paideia LMS uses React with Mantine components for a modern, consistent UI.
+
+- **Database:** Moodle uses MySQL/MariaDB/PostgreSQL, while Paideia LMS uses PostgreSQL exclusively, which provides better performance and scalability.
+
+## Migrate from Moodle to Paideia LMS
+
+To migrate your Moodle installation to Paideia LMS, follow these steps:
+
+1. **Export your Moodle data:**
+   - Export course content (courses, sections, activities)
+   - Export user accounts and enrollment data
+   - Export gradebook data and assessment results
+   - Export discussion forums and submissions
+
+2. **Install Paideia LMS:**
+   - Download the Paideia LMS binary for your platform
+   - Set up PostgreSQL database
+   - Configure S3-compatible storage
+   - Start the Paideia LMS server
+
+3. **Import your data:**
+   - Use Paideia LMS import tools to migrate courses
+   - Import user accounts and set up enrollments
+   - Transfer gradebook data
+   - Migrate discussion forums and activity submissions
+
+4. **Configure your LMS:**
+   - Set up user roles and permissions
+   - Configure course categories
+   - Customize the appearance and branding
+
+## Migration Considerations
+
+When migrating from Moodle to Paideia LMS, keep in mind:
+
+- **Plugins:** Moodle plugins will not work in Paideia LMS. Check if the functionality you need is available as a built-in feature in Paideia LMS. If custom functionality is needed, Paideia LMS's modern codebase is easier to extend.
+
+- **Themes:** Moodle themes are not compatible with Paideia LMS. Paideia LMS uses React with Mantine components, which provides a modern, customizable UI out of the box.
+
+- **Custom Blocks:** Moodle blocks are not supported in Paideia LMS. Similar functionality can be achieved through Paideia LMS's built-in features or custom development.
+
+- **Activity Modules:** Most standard Moodle activity modules (assignments, quizzes, forums, etc.) have equivalents in Paideia LMS. Check the Paideia LMS documentation for feature parity.
+
+## Community Resources
+
+<CardGrid>
+
+  <LinkCard title="Migrating from Moodle to Modern LMS Platforms" href="#"/>
+
+  <LinkCard title="LMS Migration Best Practices" href="#"/>
+
+</CardGrid>
+
+:::note[Have a resource to share?]
+If you found (or made!) a helpful video or blog post about converting a Moodle installation to Paideia LMS, [add it to this list](https://github.com/withastro/docs/edit/main/src/content/docs/en/guides/migrate-to-paideia/from-moodle.mdx)!
+:::

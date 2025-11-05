@@ -1,0 +1,105 @@
+---
+title: 使用环境变量
+sidebar:
+  label: 环境变量
+description: 了解如何使用环境变量配置 Paideia LMS。
+i18nReady: true
+---
+
+Paideia LMS 使用环境变量来配置数据库连接、文件存储、API 设置和其他系统参数。你可以在托管环境中设置环境变量，或在运行 Paideia CLI 的目录中使用 `.env` 文件。
+
+## 设置环境变量
+
+### 在托管环境中
+
+将 Paideia LMS 部署到托管平台时，通常通过托管提供商的控制面板或配置界面设置环境变量。这是生产部署的推荐方法。
+
+常见的托管平台包括：
+- **云 VPS**（Hetzner、DigitalOcean、AWS EC2 等）：在 systemd 服务文件、`.bashrc` 或系统环境中设置环境变量
+- **Docker**：在 `docker-compose.yml` 文件中或通过 Docker 的环境变量系统设置环境变量
+- **Kubernetes**：使用 ConfigMaps 和 Secrets 管理环境变量
+- **平台即服务**（Heroku、Railway、Render 等）：通过其 Web 界面或 CLI 工具设置环境变量
+
+### 使用 `.env` 文件
+
+对于本地开发或直接运行 Paideia 二进制文件时，你可以在运行 Paideia CLI 的目录中创建 `.env` 文件。
+
+只需在项目目录中创建 `.env` 文件并添加环境变量：
+
+```ini title=".env"
+# 数据库
+DATABASE_URL=postgresql://user:password@localhost:5432/paideia_db
+
+# S3/MinIO
+S3_URL=http://localhost:9000
+S3_ACCESS_KEY=your-access-key
+S3_SECRET_KEY=your-secret-key
+S3_BUCKET=paideia-bucket
+S3_REGION=us-east-1
+
+# Payload
+PAYLOAD_SECRET=your-secure-random-string
+
+# 端口
+PORT=3001
+FRONTEND_PORT=3000
+
+# CORS
+CORS_ORIGINS=*
+
+# 邮件
+EMAIL_FROM_ADDRESS=info@paideialms.com
+EMAIL_FROM_NAME=Paideia LMS
+```
+
+运行 Paideia 二进制文件时，它会自动从当前目录的 `.env` 文件加载环境变量。
+
+:::tip[安全最佳实践]
+永远不要将 `.env` 文件提交到版本控制。将 `.env` 添加到 `.gitignore` 文件中以保护敏感凭据。
+:::
+
+### 使用命令行
+
+你也可以在运行 Paideia 二进制文件时直接设置环境变量：
+
+```bash
+DATABASE_URL="postgresql://user:password@localhost:5432/paideia_db" \
+S3_URL="http://localhost:9000" \
+S3_ACCESS_KEY="your-access-key" \
+S3_SECRET_KEY="your-secret-key" \
+S3_BUCKET="paideia-bucket" \
+./paideia
+```
+
+## 环境变量参考
+
+有关所有可用环境变量的完整列表，包括说明、默认值以及是否必需，请参阅[安装和设置指南](/zh-cn/install-and-setup/#环境变量)。
+
+环境变量包括：
+
+- **数据库**：用于 PostgreSQL 连接的 `DATABASE_URL`
+- **存储**：用于 S3 兼容存储的 `S3_URL`、`S3_ACCESS_KEY`、`S3_SECRET_KEY`、`S3_BUCKET`、`S3_REGION`
+- **安全**：用于加密的 `PAYLOAD_SECRET`，用于 CORS 配置的 `CORS_ORIGINS`
+- **端口**：后端 API 的 `PORT`，前端的 `FRONTEND_PORT`
+- **邮件**：`EMAIL_FROM_ADDRESS`、`EMAIL_FROM_NAME`、`SMTP_HOST`、`SMTP_USER`、`SMTP_PASS`、`RESEND_API_KEY`
+- **其他**：用于沙盒功能的 `SANDBOX_MODE`
+
+## 优先级顺序
+
+当 Paideia LMS 查找环境变量时，它使用以下优先级顺序（从高到低）：
+
+1. **`.env` 文件**：在当前目录的 `.env` 文件中定义的变量
+2. **系统环境变量**：在系统环境中设置的变量
+3. **默认值**：内置默认值（如果可用）
+
+这意味着如果你在系统环境和 `.env` 文件中都设置了环境变量，`.env` 文件中的值将优先。
+
+## 安全建议
+
+1. **永远不要提交密钥**：始终将 `.env` 添加到 `.gitignore` 文件中
+2. **使用强密钥**：为 `PAYLOAD_SECRET` 生成加密安全的随机字符串
+3. **限制 CORS**：在生产环境中将 `CORS_ORIGINS: "*"` 替换为你的实际域名
+4. **使用安全连接**：在生产环境中为 `S3_URL` 和 `DATABASE_URL` 使用 HTTPS URL
+5. **定期轮换密钥**：定期更改密码和 API 密钥
+
+有关更多安全最佳实践，请参阅[安装和设置指南](/zh-cn/install-and-setup/#安全建议)。

@@ -1,0 +1,159 @@
+---
+title: Upgrading Paideia LMS
+description: Learn how to upgrade your Paideia LMS installation
+i18nReady: true
+---
+
+import PackageManagerTabs from '~/components/tabs/PackageManagerTabs.astro';
+import Version from '~/components/Version.astro';
+
+This guide covers how to update your version of Paideia LMS, how to learn what has changed from one version to the next, and how to understand Paideia's versioning system and corresponding documentation updates.
+
+## What has changed?
+
+The latest release of Paideia LMS is <Version pkgName="paideia" />.
+
+You can find an exhaustive list of all changes in [Paideia's changelog](https://github.com/paideia-lms/Paideia/blob/main/CHANGELOG.md) on GitHub and in the documentation. Important instructions for upgrading to each new [major version](#major-changes) are documented in the release notes.
+
+## Upgrading Paideia LMS
+
+Since Paideia LMS is distributed as a single binary, upgrading is straightforward: simply download the new binary version and replace the old one.
+
+### Download the latest version
+
+1. **Download the binary** for your platform (macOS ARM64, Linux ARM64, or Linux x64) from the [Paideia releases page](https://github.com/paideia-lms/Paideia/releases)
+2. **Stop your current Paideia instance** (if running as a service)
+3. **Replace the binary** with the new version
+4. **Restart Paideia LMS**
+
+### Database migrations
+
+When you start Paideia LMS with a new version, **database migrations are automatically applied** during startup. These migrations are designed to be:
+
+- **Backward compatible**: Migrations are structured to maintain compatibility with existing data
+- **Non-breaking**: Database schema changes are applied in a way that preserves existing data
+- **Safe**: The migration system ensures data integrity throughout the upgrade process
+
+If you encounter any issues during migration, the process will be rolled back automatically, and your database will remain in its previous state.
+
+### Before upgrading
+
+We strongly recommend taking the following precautions before upgrading:
+
+1. **Daily backups**: Ensure you have a recent backup of your PostgreSQL database
+2. **Database dump**: Use Paideia's built-in database dump feature to create a backup before upgrading
+3. **Review release notes**: Check the release notes for any breaking changes or special upgrade instructions
+
+```bash
+# Example: Create a database dump before upgrading
+# Using Paideia's built-in dump feature
+./paideia dump --output backup-$(date +%Y%m%d).sql
+
+# Or using PostgreSQL's pg_dump directly
+pg_dump -h localhost -U postgres paideia_db > backup-$(date +%Y%m%d).sql
+```
+
+### Zero-downtime upgrades (rolling upgrade)
+
+If you need to avoid downtime completely, you can perform a **rolling upgrade**:
+
+1. **Deploy new binary** to a new instance while keeping the old instance running
+2. **Point the new instance** to the same PostgreSQL database and S3 storage
+3. **Update load balancer** to route traffic to the new instance
+4. **Verify** the new instance is working correctly
+5. **Decommission** the old instance once confirmed
+
+Since Paideia LMS is stateless (all data is stored in PostgreSQL and S3), multiple instances can run simultaneously against the same database during the upgrade process.
+
+## Semantic versioning
+
+Paideia LMS follows [semantic versioning](https://semver.org/), which uses a predictable pattern to inform users of the kind of changes they can expect from one version to the next.
+
+Semantic versioning follows a pattern of `X.Y.Z` for software version numbers. These values represent **major (X)**, **minor (Y)**, and **patch (Z)** updates.
+
+### Patch changes
+
+Patch changes are the least disruptive changes. They do not change the way you use Paideia LMS, and no change to your configuration or data is required when you update.
+
+When Paideia issues a "patch" version, the last number increases. (e.g. `paideia@1.2.3` -> `paideia@1.2.4`)
+
+Patches may be released for reasons such as:
+
+- Bug fixes that don't affect functionality
+- Internal improvements that don't change behavior
+- Performance optimizations
+- Security patches
+- Improvements to logging and error messages
+
+Patch changes also include **most bug fixes**, even in cases where users were taking advantage of existing unintended behavior.
+
+### Minor changes
+
+Minor releases primarily introduce new features and improvements that you may wish to use, but require no changes to your configuration or data. Some existing features may also be **deprecated** (marked for removal in a future version while continuing to function) in a minor release, giving you the opportunity to prepare for their eventual removal.
+
+Minor releases include changes such as:
+
+- **Deprecations** of existing features/options with a warning that they will be removed in an upcoming major release
+- Introduction of new functionalities
+- Introduction of new configuration options
+- Performance improvements
+- New integrations or features
+
+A minor release may also include smaller, patch changes at the same time.
+
+### Major changes
+
+Major releases will include breaking changes to at least some existing code or configuration. These breaking changes are always documented in the release notes.
+
+Major releases allow Paideia to make significant changes not only to internal logic, but also to intended behavior and usage. Documentation will be updated to reflect the latest version only.
+
+Major releases include changes such as:
+
+- Removal of previously deprecated functionalities
+- Changes to existing functionalities
+- Changes to configuration options that require updates
+- Significant architectural changes
+- Database schema changes that may require manual intervention (rare)
+
+A major release may also include some non-breaking changes and improvements that would normally be released separately in a minor or patch release.
+
+**Breaking changes and data loss**: If a major release includes breaking changes or data loss migrations, these will be clearly specified in the release notes. Such changes are unlikely, but when they occur, they will be thoroughly documented with migration instructions.
+
+### Exceptions
+
+- **Improvements to the documentation**: Documentation updates are built from source and can be updated independently of the binary releases.
+
+## Release notes
+
+Every release includes detailed release notes that document:
+
+- New features and capabilities
+- Bug fixes
+- Performance improvements
+- Breaking changes (if any)
+- Migration instructions (if required)
+- Deprecations and future changes
+
+Always review the release notes before upgrading to understand what has changed and whether any action is required on your part.
+
+## Backup recommendations
+
+To ensure a safe upgrade process, we recommend:
+
+1. **Daily automated backups**: Set up automated daily backups of your PostgreSQL database
+2. **Pre-upgrade backup**: Always create a database dump before upgrading to a new major version
+3. **Test backups**: Periodically verify that your backups can be restored successfully
+4. **Backup storage**: Store backups in a separate location from your production database
+
+For more information on backups, see the [Installation and Setup guide](/en/install-and-setup/#backup-and-restore).
+
+## Troubleshooting upgrades
+
+If you encounter issues during or after an upgrade:
+
+1. **Check the release notes** for any known issues or special instructions
+2. **Review the logs** for error messages that might indicate the problem
+3. **Restore from backup** if necessary and contact support
+4. **Check GitHub issues** to see if others have encountered similar problems
+
+Most upgrade issues can be resolved by ensuring you have a recent backup and following the release notes carefully.

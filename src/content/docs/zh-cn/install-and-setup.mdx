@@ -1,0 +1,290 @@
+---
+title: 安装 Paideia LMS
+sidebar:
+  label: 安装
+description: '如何安装和设置 Paideia LMS。'
+i18nReady: true
+---
+import { Tabs, TabItem, Steps } from '@astrojs/starlight/components';
+
+Paideia LMS 提供两种安装方法：**单文件二进制**（推荐用于快速部署）和 **Docker Compose**（用于需要完全控制的生产环境）。选择最适合你需求的方法。
+
+:::tip[安装前试用]
+想在浏览器中试用 Paideia LMS 吗？访问 [demo.paideialms.com](https://demo.paideialms.com) 无需安装即可探索所有功能。
+
+演示版托管在 Hetzner CPX21 实例上（3 个 vCPU、4GB RAM、80GB 本地磁盘），配备每日备份，每月成本不到 $10，展示了 Paideia LMS 高效的资源使用。
+:::
+
+## 前提条件
+
+### 单文件二进制安装
+- **操作系统**：macOS（ARM64 或 x64）或 Linux（ARM64 或 x64）
+- **终端**：访问命令行界面
+
+### Docker Compose 安装
+- **Docker**：Docker Engine 20.10 或更高版本
+- **Docker Compose**：Docker Compose v2.0 或更高版本
+- **端口**：端口 3000、3001、5432、9000、9001 和 4983 应该可用
+
+## 单文件二进制安装
+
+单文件二进制安装是启动 Paideia LMS 最快的方法。受 PocketBase 启发，Paideia LMS 作为单个可执行文件分发，包含你所需的一切。
+
+<Steps>
+1. 下载适用于你平台的二进制文件：
+
+   <Tabs>
+     <TabItem label="macOS ARM64">
+       ```bash
+       curl -L -o paideia https://github.com/paideia-lms/paideia/releases/latest/download/paideia-macos-arm64
+       chmod +x paideia
+       xattr -c paideia
+       ```
+     </TabItem>
+     <TabItem label="Linux ARM64">
+       ```bash
+       curl -L -o paideia https://github.com/paideia-lms/paideia/releases/latest/download/paideia-linux-arm64
+       chmod +x paideia
+       ```
+     </TabItem>
+     <TabItem label="Linux x64">
+       ```bash
+       curl -L -o paideia https://github.com/paideia-lms/paideia/releases/latest/download/paideia-linux-x64
+       chmod +x paideia
+       ```
+     </TabItem>
+   </Tabs>
+
+2. 运行 Paideia LMS：
+
+   ```bash
+   ./paideia
+   ```
+
+3. 配置你的环境：
+
+   二进制文件将引导你完成初始设置。你需要提供：
+   - 数据库连接（PostgreSQL）
+   - 用于文件存储的 S3/MinIO 配置
+   - 管理员用户凭据
+
+   或在运行前设置环境变量：
+
+   ```bash
+   export DATABASE_URL="postgresql://user:password@localhost:5432/paideia_db"
+   export S3_URL="http://localhost:9000"
+   export S3_ACCESS_KEY="your-access-key"
+   export S3_SECRET_KEY="your-secret-key"
+   export S3_BUCKET="paideia-bucket"
+   ./paideia
+   ```
+
+4. 访问 Paideia LMS：
+
+   打开浏览器并导航到 `http://localhost:3000`（或通过 `FRONTEND_PORT` 环境变量配置的端口）。
+</Steps>
+
+## Docker Compose 安装
+
+对于生产部署或需要完全控制基础设施的情况，使用 Docker Compose。此设置包括 Paideia LMS、PostgreSQL 数据库、MinIO（S3 兼容存储）和 Drizzle Gateway。
+
+<Steps>
+1. 创建 `docker-compose.yml` 文件：
+
+   在项目目录中创建一个名为 `docker-compose.yml` 的新文件：
+
+   ```yaml
+   version: '3.8'
+
+   services:
+     paideia:
+       image: hananoshikayomaru/paideia:latest
+       container_name: paideia
+       restart: no
+       ports:
+         - "3000:3000"
+         - "3001:3001"
+       environment:
+         # Database
+         DATABASE_URL: postgresql://paideia:paideia_password@postgres:5432/paideia_db
+         # S3/MinIO
+         S3_URL: http://minio:9000
+         S3_ACCESS_KEY: paideia_minio
+         S3_SECRET_KEY: paideia_minio_secret
+         S3_ENDPOINT_URL: http://minio:9000
+         S3_BUCKET: paideia-bucket
+         S3_REGION: us-east-1
+         # Payload
+         PAYLOAD_SECRET: change-this-to-a-secure-random-string
+         # Ports (optional, defaults shown)
+         PORT: 3001
+         FRONTEND_PORT: 3000
+         # Email (optional - uncomment if using SMTP)
+         # SMTP_HOST: smtp.example.com
+         # SMTP_USER: your-email@example.com
+         # SMTP_PASS: your-password
+         # RESEND_API_KEY: your-resend-api-key
+         # Email sender (optional, defaults shown)
+         EMAIL_FROM_ADDRESS: info@paideialms.com
+         EMAIL_FROM_NAME: Paideia LMS
+         CORS_ORIGINS: "*"
+         # CSRF_ORIGINS: "https://paideia-13.localcan.dev"
+         # Sandbox mode (optional, default: 0)
+         # SANDBOX_MODE: 0
+       networks:
+         paideia_net:
+           ipv4_address: 172.28.0.2
+       depends_on:
+         - postgres
+         - minio
+
+     postgres:
+       image: postgres:18
+       container_name: paideia_postgres
+       restart: unless-stopped
+       environment:
+         POSTGRES_USER: paideia
+         POSTGRES_PASSWORD: paideia_password
+         POSTGRES_DB: paideia_db
+       ports:
+         - "5432:5432"
+       volumes:
+         - postgres_data:/var/lib/postgresql
+       healthcheck:
+         test: ["CMD-SHELL", "pg_isready -U paideia"]
+         interval: 5s
+         timeout: 5s
+         retries: 10
+       networks:
+         paideia_net:
+           ipv4_address: 172.28.0.3
+
+     minio:
+       image: minio/minio:latest
+       container_name: paideia_minio
+       restart: unless-stopped
+       ports:
+         - "9000:9000"
+         - "9001:9001"
+       environment:
+         MINIO_ROOT_USER: paideia_minio
+         MINIO_ROOT_PASSWORD: paideia_minio_secret
+       volumes:
+         - minio_data:/data
+       command: server /data --console-address ":9001"
+       networks:
+         paideia_net:
+           ipv4_address: 172.28.0.4
+
+     drizzle-gateway:
+       image: ghcr.io/drizzle-team/gateway:latest
+       container_name: drizzle-gateway
+       restart: unless-stopped
+       ports:
+         - "4983:4983"
+       environment:
+         PORT: 4983
+         STORE_PATH: ./app
+         DATABASE_URL: postgresql://paideia:paideia_password@postgres:5432/paideia_db
+       volumes:
+         - drizzle-gateway:/app
+       networks:
+         paideia_net:
+           ipv4_address: 172.28.0.5
+       depends_on:
+         - postgres
+
+   volumes:
+     minio_data:
+     postgres_data:
+     drizzle-gateway:
+
+   networks:
+     paideia_net:
+       driver: bridge
+       ipam:
+         config:
+           - subnet: 172.28.0.0/16
+   ```
+
+2. 配置环境变量：
+
+   **重要**：启动前，在 `docker-compose.yml` 中更新以下内容：
+   - `PAYLOAD_SECRET`：为生产环境生成安全的随机字符串
+   - `POSTGRES_PASSWORD`：更改默认密码
+   - `MINIO_ROOT_PASSWORD`：更改默认密码
+   - `S3_ACCESS_KEY` 和 `S3_SECRET_KEY`：更新以供生产使用
+   - 电子邮件配置：如果使用 SMTP，请取消注释并配置
+
+3. 启动所有服务：
+
+   ```bash
+   docker-compose up -d
+   ```
+
+4. 验证服务正在运行：
+
+   ```bash
+   docker-compose ps
+   ```
+
+   你应该看到所有四个服务（paideia、postgres、minio、drizzle-gateway）都处于 "Up" 状态。
+
+5. 访问 Paideia LMS：
+
+   - **前端**：[`http://localhost:3000`](http://localhost:3000)
+   - **API**：[`http://localhost:3001`](http://localhost:3001)
+   - **MinIO 控制台**：[`http://localhost:9001`](http://localhost:9001)（使用 `paideia_minio` / `paideia_minio_secret` 登录）
+   - **Drizzle Gateway**：[`http://localhost:4983`](http://localhost:4983)
+   - **PostgreSQL**：`localhost:5432`
+
+6. 创建管理员用户：
+
+   首次访问时，系统会提示你创建管理员账户。按照屏幕上的说明操作。
+</Steps>
+
+## 配置
+
+### 环境变量
+
+两种安装方法都支持以下环境变量：
+
+| 变量 | 说明 | 默认值 | 必需 |
+|------|------|--------|------|
+| `DATABASE_URL` | PostgreSQL 连接字符串 | - | 是 |
+| `S3_URL` | S3/MinIO 端点 URL | - | 是 |
+| `S3_ACCESS_KEY` | S3 访问密钥 | - | 是 |
+| `S3_SECRET_KEY` | S3 密钥 | - | 是 |
+| `S3_BUCKET` | S3 存储桶名称 | - | 是 |
+| `S3_REGION` | S3 区域 | `us-east-1` | 否 |
+| `PORT` | 后端 API 端口 | `3001` | 否 |
+| `FRONTEND_PORT` | 前端端口 | `3000` | 否 |
+| `PAYLOAD_SECRET` | 用于有效负载加密的密钥 | - | 是 |
+| `CORS_ORIGINS` | 允许的 CORS 来源 | `*` | 否 |
+| `EMAIL_FROM_ADDRESS` | 电子邮件发件人地址 | `info@paideialms.com` | 否 |
+| `EMAIL_FROM_NAME` | 电子邮件发件人名称 | `Paideia LMS` | 否 |
+| `SMTP_HOST` | SMTP 服务器主机 | - | 否 |
+| `SMTP_USER` | SMTP 用户名 | - | 否 |
+| `SMTP_PASS` | SMTP 密码 | - | 否 |
+| `RESEND_API_KEY` | Resend API 密钥 | - | 否 |
+| `SANDBOX_MODE` | 启用沙盒模式 | `0` | 否 |
+
+### 安全建议
+
+1. **更改默认密码**：在生产环境中始终更新默认密码
+2. **生成安全密钥**：为 `PAYLOAD_SECRET` 使用加密安全的随机字符串
+3. **正确配置 CORS**：将 `CORS_ORIGINS: "*"` 替换为你的实际域名
+4. **使用 HTTPS**：在生产环境中配置反向代理（nginx、Traefik 等）以使用 HTTPS
+5. **数据库安全**：使用强 PostgreSQL 密码并考虑网络限制
+
+## 后续步骤
+
+安装并运行 Paideia LMS 后：
+
+1. **配置你的第一个课程**：创建课程、添加内容和管理学生
+2. **设置用户管理**：配置角色、权限和访问控制
+3. **与 Microsoft 集成**：设置 Microsoft Teams、OneDrive 和 Office 365 集成
+4. **启用 LTI**：配置学习工具互操作性以进行外部工具集成
+5. **探索 AI 功能**：设置和配置 AI 原生功能
+
+有关详细的设置说明，请参阅我们的[配置指南](/zh-cn/guides/configuration/)。

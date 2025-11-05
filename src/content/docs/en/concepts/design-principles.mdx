@@ -1,0 +1,111 @@
+---
+title: Design Principles
+description: Learn about Paideia LMS's core design principles and how they guide development.
+i18nReady: true
+---
+
+import ReadMore from '~/components/ReadMore.astro';
+
+**Paideia LMS** is built on six core design principles that guide our development and ensure the platform delivers on its promises. These principles explain why we built Paideia, the problems it solves, and why Paideia may be the best choice for your institution.
+
+## Modern Tech Stack
+
+**Paideia is built with cutting-edge technologies and best practices from day one.** This means no legacy code, no technical debt, and no need to support outdated patterns. We chose technologies that are performant, maintainable, and have a bright future.
+
+By contrast, traditional LMS platforms like Moodle and Canvas were built years ago with older technologies. They've accumulated technical debt over years of development, making them harder to maintain, slower to update, and more complex to deploy. These platforms often struggle with performance issues, security vulnerabilities, and require significant resources to maintain.
+
+Paideia's modern tech stack — Bun runtime, React Router v7, Elysia, and TypeScript — allows us to **deliver a performant, maintainable platform** that can evolve with the latest web standards. Our focus on modern technologies means you get a platform that's built for today's needs and tomorrow's opportunities.
+
+## Robust Design Decisions
+
+**Paideia is built on a firm foundation with React at its core.** We chose React because it's battle-tested, widely adopted, and has a massive ecosystem. Combined with Mantine components, we deliver a consistent, modern UI that's both powerful and accessible.
+
+Our architecture decisions are production-grade from the start. We use:
+- Type-safe TypeScript throughout with comprehensive type generation
+- Result-based error handling instead of try-catch blocks
+- Transaction-based database operations for data integrity
+- Non-breaking, backward-compatible migrations
+- Strict coding standards with zero type casting in internal functions
+
+This robust foundation means Paideia is reliable, maintainable, and ready for production use from day one. You don't need to wait for us to "harden" the platform — it's built with enterprise-grade practices from the beginning.
+
+## Feature Complete
+
+**Paideia delivers comprehensive LMS functionality out of the box.** In just 30 days of development, we've built a complete Learning Management System with 27 database collections covering all essential LMS features.
+
+Paideia includes:
+- Course management with sections and categories
+- User management with role-based access control (admin, content-manager, analytics-viewer, instructor, student)
+- Activity modules: pages, whiteboards, assignments, quizzes, and discussions
+- Advanced quiz builder with drag-and-drop interface
+- Gradebook system with categories and items
+- Enrollment management with groups
+- Media storage with S3 integration
+- Search functionality
+- LTI (Learning Tools Interoperability) support for seamless integration with external tools
+- AI-native features built into the platform
+- Built-in Microsoft integration (Teams, OneDrive, Office 365)
+
+Unlike other platforms that require plugins or extensive configuration, Paideia comes feature-complete. You don't need to hunt for plugins, worry about compatibility, or manage complex dependencies.
+
+## Easy Deployment
+
+**Paideia deploys as a single binary — download and run.** This design is inspired by one of the most popular open source projects, [PocketBase](https://pocketbase.io/), which has revolutionized how backend applications are deployed. No complex setup, no multiple services to configure, no dependency management. Just download the binary for your platform (macOS ARM64, Linux ARM64, or Linux x64), make it executable, and run it.
+
+This stands in contrast to traditional LMS platforms that require:
+- Multiple services (web server, database, application server)
+- Complex configuration files
+- Dependency management
+- Version compatibility concerns
+- Ongoing maintenance and updates
+
+With Paideia, deployment is a matter of minutes, not hours or days. Start your PostgreSQL database and S3-compatible storage, configure your environment variables, and you're ready to go. The single binary approach means consistent behavior across environments and easy updates — just replace the binary.
+
+## Scalable by Design
+
+**Paideia uses PostgreSQL and S3 as its foundation — minimal footprint but insanely scalable.** PostgreSQL is one of the most reliable and scalable databases available, trusted by companies of all sizes. S3-compatible storage provides unlimited storage capacity with industry-standard reliability.
+
+This approach means:
+- **Small footprint:** Paideia itself is lightweight, and the infrastructure (PostgreSQL + S3) is what you'd use for any production system
+- **Massive scalability:** PostgreSQL handles millions of records, and S3 scales to exabytes
+- **Proven reliability:** Both technologies are battle-tested in production environments worldwide
+- **Cost-effective:** You only pay for what you use, and you can optimize costs as you scale
+
+Whether you're serving 100 students or 100,000, Paideia's architecture scales with you. The database and storage layers are designed to handle growth, and Paideia's efficient queries ensure consistent performance as your data grows.
+
+## No Plugin Hell
+
+**Paideia avoids the plugin architecture that plagues Moodle and Canvas.** Instead of a plugin system that leads to compatibility issues, management overhead, and security concerns, Paideia includes all essential features built-in.
+
+Traditional LMS platforms with plugin architectures face several problems:
+- **Plugin compatibility:** Updates can break plugins, requiring constant maintenance
+- **Security vulnerabilities:** Each plugin is a potential security risk
+- **Management overhead:** Keeping track of plugins, updates, and dependencies
+- **Performance issues:** Poorly written plugins can slow down the entire system
+- **Vendor lock-in:** Some plugins are commercial-only, adding costs
+
+Paideia's approach is different. We include all essential features built-in, so you don't need plugins for core functionality. This means:
+- No compatibility concerns
+- Better security (fewer moving parts)
+- Easier management
+- Consistent performance
+- No vendor lock-in
+
+If you need custom functionality, Paideia's modern codebase is easy to extend. But unlike Moodle and Canvas, you won't need plugins for basic features — they're all included.
+
+## Stateless Architecture
+
+**Paideia is completely stateless — all data is stored in PostgreSQL and S3.** This stateless design means Paideia doesn't store any data or state on the server itself. Everything — courses, users, assignments, grades, media files — is stored in PostgreSQL (for structured data) and S3 (for media and files).
+
+This architecture brings several benefits:
+
+- **Massive scalability:** Since no data sits on the server, you can scale Paideia to millions of users by simply adding more application instances. The database and storage layers handle the scale independently.
+
+- **Easy migration:** Migrating Paideia is incredibly simple because nothing is stored on the server. Just point your new Paideia instance to the same PostgreSQL database and S3 storage, and you're done. No data export/import, no complex migration scripts.
+
+- **High availability:** Stateless design means you can run multiple Paideia instances behind a load balancer. If one instance goes down, others continue serving requests seamlessly.
+
+- **Zero downtime deployments:** Update Paideia by simply replacing the binary and restarting the service. No data migration needed because the data lives independently in PostgreSQL and S3.
+
+<ReadMore>Learn more about [why Paideia was built](/en/concepts/why-paideia/) and how these principles benefit your institution.</ReadMore>
+

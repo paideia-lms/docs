@@ -1,0 +1,90 @@
+---
+title: Moodleからの移行
+description: 既存のMoodleインストールをPaideia LMSに移行するためのガイド
+sidebar:
+  label: Moodle
+type: migration
+stub: true
+framework: Moodle
+i18nReady: true
+---
+
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+[Moodle](https://moodle.org)はPHPで構築されたオープンソースの学習管理システムです。
+
+## MoodleとPaideia LMSの類似点
+
+MoodleとPaideia LMSには、コースとコンテンツの移行を容易にするいくつかの共通点があります：
+
+- MoodleもPaideia LMSも、コース管理、ユーザー管理、課題、クイズ、成績簿を備えた機能が完全な学習管理システムです。
+
+- どちらもセクション、カテゴリ、モジュールによるコースコンテンツの整理をサポートしています。
+
+- どちらもユーザーロールと権限（管理者、インストラクター、学生など）を含みます。
+
+- どちらも課題、クイズ、ディスカッション、ページなどの様々なアクティビティタイプをサポートしています。
+
+## MoodleとPaideia LMSの主な相違点
+
+MoodleからPaideia LMSに移行する際、いくつかの重要な違いに気づくでしょう：
+
+- **デプロイ:** MoodleはPHP、Webサーバー、データベースが必要ですが、Paideia LMSは単一バイナリとしてデプロイされます。これにより、インストールと更新がはるかに簡単になります。
+
+- **技術スタック:** MoodleはPHPと古い技術で構築されていますが、Paideia LMSはより良いパフォーマンスと保守性のために最新の技術（Bun、React Router v7、Elysia、TypeScript）を使用しています。
+
+- **プラグインアーキテクチャ:** Moodleは機能にプラグインに大きく依存しており、互換性の問題や管理のオーバーヘッドにつながる可能性があります。Paideia LMSにはすべての重要な機能が組み込まれており、プラグインの必要性がありません。
+
+- **ユーザーインターフェース:** Moodleは独自のテンプレートシステムを使用しますが、Paideia LMSはモダンで一貫性のあるUIのためにReactとMantineコンポーネントを使用します。
+
+- **データベース:** MoodleはMySQL/MariaDB/PostgreSQLを使用しますが、Paideia LMSはPostgreSQLのみを使用し、より良いパフォーマンスとスケーラビリティを提供します。
+
+## MoodleからPaideia LMSへの移行
+
+MoodleインストールをPaideia LMSに移行するには、次の手順に従ってください：
+
+1. **Moodleデータのエクスポート:**
+   - コースコンテンツ（コース、セクション、アクティビティ）をエクスポート
+   - ユーザーアカウントと登録データをエクスポート
+   - 成績簿データと評価結果をエクスポート
+   - ディスカッションフォーラムと提出物をエクスポート
+
+2. **Paideia LMSのインストール:**
+   - プラットフォーム用のPaideia LMSバイナリをダウンロード
+   - PostgreSQLデータベースをセットアップ
+   - S3互換ストレージを設定
+   - Paideia LMSサーバーを起動
+
+3. **データのインポート:**
+   - Paideia LMSのインポートツールを使用してコースを移行
+   - ユーザーアカウントをインポートし、登録を設定
+   - 成績簿データを転送
+   - ディスカッションフォーラムとアクティビティ提出物を移行
+
+4. **LMSの設定:**
+   - ユーザーロールと権限を設定
+   - コースカテゴリを設定
+   - 外観とブランディングをカスタマイズ
+
+## 移行時の考慮事項
+
+MoodleからPaideia LMSに移行する際、以下を考慮してください：
+
+- **プラグイン:** MoodleプラグインはPaideia LMSでは動作しません。必要な機能がPaideia LMSの組み込み機能として利用可能かどうかを確認してください。カスタム機能が必要な場合、Paideia LMSのモダンなコードベースは拡張が容易です。
+
+- **テーマ:** MoodleテーマはPaideia LMSと互換性がありません。Paideia LMSはReactとMantineコンポーネントを使用しており、すぐに使えるモダンでカスタマイズ可能なUIを提供します。
+
+- **カスタムブロック:** MoodleブロックはPaideia LMSではサポートされていません。同様の機能は、Paideia LMSの組み込み機能またはカスタム開発によって実現できます。
+
+- **アクティビティモジュール:** ほとんどの標準的なMoodleアクティビティモジュール（課題、クイズ、フォーラムなど）には、Paideia LMSに同等のものがあります。機能の同等性については、Paideia LMSのドキュメントを確認してください。
+
+## コミュニティリソース
+
+<CardGrid>
+  <LinkCard title="MoodleからモダンなLMSプラットフォームへの移行" href="#"/>
+  <LinkCard title="LMS移行のベストプラクティス" href="#"/>
+</CardGrid>
+
+:::note[共有したいリソースがありますか？]
+MoodleインストールをPaideia LMSに変換するのに役立つ動画やブログ記事を見つけた（または作成した）場合は、[こちらのリストに追加してください](https://github.com/withastro/docs/edit/main/src/content/docs/ja/guides/migrate-to-paideia/from-moodle.mdx)！
+:::

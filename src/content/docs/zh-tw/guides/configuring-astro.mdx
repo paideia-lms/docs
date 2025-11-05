@@ -1,0 +1,151 @@
+---
+title: 設定概覽
+description: 了解如何設定和自訂你的 Paideia LMS 安裝。
+i18nReady: true
+---
+import ReadMore from '~/components/ReadMore.astro'
+
+Paideia LMS 使用環境變數作為主要的設定方法。這種方法提供了靈活性和安全性，允許你在不修改程式碼檔案的情況下設定你的 LMS 實例。無論你是設定新的安裝還是自訂現有的安裝，了解 Paideia LMS 的設定方法將幫助你充分利用系統。
+
+本"設定"部分的指南將幫助你熟悉可用於 Paideia LMS 安裝的各種設定選項，從基本系統設定到進階整合。
+
+如果這是你的第一個 Paideia LMS 安裝，或者你已經有一段時間沒有設定新實例了，請使用以下指南和文件中的參考資料來獲取幫助。
+
+## 系統設定
+
+Paideia LMS 使用環境變數進行所有系統設定，而不是設定檔。這種方法提供了幾個好處：
+
+- **安全性**：敏感憑據與程式碼分開保存
+- **靈活性**：易於為不同環境設定不同設定
+- **簡單性**：無需編輯程式碼檔案即可變更設定
+
+所有設定都透過你在託管環境中或在 `.env` 檔案中設定的環境變數來完成。最重要的設定區域包括：
+
+- **資料庫**：PostgreSQL 連接設定
+- **儲存**：用於課程檔案和媒體的 S3 相容儲存
+- **郵件**：用於通知的 SMTP 或 Resend 設定
+- **安全**：CORS 設定、加密密鑰和安全策略
+- **連接埠**：後端 API 和前端連接埠設定
+
+<ReadMore>閱讀[環境變數指南](/zh-tw/guides/environment-variables/)以了解所有設定選項的完整概覽以及如何設定它們。</ReadMore>
+
+## 初始設定任務
+
+安裝 Paideia LMS 後，你需要在使用系統之前設定幾個基本組件。這些初始設定任務對於讓你的 LMS 正常運作至關重要。
+
+### 設定資料庫連接
+
+Paideia LMS 需要 PostgreSQL 資料庫。使用 `DATABASE_URL` 環境變數設定資料庫連接：
+
+```bash
+DATABASE_URL=postgresql://user:password@localhost:5432/paideia_db
+```
+
+對於生產部署，請確保你的資料庫使用強密碼和網路限制進行適當保護。
+
+### 設定檔案儲存
+
+Paideia LMS 使用 S3 相容儲存來儲存課程檔案、媒體資源和使用者上傳。使用以下環境變數設定儲存：
+
+```bash
+S3_URL=http://localhost:9000
+S3_ACCESS_KEY=your-access-key
+S3_SECRET_KEY=your-secret-key
+S3_BUCKET=paideia-bucket
+S3_REGION=us-east-1
+```
+
+你可以使用 MinIO 進行本地開發，或使用任何 S3 相容服務（AWS S3、DigitalOcean Spaces 等）進行生產。
+
+### 設定郵件服務
+
+郵件通知對於使用者註冊、密碼重設和課程更新至關重要。設定 SMTP 或 Resend：
+
+**SMTP 設定：**
+```bash
+SMTP_HOST=smtp.example.com
+SMTP_USER=your-email@example.com
+SMTP_PASS=your-password
+EMAIL_FROM_ADDRESS=info@paideialms.com
+EMAIL_FROM_NAME=Paideia LMS
+```
+
+**Resend 設定：**
+```bash
+RESEND_API_KEY=your-resend-api-key
+EMAIL_FROM_ADDRESS=info@paideialms.com
+EMAIL_FROM_NAME=Paideia LMS
+```
+
+### 設定安全
+
+安全設定對於生產部署至關重要：
+
+```bash
+# 為 PAYLOAD_SECRET 產生安全的隨機字串
+PAYLOAD_SECRET=your-secure-random-string
+
+# 為你的網域設定 CORS
+CORS_ORIGINS=https://yourdomain.com,https://www.yourdomain.com
+```
+
+<ReadMore>查看[安裝和設定指南](/zh-tw/install-and-setup/#安全建議)以了解詳細的安全建議。</ReadMore>
+
+## 常見的安裝後任務
+
+一旦你的 Paideia LMS 安裝使用基本設定運作，以下是一些你可能想要執行的常見任務：
+
+### 建立管理員帳戶
+
+首次存取時，系統會提示你建立管理員帳戶。此帳戶將擁有完全的管理權限來管理你的 LMS 實例。
+
+### 設定整合
+
+Paideia LMS 支援多種可以增強系統的整合：
+
+- **Microsoft 整合**：設定 Microsoft Teams、OneDrive 和 Office 365 整合以實現無縫協作
+- **LTI 支援**：設定學習工具互操作性以連接外部教育工具
+- **AI 功能**：啟用和設定 AI 原生功能以增強學習體驗
+
+### 設定使用者管理
+
+設定使用者角色和權限以符合你機構的需求：
+
+- 定義角色（管理員、講師、學生、助教等）
+- 為不同使用者類型設定權限
+- 設定註冊策略
+- 設定課程類別和組織
+
+### 設定課程設定
+
+在建立第一個課程之前，你可能想要設定：
+
+- 課程類別和組織
+- 預設課程設定
+- 作業和測驗預設值
+- 成績簿設定
+
+### 自訂外觀
+
+Paideia LMS 使用 React 和 Mantine 元件，提供現代、可自訂的 UI。你可以自訂：
+
+- 品牌和外觀
+- 配色方案和主題
+- 徽標和網站圖標
+- 如果需要，可以自訂 CSS
+
+### 設定監控和備份
+
+對於生產部署：
+
+- 設定資料庫備份
+- 設定監控和日誌記錄
+- 設定健康檢查
+- 設定系統問題警示
+
+### 啟用 HTTPS
+
+對於生產環境，設定反向代理（nginx、Traefik 等）以提供 HTTPS 加密。這對於安全性和使用者信任至關重要。
+
+<ReadMore>有關詳細的設定說明，請參閱[安裝和設定指南](/zh-tw/install-and-setup/)和[環境變數指南](/zh-tw/guides/environment-variables/)。</ReadMore>
+

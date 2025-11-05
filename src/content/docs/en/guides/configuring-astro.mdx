@@ -1,0 +1,150 @@
+---
+title: Configuration overview
+description: Learn how to configure and customize your Paideia LMS installation.
+i18nReady: true
+---
+import ReadMore from '~/components/ReadMore.astro'
+
+Paideia LMS uses environment variables as the primary method for configuration. This approach provides flexibility and security, allowing you to configure your LMS instance without modifying code files. Whether you're setting up a new installation or customizing an existing one, understanding Paideia LMS's configuration approach will help you get the most out of your system.
+
+The guides in this "Configuration" section will help you familiarize yourself with the various configuration options available for your Paideia LMS installation, from basic system settings to advanced integrations.
+
+If this is your first Paideia LMS installation, or if it's been a while since you've configured a new instance, use the following guides and references in the documentation for assistance.
+
+## System Configuration
+
+Paideia LMS uses environment variables for all system configuration instead of a config file. This approach provides several benefits:
+
+- **Security**: Sensitive credentials are kept separate from code
+- **Flexibility**: Easy to configure different settings for different environments
+- **Simplicity**: No need to edit code files to change configuration
+
+All configuration is done through environment variables that you set in your hosting environment or in a `.env` file. The most important configuration areas include:
+
+- **Database**: PostgreSQL connection settings
+- **Storage**: S3-compatible storage for course files and media
+- **Email**: SMTP or Resend configuration for notifications
+- **Security**: CORS settings, encryption secrets, and security policies
+- **Ports**: Backend API and frontend port configuration
+
+<ReadMore>Read the [environment variables guide](/en/guides/environment-variables/) for a complete overview of all configuration options and how to set them.</ReadMore>
+
+## Initial Setup Tasks
+
+After installing Paideia LMS, you'll need to configure several essential components before you can start using the system. These initial setup tasks are critical for getting your LMS running properly.
+
+### Configure Database Connection
+
+Paideia LMS requires a PostgreSQL database. Set up your database connection using the `DATABASE_URL` environment variable:
+
+```bash
+DATABASE_URL=postgresql://user:password@localhost:5432/paideia_db
+```
+
+For production deployments, ensure your database is properly secured with strong passwords and network restrictions.
+
+### Set Up File Storage
+
+Paideia LMS uses S3-compatible storage for course files, media assets, and user uploads. Configure your storage using these environment variables:
+
+```bash
+S3_URL=http://localhost:9000
+S3_ACCESS_KEY=your-access-key
+S3_SECRET_KEY=your-secret-key
+S3_BUCKET=paideia-bucket
+S3_REGION=us-east-1
+```
+
+You can use MinIO for local development or any S3-compatible service (AWS S3, DigitalOcean Spaces, etc.) for production.
+
+### Configure Email Service
+
+Email notifications are essential for user registration, password resets, and course updates. Configure either SMTP or Resend:
+
+**SMTP Configuration:**
+```bash
+SMTP_HOST=smtp.example.com
+SMTP_USER=your-email@example.com
+SMTP_PASS=your-password
+EMAIL_FROM_ADDRESS=info@paideialms.com
+EMAIL_FROM_NAME=Paideia LMS
+```
+
+**Resend Configuration:**
+```bash
+RESEND_API_KEY=your-resend-api-key
+EMAIL_FROM_ADDRESS=info@paideialms.com
+EMAIL_FROM_NAME=Paideia LMS
+```
+
+### Set Up Security
+
+Security configuration is crucial for production deployments:
+
+```bash
+# Generate a secure random string for PAYLOAD_SECRET
+PAYLOAD_SECRET=your-secure-random-string
+
+# Configure CORS for your domain(s)
+CORS_ORIGINS=https://yourdomain.com,https://www.yourdomain.com
+```
+
+<ReadMore>See the [Installation and Setup guide](/en/install-and-setup/#security-recommendations) for detailed security recommendations.</ReadMore>
+
+## Common Post-Installation Tasks
+
+Once your Paideia LMS installation is running with basic configuration, here are some common tasks you might want to perform:
+
+### Create Admin Account
+
+On first access, you'll be prompted to create an admin account. This account will have full administrative privileges to manage your LMS instance.
+
+### Configure Integrations
+
+Paideia LMS supports several integrations that can enhance your system:
+
+- **Microsoft Integration**: Set up Microsoft Teams, OneDrive, and Office 365 integration for seamless collaboration
+- **LTI Support**: Configure Learning Tools Interoperability for connecting external educational tools
+- **AI Features**: Enable and configure AI-native capabilities for enhanced learning experiences
+
+### Set Up User Management
+
+Configure user roles and permissions to match your institution's needs:
+
+- Define roles (admin, instructor, student, TA, etc.)
+- Set up permissions for different user types
+- Configure enrollment policies
+- Set up course categories and organization
+
+### Configure Course Settings
+
+Before creating your first course, you may want to configure:
+
+- Course categories and organization
+- Default course settings
+- Assignment and quiz defaults
+- Gradebook configuration
+
+### Customize Appearance
+
+Paideia LMS uses React with Mantine components, providing a modern, customizable UI. You can customize:
+
+- Branding and appearance
+- Color schemes and themes
+- Logo and favicon
+- Custom CSS if needed
+
+### Set Up Monitoring and Backups
+
+For production deployments:
+
+- Configure database backups
+- Set up monitoring and logging
+- Configure health checks
+- Set up alerts for system issues
+
+### Enable HTTPS
+
+For production, configure a reverse proxy (nginx, Traefik, etc.) to provide HTTPS encryption. This is essential for security and user trust.
+
+<ReadMore>For detailed setup instructions, see the [Installation and Setup guide](/en/install-and-setup/) and the [Environment Variables guide](/en/guides/environment-variables/).</ReadMore>

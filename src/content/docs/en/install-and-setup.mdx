@@ -1,0 +1,290 @@
+---
+title: Install Paideia LMS
+sidebar:
+  label: Installation
+description: 'How to install and set up Paideia LMS.'
+i18nReady: true
+---
+import { Tabs, TabItem, Steps } from '@astrojs/starlight/components';
+
+Paideia LMS offers two installation methods: **single binary** (recommended for quick deployment) and **Docker Compose** (for production environments with full control). Choose the method that best fits your needs.
+
+:::tip[Try before installing]
+Prefer to try Paideia LMS in your browser? Visit [demo.paideialms.com](https://demo.paideialms.com) to explore all features without installation.
+
+The demo is hosted on a Hetzner CPX21 instance (3 vCPU, 4GB RAM, 80GB local disk) with daily backups, costing less than $10 per month, demonstrating Paideia LMS's efficient resource usage.
+:::
+
+## Prerequisites
+
+### Single Binary Installation
+- **Operating System**: macOS (ARM64 or x64) or Linux (ARM64 or x64)
+- **Terminal**: Access to command-line interface
+
+### Docker Compose Installation
+- **Docker**: Docker Engine 20.10 or higher
+- **Docker Compose**: Docker Compose v2.0 or higher
+- **Ports**: Ports 3000, 3001, 5432, 9000, 9001, and 4983 should be available
+
+## Single Binary Installation
+
+The single binary installation is the fastest way to get Paideia LMS running. Inspired by PocketBase, Paideia LMS is distributed as a single executable file that contains everything you need.
+
+<Steps>
+1. Download the binary for your platform:
+
+   <Tabs>
+     <TabItem label="macOS ARM64">
+       ```bash
+       curl -L -o paideia https://github.com/paideia-lms/paideia/releases/latest/download/paideia-macos-arm64
+       chmod +x paideia
+       xattr -c paideia
+       ```
+     </TabItem>
+     <TabItem label="Linux ARM64">
+       ```bash
+       curl -L -o paideia https://github.com/paideia-lms/paideia/releases/latest/download/paideia-linux-arm64
+       chmod +x paideia
+       ```
+     </TabItem>
+     <TabItem label="Linux x64">
+       ```bash
+       curl -L -o paideia https://github.com/paideia-lms/paideia/releases/latest/download/paideia-linux-x64
+       chmod +x paideia
+       ```
+     </TabItem>
+   </Tabs>
+
+2. Run Paideia LMS:
+
+   ```bash
+   ./paideia
+   ```
+
+3. Configure your environment:
+
+   The binary will guide you through initial setup. You'll need to provide:
+   - Database connection (PostgreSQL)
+   - S3/MinIO configuration for file storage
+   - Admin user credentials
+
+   Or set environment variables before running:
+
+   ```bash
+   export DATABASE_URL="postgresql://user:password@localhost:5432/paideia_db"
+   export S3_URL="http://localhost:9000"
+   export S3_ACCESS_KEY="your-access-key"
+   export S3_SECRET_KEY="your-secret-key"
+   export S3_BUCKET="paideia-bucket"
+   ./paideia
+   ```
+
+4. Access Paideia LMS:
+
+   Open your browser and navigate to `http://localhost:3000` (or the port configured via `FRONTEND_PORT` environment variable).
+</Steps>
+
+## Docker Compose Installation
+
+For production deployments or when you need full control over the infrastructure, use Docker Compose. This setup includes Paideia LMS, PostgreSQL database, MinIO (S3-compatible storage), and Drizzle Gateway.
+
+<Steps>
+1. Create a `docker-compose.yml` file:
+
+   Create a new file named `docker-compose.yml` in your project directory:
+
+   ```yaml
+   version: '3.8'
+
+   services:
+     paideia:
+       image: hananoshikayomaru/paideia:latest
+       container_name: paideia
+       restart: no
+       ports:
+         - "3000:3000"
+         - "3001:3001"
+       environment:
+         # Database
+         DATABASE_URL: postgresql://paideia:paideia_password@postgres:5432/paideia_db
+         # S3/MinIO
+         S3_URL: http://minio:9000
+         S3_ACCESS_KEY: paideia_minio
+         S3_SECRET_KEY: paideia_minio_secret
+         S3_ENDPOINT_URL: http://minio:9000
+         S3_BUCKET: paideia-bucket
+         S3_REGION: us-east-1
+         # Payload
+         PAYLOAD_SECRET: change-this-to-a-secure-random-string
+         # Ports (optional, defaults shown)
+         PORT: 3001
+         FRONTEND_PORT: 3000
+         # Email (optional - uncomment if using SMTP)
+         # SMTP_HOST: smtp.example.com
+         # SMTP_USER: your-email@example.com
+         # SMTP_PASS: your-password
+         # RESEND_API_KEY: your-resend-api-key
+         # Email sender (optional, defaults shown)
+         EMAIL_FROM_ADDRESS: info@paideialms.com
+         EMAIL_FROM_NAME: Paideia LMS
+         CORS_ORIGINS: "*"
+         # CSRF_ORIGINS: "https://paideia-13.localcan.dev"
+         # Sandbox mode (optional, default: 0)
+         # SANDBOX_MODE: 0
+       networks:
+         paideia_net:
+           ipv4_address: 172.28.0.2
+       depends_on:
+         - postgres
+         - minio
+
+     postgres:
+       image: postgres:18
+       container_name: paideia_postgres
+       restart: unless-stopped
+       environment:
+         POSTGRES_USER: paideia
+         POSTGRES_PASSWORD: paideia_password
+         POSTGRES_DB: paideia_db
+       ports:
+         - "5432:5432"
+       volumes:
+         - postgres_data:/var/lib/postgresql
+       healthcheck:
+         test: ["CMD-SHELL", "pg_isready -U paideia"]
+         interval: 5s
+         timeout: 5s
+         retries: 10
+       networks:
+         paideia_net:
+           ipv4_address: 172.28.0.3
+
+     minio:
+       image: minio/minio:latest
+       container_name: paideia_minio
+       restart: unless-stopped
+       ports:
+         - "9000:9000"
+         - "9001:9001"
+       environment:
+         MINIO_ROOT_USER: paideia_minio
+         MINIO_ROOT_PASSWORD: paideia_minio_secret
+       volumes:
+         - minio_data:/data
+       command: server /data --console-address ":9001"
+       networks:
+         paideia_net:
+           ipv4_address: 172.28.0.4
+
+     drizzle-gateway:
+       image: ghcr.io/drizzle-team/gateway:latest
+       container_name: drizzle-gateway
+       restart: unless-stopped
+       ports:
+         - "4983:4983"
+       environment:
+         PORT: 4983
+         STORE_PATH: ./app
+         DATABASE_URL: postgresql://paideia:paideia_password@postgres:5432/paideia_db
+       volumes:
+         - drizzle-gateway:/app
+       networks:
+         paideia_net:
+           ipv4_address: 172.28.0.5
+       depends_on:
+         - postgres
+
+   volumes:
+     minio_data:
+     postgres_data:
+     drizzle-gateway:
+
+   networks:
+     paideia_net:
+       driver: bridge
+       ipam:
+         config:
+           - subnet: 172.28.0.0/16
+   ```
+
+2. Configure environment variables:
+
+   **Important**: Before starting, update the following in `docker-compose.yml`:
+   - `PAYLOAD_SECRET`: Generate a secure random string for production
+   - `POSTGRES_PASSWORD`: Change the default password
+   - `MINIO_ROOT_PASSWORD`: Change the default password
+   - `S3_ACCESS_KEY` and `S3_SECRET_KEY`: Update for production use
+   - Email configuration: Uncomment and configure if using SMTP
+
+3. Start all services:
+
+   ```bash
+   docker-compose up -d
+   ```
+
+4. Verify services are running:
+
+   ```bash
+   docker-compose ps
+   ```
+
+   You should see all four services (paideia, postgres, minio, drizzle-gateway) in "Up" status.
+
+5. Access Paideia LMS:
+
+   - **Frontend**: [`http://localhost:3000`](http://localhost:3000)
+   - **API**: [`http://localhost:3001`](http://localhost:3001)
+   - **MinIO Console**: [`http://localhost:9001`](http://localhost:9001) (login with `paideia_minio` / `paideia_minio_secret`)
+   - **Drizzle Gateway**: [`http://localhost:4983`](http://localhost:4983)
+   - **PostgreSQL**: `localhost:5432`
+
+6. Create your admin user:
+
+   On first access, you'll be prompted to create an admin account. Follow the on-screen instructions.
+</Steps>
+
+## Configuration
+
+### Environment Variables
+
+Both installation methods support the following environment variables:
+
+| Variable | Description | Default | Required |
+|----------|-------------|---------|----------|
+| `DATABASE_URL` | PostgreSQL connection string | - | Yes |
+| `S3_URL` | S3/MinIO endpoint URL | - | Yes |
+| `S3_ACCESS_KEY` | S3 access key | - | Yes |
+| `S3_SECRET_KEY` | S3 secret key | - | Yes |
+| `S3_BUCKET` | S3 bucket name | - | Yes |
+| `S3_REGION` | S3 region | `us-east-1` | No |
+| `PORT` | Backend API port | `3001` | No |
+| `FRONTEND_PORT` | Frontend port | `3000` | No |
+| `PAYLOAD_SECRET` | Secret for payload encryption | - | Yes |
+| `CORS_ORIGINS` | Allowed CORS origins | `*` | No |
+| `EMAIL_FROM_ADDRESS` | Email sender address | `info@paideialms.com` | No |
+| `EMAIL_FROM_NAME` | Email sender name | `Paideia LMS` | No |
+| `SMTP_HOST` | SMTP server host | - | No |
+| `SMTP_USER` | SMTP username | - | No |
+| `SMTP_PASS` | SMTP password | - | No |
+| `RESEND_API_KEY` | Resend API key | - | No |
+| `SANDBOX_MODE` | Enable sandbox mode | `0` | No |
+
+### Security Recommendations
+
+1. **Change default passwords**: Always update default passwords in production
+2. **Generate secure secrets**: Use a cryptographically secure random string for `PAYLOAD_SECRET`
+3. **Configure CORS properly**: Replace `CORS_ORIGINS: "*"` with your actual domain(s)
+4. **Use HTTPS**: Configure a reverse proxy (nginx, Traefik, etc.) for HTTPS in production
+5. **Database security**: Use strong PostgreSQL passwords and consider network restrictions
+
+## Next Steps
+
+Once Paideia LMS is installed and running:
+
+1. **Configure your first course**: Create courses, add content, and manage students
+2. **Set up user management**: Configure roles, permissions, and access controls
+3. **Integrate with Microsoft**: Set up Microsoft Teams, OneDrive, and Office 365 integration
+4. **Enable LTI**: Configure Learning Tools Interoperability for external tool integration
+5. **Explore AI features**: Set up and configure AI-native capabilities
+
+See our [configuration guide](/en/guides/configuration/) for detailed setup instructions.

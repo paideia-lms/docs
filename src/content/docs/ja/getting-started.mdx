@@ -1,0 +1,87 @@
+---
+title: はじめに
+description: Paideia LMS——モダンで軽量な学習管理システム——を使い始めるためのガイド、リソース、APIリファレンス。
+i18nReady: true
+tableOfContents: false
+editUrl: false
+next: false
+
+hero:
+  title: Paideia LMS Docs
+  tagline: Paideia LMSをデプロイおよび管理するためのガイド、リソース、APIリファレンス。
+  actions:
+    - text: Paideiaをインストール
+      icon: rocket
+      link: /ja/install-and-setup/
+    - text: Paideiaの機能について学ぶ
+      icon: right-arrow
+      variant: minimal
+      link: /ja/concepts/why-paideia/
+  facepile:
+    tagline: Bun、React Router、そしてオープンソースコントリビューターによって支えられています。
+    linkText: 参加しましょう！
+    link: /ja/contribute/
+---
+
+import { CardGrid, Tabs, TabItem } from '@astrojs/starlight/components'
+import Card from '~/components/Landing/Card.astro'
+import ListCard from '~/components/Landing/ListCard.astro'
+import SplitCard from '~/components/Landing/SplitCard.astro'
+import Discord from '~/components/Landing/Discord.astro'
+
+<CardGrid>
+  <Card title="Paideia LMSとは？" icon="laptop">
+    Paideia LMSは、[Bun](https://bun.sh)と[React Router v7](https://reactrouter.com/)で構築された、モダンで軽量な学習管理システムです。単一の実行ファイルとして、管理とデプロイが非常に簡単に設計されています。
+  </Card>
+
+  <Card title="クイックスタート" icon="star">
+    数秒で起動できます！事前ビルドされたバイナリをダウンロードし、[インストールガイド](/ja/install-and-setup/)でLMSを開始しましょう。または、インストールなしでPaideia LMSを探索できる[デモサンドボックスを試す](https://demo.paideialms.com)こともできます。
+  </Card>
+
+  <SplitCard title="Paideiaをインストール" icon="rocket">
+    <Tabs syncKey="paideia-install">
+      <TabItem label="macOS ARM64">
+        ```sh
+        curl -L -o paideia https://github.com/paideia-lms/paideia/releases/latest/download/paideia-macos-arm64
+        chmod +x paideia
+        xattr -c paideia        
+        ./paideia
+        ```
+      </TabItem>
+      <TabItem label="Linux ARM64">
+        ```sh
+        curl -L -o paideia https://github.com/paideia-lms/paideia/releases/latest/download/paideia-linux-arm64
+        chmod +x paideia        
+        ./paideia
+        ```
+      </TabItem>
+      <TabItem label="Linux x64">
+        ```sh
+        curl -L -o paideia https://github.com/paideia-lms/paideia/releases/latest/download/paideia-linux-x64
+        chmod +x paideia
+        ./paideia
+        ```
+      </TabItem>
+    </Tabs>
+
+    [インストールガイド](/ja/install-and-setup/)には、macOS、LinuxでのPaideiaのインストール、およびDocker Composeの使用に関するステップバイステップの手順が記載されています。
+  </SplitCard>
+
+  <ListCard title="コア機能" icon="open-book">
+    - [コース管理](/ja/concepts/course-management/)
+    - [ユーザー管理](/ja/concepts/user-management/)
+    - [アクセス制御](/ja/concepts/access-control/)
+    - [支払い統合](/ja/concepts/payment-integration/)
+    - [バージョン管理](/ja/concepts/version-control/)
+  </ListCard>
+
+  <ListCard title="はじめに" icon="puzzle">
+    - [インストールとセットアップ](/ja/install-and-setup/)
+    - [設定](/ja/guides/configuration/)
+    - [コース管理](/ja/guides/course-management/)
+    - [ユーザー管理](/ja/guides/user-management/)
+    - [APIリファレンス](/ja/reference/api-reference/)
+  </ListCard>
+</CardGrid>
+
+{/* <Discord title="何か知りたいことや、関わりたいことはありますか？" cta="Discordに参加する"/> */}

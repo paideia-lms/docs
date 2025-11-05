@@ -1,0 +1,76 @@
+---
+title: Migrate an existing LMS to Paideia LMS
+description: Some tips and tricks for converting your LMS to Paideia LMS.
+sidebar:
+  label: LMS migration overview
+i18nReady: true
+---
+import MigrationGuidesNav from '~/components/MigrationGuidesNav.astro';
+
+**Ready to convert your LMS to Paideia LMS?** See one of our guides for migration tips.
+
+## Migration Guides
+
+<MigrationGuidesNav />
+
+Note that many of these pages are **stubs**: they're collections of resources waiting for your contribution!
+
+## Why migrate your LMS to Paideia LMS?
+
+Paideia LMS provides many benefits: performance, simplicity, modern technology stack, and many of the features you want built right into the platform. When you do need to extend your LMS, Paideia LMS's modern codebase makes it easy to customize.
+
+Migrating may be less work than you think!
+
+Depending on your existing LMS, you may be able to:
+
+- Export your existing course content and import it into Paideia LMS.
+
+- Migrate user accounts and enrollment data from your previous LMS.
+
+- Transfer gradebook data and assessment results.
+
+- Move discussion forums and activity submissions.
+
+## Which LMS platforms can I migrate from?
+
+Paideia LMS is designed to replace traditional LMS platforms like Moodle, Canvas, and D2L (Brightspace). If you're currently using one of these platforms, Paideia LMS offers a modern alternative with:
+
+- Single binary deployment instead of complex multi-service setups
+- Modern tech stack (Bun, React Router v7, Elysia) instead of legacy technologies
+- Built-in features instead of plugin dependencies
+- Better performance and scalability
+
+## Platform Comparison
+
+Here's how Paideia LMS compares to traditional LMS platforms:
+
+| Feature | Paideia LMS | Moodle | Canvas | D2L (Brightspace) |
+|---------|-------------|--------|--------|-------------------|
+| **Deployment** | 🟢 Single binary | 🔴 Multi-service setup | 🟡 Cloud/SaaS | 🟡 Cloud/SaaS |
+| **Tech Stack** | 🟢 Bun, React Router v7, Elysia, TypeScript | 🔴 PHP, MySQL | 🟡 Ruby on Rails | 🔴 Java, .NET |
+| **Architecture** | 🟢 Stateless (PostgreSQL + S3) | 🔴 Stateful | 🔴 Stateful | 🔴 Stateful |
+| **Plugin System** | 🟢 None (batteries included) | 🔴 Extensive plugin ecosystem | 🟡 Limited plugins | 🟡 App integrations |
+| **License** | 🟢 AGPL-3.0 (free forever) | 🟢 GPL | 🔴 Proprietary | 🔴 Proprietary |
+| **Setup Complexity** | 🟢 Minutes | 🔴 Hours/Days | 🟡 Managed by vendor | 🟡 Managed by vendor |
+| **Scalability** | 🟢 Highly scalable | 🟡 Moderate | 🟡 Vendor-managed | 🟡 Vendor-managed |
+| **Customization** | 🟢 Modern codebase, easy to extend | 🔴 Complex plugin system | 🔴 Limited customization | 🔴 Limited customization |
+| **Performance** | 🟢 Optimized, modern architecture | 🔴 Can be slow with plugins | 🟡 Generally good | 🟡 Generally good |
+| **Migration Ease** | 🟢 Simple (stateless design) | 🔴 Complex | 🔴 Complex | 🔴 Complex |
+| **Cost** | 🟢 Free (self-hosted) | 🟢 Free (self-hosted) | 🔴 Paid subscription | 🔴 Paid subscription |
+| **Maintenance** | 🟢 Minimal (single binary updates) | 🔴 Requires ongoing maintenance | 🟡 Vendor-managed | 🟡 Vendor-managed |
+| **Modern UI** | 🟢 React + Mantine components | 🔴 Traditional UI | 🟢 Modern UI | 🟢 Modern UI |
+| **LTI Support** | 🟢 Built-in | 🟡 Plugin required | 🟢 Built-in | 🟢 Built-in |
+| **AI Features** | 🟢 AI-native | 🔴 Not available | 🔴 Not available | 🔴 Not available |
+| **Microsoft Integration** | 🟢 Built-in (Teams, OneDrive, Office 365) | 🔴 Plugin required | 🟡 Limited | 🟡 Limited |
+
+## How will my LMS change?
+
+When migrating to Paideia LMS, you'll notice several improvements:
+
+- **Simplified deployment:** Deploy as a single binary instead of managing multiple services.
+
+- **Better performance:** Modern architecture delivers faster response times and better scalability.
+
+- **No plugin management:** All essential features are built-in, eliminating compatibility issues and security concerns.
+
+- **Modern UI:** React-based frontend with Mantine components provides a consistent, modern interface.

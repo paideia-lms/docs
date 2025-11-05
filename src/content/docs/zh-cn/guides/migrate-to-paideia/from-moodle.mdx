@@ -1,0 +1,93 @@
+---
+title: 从 Moodle 迁移
+description: 将现有的 Moodle 安装迁移到 Paideia LMS 的提示
+sidebar:
+  label: Moodle
+type: migration
+stub: true
+framework: Moodle
+i18nReady: true
+---
+
+import { LinkCard, CardGrid } from '@astrojs/starlight/components';
+
+[Moodle](https://moodle.org) 是一个用 PHP 构建的开源学习管理系统。
+
+## Moodle 和 Paideia LMS 的主要相似之处
+
+Moodle 和 Paideia LMS 有一些相似之处，可以帮助你迁移课程和内容：
+
+- Moodle 和 Paideia LMS 都是功能完整的学习管理系统，具有课程管理、用户管理、作业、测验和成绩簿。
+
+- 两者都支持通过章节、类别和模块组织课程内容。
+
+- 两者都包括用户角色和权限（管理员、讲师、学生等）。
+
+- 两者都支持各种活动类型，包括作业、测验、讨论和页面。
+
+## Moodle 和 Paideia LMS 的主要区别
+
+当你从 Moodle 迁移到 Paideia LMS 时，你会注意到一些重要的差异：
+
+- **部署:** Moodle 需要 PHP、Web 服务器和数据库，而 Paideia LMS 作为单个二进制文件部署。这使安装和更新变得更加简单。
+
+- **技术栈:** Moodle 使用 PHP 和旧技术构建，而 Paideia LMS 使用现代技术（Bun、React Router v7、Elysia、TypeScript）以获得更好的性能和可维护性。
+
+- **插件架构:** Moodle 在功能上严重依赖插件，这可能导致兼容性问题和管理开销。Paideia LMS 包含所有基本功能作为内置功能，消除了对插件的需求。
+
+- **用户界面:** Moodle 使用自己的模板系统，而 Paideia LMS 使用 React 与 Mantine 组件来提供现代、一致的 UI。
+
+- **数据库:** Moodle 使用 MySQL/MariaDB/PostgreSQL，而 Paideia LMS 专门使用 PostgreSQL，这提供了更好的性能和可扩展性。
+
+## 从 Moodle 迁移到 Paideia LMS
+
+要将你的 Moodle 安装迁移到 Paideia LMS，请按照以下步骤操作：
+
+1. **导出你的 Moodle 数据:**
+   - 导出课程内容（课程、章节、活动）
+   - 导出用户账户和注册数据
+   - 导出成绩簿数据和评估结果
+   - 导出讨论论坛和提交
+
+2. **安装 Paideia LMS:**
+   - 下载适用于你平台的 Paideia LMS 二进制文件
+   - 设置 PostgreSQL 数据库
+   - 配置 S3 兼容存储
+   - 启动 Paideia LMS 服务器
+
+3. **导入你的数据:**
+   - 使用 Paideia LMS 导入工具迁移课程
+   - 导入用户账户并设置注册
+   - 传输成绩簿数据
+   - 迁移讨论论坛和活动提交
+
+4. **配置你的 LMS:**
+   - 设置用户角色和权限
+   - 配置课程类别
+   - 自定义外观和品牌
+
+## 迁移注意事项
+
+从 Moodle 迁移到 Paideia LMS 时，请记住：
+
+- **插件:** Moodle 插件在 Paideia LMS 中不起作用。检查你需要的功能是否在 Paideia LMS 中作为内置功能提供。如果需要自定义功能，Paideia LMS 的现代代码库更容易扩展。
+
+- **主题:** Moodle 主题与 Paideia LMS 不兼容。Paideia LMS 使用 React 与 Mantine 组件，开箱即用地提供现代、可自定义的 UI。
+
+- **自定义块:** Moodle 块在 Paideia LMS 中不受支持。类似的功能可以通过 Paideia LMS 的内置功能或自定义开发来实现。
+
+- **活动模块:** 大多数标准 Moodle 活动模块（作业、测验、论坛等）在 Paideia LMS 中都有对应的功能。请查看 Paideia LMS 文档以了解功能对等性。
+
+## 社区资源
+
+<CardGrid>
+
+  <LinkCard title="从 Moodle 迁移到现代 LMS 平台" href="#"/>
+
+  <LinkCard title="LMS 迁移最佳实践" href="#"/>
+
+</CardGrid>
+
+:::note[有想要分享的资源吗？]
+如果你找到（或制作）了一个关于将 Moodle 安装转换为 Paideia LMS 的有用的视频或博客文章，请将其 [添加到这个列表中](https://github.com/withastro/docs/edit/main/src/content/docs/zh-cn/guides/migrate-to-paideia/from-moodle.mdx)！
+:::

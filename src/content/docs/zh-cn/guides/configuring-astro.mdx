@@ -1,0 +1,150 @@
+---
+title: 配置概览
+description: 了解如何配置和自定义你的 Paideia LMS 安装。
+i18nReady: true
+---
+import ReadMore from '~/components/ReadMore.astro'
+
+Paideia LMS 使用环境变量作为主要的配置方法。这种方法提供了灵活性和安全性，允许你在不修改代码文件的情况下配置你的 LMS 实例。无论你是设置新的安装还是自定义现有的安装，了解 Paideia LMS 的配置方法将帮助你充分利用系统。
+
+本"配置"部分的指南将帮助你熟悉可用于 Paideia LMS 安装的各种配置选项，从基本系统设置到高级集成。
+
+如果这是你的第一个 Paideia LMS 安装，或者你已经有一段时间没有配置新实例了，请使用以下指南和文档中的参考资料来获取帮助。
+
+## 系统配置
+
+Paideia LMS 使用环境变量进行所有系统配置，而不是配置文件。这种方法提供了几个好处：
+
+- **安全性**：敏感凭据与代码分开保存
+- **灵活性**：易于为不同环境配置不同设置
+- **简单性**：无需编辑代码文件即可更改配置
+
+所有配置都通过你在托管环境中或在 `.env` 文件中设置的环境变量来完成。最重要的配置区域包括：
+
+- **数据库**：PostgreSQL 连接设置
+- **存储**：用于课程文件和媒体的 S3 兼容存储
+- **邮件**：用于通知的 SMTP 或 Resend 配置
+- **安全**：CORS 设置、加密密钥和安全策略
+- **端口**：后端 API 和前端端口配置
+
+<ReadMore>阅读[环境变量指南](/zh-cn/guides/environment-variables/)以了解所有配置选项的完整概述以及如何设置它们。</ReadMore>
+
+## 初始设置任务
+
+安装 Paideia LMS 后，你需要在使用系统之前配置几个基本组件。这些初始设置任务对于让你的 LMS 正常运行至关重要。
+
+### 配置数据库连接
+
+Paideia LMS 需要 PostgreSQL 数据库。使用 `DATABASE_URL` 环境变量设置数据库连接：
+
+```bash
+DATABASE_URL=postgresql://user:password@localhost:5432/paideia_db
+```
+
+对于生产部署，请确保你的数据库使用强密码和网络限制进行适当保护。
+
+### 设置文件存储
+
+Paideia LMS 使用 S3 兼容存储来存储课程文件、媒体资源和用户上传。使用以下环境变量配置存储：
+
+```bash
+S3_URL=http://localhost:9000
+S3_ACCESS_KEY=your-access-key
+S3_SECRET_KEY=your-secret-key
+S3_BUCKET=paideia-bucket
+S3_REGION=us-east-1
+```
+
+你可以使用 MinIO 进行本地开发，或使用任何 S3 兼容服务（AWS S3、DigitalOcean Spaces 等）进行生产。
+
+### 配置邮件服务
+
+邮件通知对于用户注册、密码重置和课程更新至关重要。配置 SMTP 或 Resend：
+
+**SMTP 配置：**
+```bash
+SMTP_HOST=smtp.example.com
+SMTP_USER=your-email@example.com
+SMTP_PASS=your-password
+EMAIL_FROM_ADDRESS=info@paideialms.com
+EMAIL_FROM_NAME=Paideia LMS
+```
+
+**Resend 配置：**
+```bash
+RESEND_API_KEY=your-resend-api-key
+EMAIL_FROM_ADDRESS=info@paideialms.com
+EMAIL_FROM_NAME=Paideia LMS
+```
+
+### 设置安全
+
+安全配置对于生产部署至关重要：
+
+```bash
+# 为 PAYLOAD_SECRET 生成安全的随机字符串
+PAYLOAD_SECRET=your-secure-random-string
+
+# 为你的域名配置 CORS
+CORS_ORIGINS=https://yourdomain.com,https://www.yourdomain.com
+```
+
+<ReadMore>查看[安装和设置指南](/zh-cn/install-and-setup/#安全建议)以了解详细的安全建议。</ReadMore>
+
+## 常见的安装后任务
+
+一旦你的 Paideia LMS 安装使用基本配置运行，以下是一些你可能想要执行的常见任务：
+
+### 创建管理员账户
+
+首次访问时，系统会提示你创建管理员账户。此账户将拥有完全的管理权限来管理你的 LMS 实例。
+
+### 配置集成
+
+Paideia LMS 支持多种可以增强系统的集成：
+
+- **Microsoft 集成**：设置 Microsoft Teams、OneDrive 和 Office 365 集成以实现无缝协作
+- **LTI 支持**：配置学习工具互操作性以连接外部教育工具
+- **AI 功能**：启用和配置 AI 原生功能以增强学习体验
+
+### 设置用户管理
+
+配置用户角色和权限以匹配你机构的需求：
+
+- 定义角色（管理员、讲师、学生、助教等）
+- 为不同用户类型设置权限
+- 配置注册策略
+- 设置课程类别和组织
+
+### 配置课程设置
+
+在创建第一个课程之前，你可能想要配置：
+
+- 课程类别和组织
+- 默认课程设置
+- 作业和测验默认值
+- 成绩簿配置
+
+### 自定义外观
+
+Paideia LMS 使用 React 和 Mantine 组件，提供现代、可自定义的 UI。你可以自定义：
+
+- 品牌和外观
+- 配色方案和主题
+- 徽标和网站图标
+- 如果需要，可以自定义 CSS
+
+### 设置监控和备份
+
+对于生产部署：
+
+- 配置数据库备份
+- 设置监控和日志记录
+- 配置健康检查
+- 设置系统问题警报
+
+### 启用 HTTPS
+
+对于生产环境，配置反向代理（nginx、Traefik 等）以提供 HTTPS 加密。这对于安全性和用户信任至关重要。
+
+<ReadMore>有关详细的设置说明，请参阅[安装和设置指南](/zh-cn/install-and-setup/)和[环境变量指南](/zh-cn/guides/environment-variables/)。</ReadMore>

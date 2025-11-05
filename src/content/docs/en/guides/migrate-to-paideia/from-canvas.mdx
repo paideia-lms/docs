@@ -1,0 +1,107 @@
+---
+title: Migrating from Canvas
+description: Tips for migrating an existing Canvas installation to Paideia LMS
+sidebar:
+  label: Canvas
+type: migration
+stub: true
+framework: Canvas
+i18nReady: true
+---
+
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+[Canvas](https://www.instructure.com/canvas) is a cloud-based learning management system built with Ruby on Rails.
+
+## Key Similarities between Canvas and Paideia LMS
+
+Canvas and Paideia LMS share some similarities that will help you migrate your courses and content:
+
+- Both Canvas and Paideia LMS are feature-complete learning management systems with course management, user management, assignments, quizzes, and gradebooks.
+
+- Both support course content organization with modules, pages, and assignments.
+
+- Both include user roles and permissions (admin, instructor, student, TA, etc.).
+
+- Both support various activity types including assignments, quizzes, discussions, pages, and files.
+
+- Both have built-in LTI support for third-party integrations.
+
+## Key Differences between Canvas and Paideia LMS
+
+When you migrate from Canvas to Paideia LMS, you will notice several important differences:
+
+- **Deployment:** Canvas is a cloud-based SaaS platform managed by Instructure, while Paideia LMS deploys as a single binary that you can self-host. This gives you full control over your data and infrastructure.
+
+- **Technology Stack:** Canvas is built with Ruby on Rails and runs on cloud infrastructure, while Paideia LMS uses modern technologies (Bun, React Router v7, Elysia, TypeScript) for better performance and maintainability.
+
+- **Cost:** Canvas requires a paid subscription, while Paideia LMS is free and open-source (AGPL-3.0), allowing you to self-host without licensing fees.
+
+- **Customization:** Canvas has limited customization options and branding restrictions, while Paideia LMS's modern codebase makes it easy to customize and extend.
+
+- **Data Ownership:** With Canvas, your data is stored on Instructure's servers. With Paideia LMS, you have full control over your data and can host it on your own infrastructure.
+
+- **Database:** Canvas uses its own proprietary database infrastructure, while Paideia LMS uses PostgreSQL exclusively, which provides better performance and scalability.
+
+## Migrate from Canvas to Paideia LMS
+
+To migrate your Canvas installation to Paideia LMS, follow these steps:
+
+1. **Export your Canvas data:**
+   - Use Canvas API or export tools to export course content (courses, modules, pages, assignments)
+   - Export user accounts and enrollment data via Canvas API
+   - Export gradebook data and assessment results
+   - Export discussion forums and submissions
+   - Download course files and media assets
+
+2. **Install Paideia LMS:**
+   - Download the Paideia LMS binary for your platform
+   - Set up PostgreSQL database
+   - Configure S3-compatible storage
+   - Start the Paideia LMS server
+
+3. **Import your data:**
+   - Use Paideia LMS import tools to migrate courses
+   - Import user accounts and set up enrollments
+   - Transfer gradebook data
+   - Migrate discussion forums and activity submissions
+   - Upload course files and media assets
+
+4. **Configure your LMS:**
+   - Set up user roles and permissions
+   - Configure course categories and organization
+   - Customize the appearance and branding
+   - Set up LTI integrations if needed
+
+## Migration Considerations
+
+When migrating from Canvas to Paideia LMS, keep in mind:
+
+- **Canvas Apps:** Canvas-specific apps and plugins will not work in Paideia LMS. Check if the functionality you need is available as a built-in feature in Paideia LMS. If custom functionality is needed, Paideia LMS's modern codebase is easier to extend.
+
+- **Themes:** Canvas themes are not compatible with Paideia LMS. Paideia LMS uses React with Mantine components, which provides a modern, customizable UI out of the box with full branding control.
+
+- **SpeedGrader:** Canvas's SpeedGrader functionality has equivalents in Paideia LMS's grading interface. Check the Paideia LMS documentation for grading workflows.
+
+- **LTI Integrations:** Both platforms support LTI, so you may be able to reuse some of your LTI integrations. Check compatibility and adjust as needed.
+
+- **Canvas Commons:** Content shared via Canvas Commons will need to be exported and imported separately. Consider using standard export formats for better compatibility.
+
+- **API Access:** Canvas uses REST APIs for data access. Paideia LMS also provides APIs, but the structure may differ. Review the Paideia LMS API documentation for migration scripts.
+
+- **Gradebook:** Canvas's gradebook features have equivalents in Paideia LMS. Review the Paideia LMS gradebook documentation to understand feature parity.
+
+## Community Resources
+
+<CardGrid>
+
+  <LinkCard title="Migrating from Canvas to Modern LMS Platforms" href="#"/>
+
+  <LinkCard title="LMS Migration Best Practices" href="#"/>
+
+</CardGrid>
+
+:::note[Have a resource to share?]
+If you found (or made!) a helpful video or blog post about converting a Canvas installation to Paideia LMS, [add it to this list](https://github.com/withastro/docs/edit/main/src/content/docs/en/guides/migrate-to-paideia/from-canvas.mdx)!
+:::
+

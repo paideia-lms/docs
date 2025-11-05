@@ -1,0 +1,66 @@
+---
+import '@astrojs/starlight/style/markdown.css';
+import BackendGuidesNav from '../BackendGuidesNav.astro';
+import CMSGuidesNav from '../CMSGuidesNav.astro';
+import DeployGuidesNav from '../DeployGuidesNav.astro';
+import MediaGuidesNav from '../MediaGuidesNav.astro';
+import IntegrationsNav from '../IntegrationsNav.astro';
+import MigrationGuidesNav from '../MigrationGuidesNav.astro';
+import { getPageCategory } from '~/util/getPageCategory';
+
+const { entry } = Astro.locals.starlightRoute;
+---
+
+<div class="sl-markdown-content">
+	<slot />
+
+	{
+		entry.data.type === 'backend' && (
+			<>
+				<h2>{Astro.locals.t('backend.navTitle')}</h2>
+				<BackendGuidesNav minimal={true} />
+			</>
+		)
+	}
+	{
+		entry.data.type === 'cms' && (
+			<>
+				<h2>{Astro.locals.t('cms.navTitle')}</h2>
+				<CMSGuidesNav minimal={true} />
+			</>
+		)
+	}
+	{
+		entry.data.type === 'deploy' && (
+			<>
+				<h2>{Astro.locals.t('deploy.altSectionTitle')}</h2>
+				<DeployGuidesNav minimal={true} />
+			</>
+		)
+	}
+	{
+		entry.data.type === 'media' && (
+			<>
+				<h2>{Astro.locals.t('media.navTitle')}</h2>
+				<MediaGuidesNav minimal={true} />
+			</>
+		)
+	}
+	{
+		entry.data.type === 'integration' && (
+			<>
+				<h2>{Astro.locals.t('integrations.more')}</h2>
+				<IntegrationsNav />
+			</>
+		)
+	}
+	{
+		entry.data.type === 'migration' && (
+			<>
+				<h2>{Astro.locals.t('migration.navTitle')}</h2>
+				<MigrationGuidesNav minimal={true} />
+			</>
+		)
+	}
+	<span id="docsearch-lvl0" hidden>{getPageCategory(Astro.url)}</span>
+</div>

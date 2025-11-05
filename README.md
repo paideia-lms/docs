@@ -1,78 +1,75 @@
-# Paideia LMS Documentation
+# Astro Docs <picture><source media="(prefers-color-scheme: dark)" srcset="https://astro.build/assets/press/astro-icon-light.png"><source media="(prefers-color-scheme: light)" srcset="https://astro.build/assets/press/astro-icon-dark.png"><img align="right" valign="center" height="79" width="63" src="https://astro.build/assets/press/astro-icon-dark.png" alt="Astro logo" /></picture>
 
-[![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
 
-**Documentation for Paideia LMS - A modern, lightweight Learning Management System built with Bun and React Router v7.**
+To all who come to this happy place: welcome.
 
-This documentation site provides comprehensive guides, API references, and development information for Paideia LMS.
+This is the repo for [docs.astro.build](https://docs.astro.build/).
+This repo contains all the source code we use to build our docs site.
 
-## 📖 About Paideia LMS
+[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/github/withastro/docs)
+[![Open in Codeflow](https://developer.stackblitz.com/img/open_in_codeflow.svg)](https://pr.new/github.com/withastro/docs)
 
-Paideia LMS is a modern alternative to traditional LMS platforms like Moodle, designed for extreme ease of management and deployment as a single executable. Built from the ground up with modern web technologies, it focuses on simplicity, performance, and developer experience while maintaining powerful LMS capabilities.
+## We are Astro
 
-### Key Features
-- **📚 Course Management**: Create and manage courses with assignments, quizzes, content, and grading
-- **👥 User Management**: Comprehensive user creation and role-based access control
-- **🔐 Authentication & Security**: Built-in authentication system with Payload CMS
-- **💾 Data Management**: PostgreSQL database with MinIO S3-compatible storage
-- **🔄 Modern Architecture**: Single executable deployment with lightweight performance
+Astro is an all-in-one web framework for building fast, content-focused websites.
+We want everyone to be successful building sites, and that means helping everyone understand how Astro works.
 
-### Tech Stack
-- **[Bun](https://bun.sh)** - Fast JavaScript runtime and bundler
-- **[React Router v7](https://reactrouter.com/)** - Modern React framework
-- **[Elysia](https://elysiajs.com)** - High-performance web framework
-- **[Payload CMS](https://payloadcms.com/)** - Headless CMS and authentication
-- **[PostgreSQL](https://postgresql.org/)** & **[MinIO](https://min.io/)** - Database and storage
+## You are Awesome
 
-## 🚀 Documentation Structure
+You can also help make the docs awesome.
+Your feedback is welcome.
+Your writing, editing, translating, designing, and developing skills are welcome.
+You being a part of our community is welcome.
 
-This documentation site is built with Astro and Starlight. The structure includes:
+## Chat with Us
 
-```
-.
-├── public/                 # Static assets
-├── src/
-│   ├── assets/            # Images and media
-│   ├── content/
-│   │   └── docs/          # Documentation content
-│   │       ├── guides/    # Implementation guides
-│   │       └── reference/ # API references
-│   └── content.config.ts  # Content configuration
-├── astro.config.mjs       # Astro configuration
-├── package.json
-└── tsconfig.json
-```
+You can learn more about Astro, get support, and meet other devs in [our Discord community](https://astro.build/chat).
 
-Documentation is written in `.md` or `.mdx` files in the `src/content/docs/` directory. Each file becomes a route based on its file name.
+## Raise an Issue
 
-## 🧞 Development Commands
+Is something missing?
+Is something confusing?
+Is something wrong?
 
-All commands are run from the root of the documentation project:
+Creating a new Issue puts a problem on our radar!
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `bun install`            | Installs dependencies                            |
-| `bun dev`                | Starts local dev server at `localhost:4321`     |
-| `bun build`              | Build your production site to `./dist/`         |
-| `bun preview`            | Preview your build locally, before deploying    |
-| `bun astro ...`          | Run CLI commands like `astro add`, `astro check`|
-| `bun astro -- --help`    | Get help using the Astro CLI                    |
+[See if your issue has already been reported](https://github.com/withastro/docs/issues), and if not, [create a new one](https://github.com/withastro/docs/issues/new/choose).
 
-## 🔗 Links
+## Share an Idea
 
-- **[Paideia LMS Repository](https://github.com/hananoshikayomaru/paideia)** - Main project repository
-- **[Starlight Documentation](https://starlight.astro.build/)** - Documentation framework
-- **[Astro Documentation](https://docs.astro.build)** - Static site generator
-- **[Contributing Guide](./src/content/docs/guides/development-guide.md)** - How to contribute to Paideia LMS
+Could something be better?
+Want to share an idea with us?
 
-## 📝 Contributing to Documentation
+Discussions are threads where you can offer feedback on things that might not exactly be problems to be fixed but are ideas to be explored. 
 
-To contribute to this documentation:
+[Join the Docs Discussions](https://github.com/withastro/docs/discussions) where we brainstorm, ask questions, share hopes and dreams...
 
-1. Fork the repository
-2. Create a new branch for your changes
-3. Edit or add `.md` files in `src/content/docs/`
-4. Test locally with `bun dev`
-5. Submit a pull request
+## Make a Fix or Contribution
 
-For contributing to the main Paideia LMS project, see the [Development Guide](./src/content/docs/guides/development-guide.md).
+Did you find a typo, a broken link, or another item with an obvious quick fix?
+
+If you can see what the problem is, and you know how to fix it, then you can make a PR (pull request) with the change and contribute to the docs repo yourself.
+
+> Want to make a larger contribution? Please see [CONTRIBUTING.md](https://github.com/withastro/docs/blob/main/CONTRIBUTING.md) first! 
+
+## Translate a Page
+
+Speak another language natively? 
+
+Join our i18n gang on Discord or jump into the PRs to help with reviewing existing draft translations!
+
+Check out the dedicated [i18n guide](https://contribute.docs.astro.build/guides/i18n/) for more details.
+
+### Translation progress
+
+<a href="https://i18n.docs.astro.build/">
+  <img alt="Details of each language’s progress translating the Astro Docs" width="600" src="https://i18n.docs.astro.build/summary.svg" />
+</a>
+
+## Next Steps
+
+- [Read the docs](https://docs.astro.build/)
+- [Raise an issue](https://github.com/withastro/docs/issues/new)
+- [Participate in a discussion](https://github.com/withastro/docs/discussions)
+- [Join the #docs channel on Discord](https://discord.gg/cZDZU3hJHc)
+

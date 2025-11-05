@@ -1,0 +1,290 @@
+---
+title: Paideia LMSのインストールとセットアップ
+sidebar:
+  label: インストール
+description: 'Paideia LMSのインストールとセットアップ方法。'
+i18nReady: true
+---
+import { Tabs, TabItem, Steps } from '@astrojs/starlight/components';
+
+Paideia LMSには2つのインストール方法があります：**単一バイナリ**（迅速なデプロイに推奨）と**Docker Compose**（完全な制御が必要な本番環境向け）。ニーズに最適な方法を選択してください。
+
+:::tip[インストール前に試す]
+ブラウザでPaideia LMSを試してみませんか？[demo.paideialms.com](https://demo.paideialms.com)にアクセスして、インストールなしですべての機能を探索できます。
+
+デモは、Hetzner CPX21インスタンス（3 vCPU、4GB RAM、80GBローカルディスク）でホストされ、毎日のバックアップ付きで、月額$10未満のコストで、Paideia LMSの効率的なリソース使用を実証しています。
+:::
+
+## 前提条件
+
+### 単一バイナリインストール
+- **オペレーティングシステム**: macOS（ARM64またはx64）またはLinux（ARM64またはx64）
+- **ターミナル**: コマンドラインインターフェースへのアクセス
+
+### Docker Composeインストール
+- **Docker**: Docker Engine 20.10以上
+- **Docker Compose**: Docker Compose v2.0以上
+- **ポート**: ポート3000、3001、5432、9000、9001、4983が利用可能である必要があります
+
+## 単一バイナリインストール
+
+単一バイナリインストールは、Paideia LMSを起動する最も速い方法です。PocketBaseにインスパイアされ、Paideia LMSは必要なすべてを含む単一の実行可能ファイルとして配布されます。
+
+<Steps>
+1. プラットフォーム用のバイナリをダウンロード：
+
+   <Tabs>
+     <TabItem label="macOS ARM64">
+       ```bash
+       curl -L -o paideia https://github.com/paideia-lms/paideia/releases/latest/download/paideia-macos-arm64
+       chmod +x paideia
+       xattr -c paideia
+       ```
+     </TabItem>
+     <TabItem label="Linux ARM64">
+       ```bash
+       curl -L -o paideia https://github.com/paideia-lms/paideia/releases/latest/download/paideia-linux-arm64
+       chmod +x paideia
+       ```
+     </TabItem>
+     <TabItem label="Linux x64">
+       ```bash
+       curl -L -o paideia https://github.com/paideia-lms/paideia/releases/latest/download/paideia-linux-x64
+       chmod +x paideia
+       ```
+     </TabItem>
+   </Tabs>
+
+2. Paideia LMSを実行：
+
+   ```bash
+   ./paideia
+   ```
+
+3. 環境を設定：
+
+   バイナリが初期セットアップをガイドします。以下を提供する必要があります：
+   - データベース接続（PostgreSQL）
+   - ファイルストレージ用のS3/MinIO設定
+   - 管理者ユーザー認証情報
+
+   または、実行前に環境変数を設定：
+
+   ```bash
+   export DATABASE_URL="postgresql://user:password@localhost:5432/paideia_db"
+   export S3_URL="http://localhost:9000"
+   export S3_ACCESS_KEY="your-access-key"
+   export S3_SECRET_KEY="your-secret-key"
+   export S3_BUCKET="paideia-bucket"
+   ./paideia
+   ```
+
+4. Paideia LMSにアクセス：
+
+   ブラウザを開き、`http://localhost:3000`（または`FRONTEND_PORT`環境変数で設定されたポート）に移動します。
+</Steps>
+
+## Docker Composeインストール
+
+本番デプロイまたはインフラストラクチャの完全な制御が必要な場合は、Docker Composeを使用します。このセットアップには、Paideia LMS、PostgreSQLデータベース、MinIO（S3互換ストレージ）、およびDrizzle Gatewayが含まれます。
+
+<Steps>
+1. `docker-compose.yml`ファイルを作成：
+
+   プロジェクトディレクトリに`docker-compose.yml`という名前の新しいファイルを作成：
+
+   ```yaml
+   version: '3.8'
+
+   services:
+     paideia:
+       image: hananoshikayomaru/paideia:latest
+       container_name: paideia
+       restart: no
+       ports:
+         - "3000:3000"
+         - "3001:3001"
+       environment:
+         # Database
+         DATABASE_URL: postgresql://paideia:paideia_password@postgres:5432/paideia_db
+         # S3/MinIO
+         S3_URL: http://minio:9000
+         S3_ACCESS_KEY: paideia_minio
+         S3_SECRET_KEY: paideia_minio_secret
+         S3_ENDPOINT_URL: http://minio:9000
+         S3_BUCKET: paideia-bucket
+         S3_REGION: us-east-1
+         # Payload
+         PAYLOAD_SECRET: change-this-to-a-secure-random-string
+         # Ports (optional, defaults shown)
+         PORT: 3001
+         FRONTEND_PORT: 3000
+         # Email (optional - uncomment if using SMTP)
+         # SMTP_HOST: smtp.example.com
+         # SMTP_USER: your-email@example.com
+         # SMTP_PASS: your-password
+         # RESEND_API_KEY: your-resend-api-key
+         # Email sender (optional, defaults shown)
+         EMAIL_FROM_ADDRESS: info@paideialms.com
+         EMAIL_FROM_NAME: Paideia LMS
+         CORS_ORIGINS: "*"
+         # CSRF_ORIGINS: "https://paideia-13.localcan.dev"
+         # Sandbox mode (optional, default: 0)
+         # SANDBOX_MODE: 0
+       networks:
+         paideia_net:
+           ipv4_address: 172.28.0.2
+       depends_on:
+         - postgres
+         - minio
+
+     postgres:
+       image: postgres:18
+       container_name: paideia_postgres
+       restart: unless-stopped
+       environment:
+         POSTGRES_USER: paideia
+         POSTGRES_PASSWORD: paideia_password
+         POSTGRES_DB: paideia_db
+       ports:
+         - "5432:5432"
+       volumes:
+         - postgres_data:/var/lib/postgresql
+       healthcheck:
+         test: ["CMD-SHELL", "pg_isready -U paideia"]
+         interval: 5s
+         timeout: 5s
+         retries: 10
+       networks:
+         paideia_net:
+           ipv4_address: 172.28.0.3
+
+     minio:
+       image: minio/minio:latest
+       container_name: paideia_minio
+       restart: unless-stopped
+       ports:
+         - "9000:9000"
+         - "9001:9001"
+       environment:
+         MINIO_ROOT_USER: paideia_minio
+         MINIO_ROOT_PASSWORD: paideia_minio_secret
+       volumes:
+         - minio_data:/data
+       command: server /data --console-address ":9001"
+       networks:
+         paideia_net:
+           ipv4_address: 172.28.0.4
+
+     drizzle-gateway:
+       image: ghcr.io/drizzle-team/gateway:latest
+       container_name: drizzle-gateway
+       restart: unless-stopped
+       ports:
+         - "4983:4983"
+       environment:
+         PORT: 4983
+         STORE_PATH: ./app
+         DATABASE_URL: postgresql://paideia:paideia_password@postgres:5432/paideia_db
+       volumes:
+         - drizzle-gateway:/app
+       networks:
+         paideia_net:
+           ipv4_address: 172.28.0.5
+       depends_on:
+         - postgres
+
+   volumes:
+     minio_data:
+     postgres_data:
+     drizzle-gateway:
+
+   networks:
+     paideia_net:
+       driver: bridge
+       ipam:
+         config:
+           - subnet: 172.28.0.0/16
+   ```
+
+2. 環境変数を設定：
+
+   **重要**: 起動前に、`docker-compose.yml`で以下を更新：
+   - `PAYLOAD_SECRET`: 本番環境用の安全なランダム文字列を生成
+   - `POSTGRES_PASSWORD`: デフォルトパスワードを変更
+   - `MINIO_ROOT_PASSWORD`: デフォルトパスワードを変更
+   - `S3_ACCESS_KEY`と`S3_SECRET_KEY`: 本番環境使用のために更新
+   - メール設定: SMTPを使用する場合はコメントを外して設定
+
+3. すべてのサービスを起動：
+
+   ```bash
+   docker-compose up -d
+   ```
+
+4. サービスが実行中であることを確認：
+
+   ```bash
+   docker-compose ps
+   ```
+
+   4つのサービス（paideia、postgres、minio、drizzle-gateway）すべてが「Up」ステータスで表示されるはずです。
+
+5. Paideia LMSにアクセス：
+
+   - **フロントエンド**: [`http://localhost:3000`](http://localhost:3000)
+   - **API**: [`http://localhost:3001`](http://localhost:3001)
+   - **MinIOコンソール**: [`http://localhost:9001`](http://localhost:9001)（`paideia_minio` / `paideia_minio_secret`でログイン）
+   - **Drizzle Gateway**: [`http://localhost:4983`](http://localhost:4983)
+   - **PostgreSQL**: `localhost:5432`
+
+6. 管理者ユーザーを作成：
+
+   初回アクセス時に、管理者アカウントの作成を求められます。画面上の指示に従ってください。
+</Steps>
+
+## 設定
+
+### 環境変数
+
+両方のインストール方法が次の環境変数をサポートしています：
+
+| 変数 | 説明 | デフォルト | 必須 |
+|------|------|-----------|------|
+| `DATABASE_URL` | PostgreSQL接続文字列 | - | はい |
+| `S3_URL` | S3/MinIOエンドポイントURL | - | はい |
+| `S3_ACCESS_KEY` | S3アクセスキー | - | はい |
+| `S3_SECRET_KEY` | S3シークレットキー | - | はい |
+| `S3_BUCKET` | S3バケット名 | - | はい |
+| `S3_REGION` | S3リージョン | `us-east-1` | いいえ |
+| `PORT` | バックエンドAPIポート | `3001` | いいえ |
+| `FRONTEND_PORT` | フロントエンドポート | `3000` | いいえ |
+| `PAYLOAD_SECRET` | ペイロード暗号化用のシークレット | - | はい |
+| `CORS_ORIGINS` | 許可されたCORSオリジン | `*` | いいえ |
+| `EMAIL_FROM_ADDRESS` | メール送信者アドレス | `info@paideialms.com` | いいえ |
+| `EMAIL_FROM_NAME` | メール送信者名 | `Paideia LMS` | いいえ |
+| `SMTP_HOST` | SMTPサーバーホスト | - | いいえ |
+| `SMTP_USER` | SMTPユーザー名 | - | いいえ |
+| `SMTP_PASS` | SMTPパスワード | - | いいえ |
+| `RESEND_API_KEY` | Resend APIキー | - | いいえ |
+| `SANDBOX_MODE` | サンドボックスモードを有効化 | `0` | いいえ |
+
+### セキュリティの推奨事項
+
+1. **デフォルトパスワードを変更**: 本番環境では常にデフォルトパスワードを更新
+2. **安全なシークレットを生成**: `PAYLOAD_SECRET`には暗号学的に安全なランダム文字列を使用
+3. **CORSを適切に設定**: `CORS_ORIGINS: "*"`を実際のドメインに置き換え
+4. **HTTPSを使用**: 本番環境ではリバースプロキシ（nginx、Traefikなど）を設定してHTTPSを構成
+5. **データベースセキュリティ**: 強力なPostgreSQLパスワードを使用し、ネットワーク制限を検討
+
+## 次のステップ
+
+Paideia LMSがインストールされ、実行されたら：
+
+1. **最初のコースを設定**: コースを作成し、コンテンツを追加し、学生を管理
+2. **ユーザー管理を設定**: ロール、権限、アクセス制御を設定
+3. **Microsoftと統合**: Microsoft Teams、OneDrive、Office 365統合を設定
+4. **LTIを有効化**: 外部ツール統合用のLearning Tools Interoperabilityを設定
+5. **AI機能を探索**: AIネイティブ機能を設定して構成
+
+詳細なセットアップ手順については、[設定ガイド](/ja/guides/configuration/)を参照してください。

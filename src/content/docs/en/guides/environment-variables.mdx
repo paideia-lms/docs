@@ -1,0 +1,105 @@
+---
+title: Using environment variables
+sidebar:
+  label: Environment variables
+description: Learn how to configure Paideia LMS using environment variables.
+i18nReady: true
+---
+
+Paideia LMS uses environment variables to configure database connections, file storage, API settings, and other system parameters. You can set environment variables in your hosting environment or by using a `.env` file in the directory where you run the Paideia CLI.
+
+## Setting environment variables
+
+### In your hosting environment
+
+When deploying Paideia LMS to a hosting platform, you typically set environment variables through your hosting provider's control panel or configuration interface. This is the recommended approach for production deployments.
+
+Common hosting platforms include:
+- **Cloud VPS** (Hetzner, DigitalOcean, AWS EC2, etc.): Set environment variables in your systemd service file, `.bashrc`, or system environment
+- **Docker**: Set environment variables in your `docker-compose.yml` file or through Docker's environment variable system
+- **Kubernetes**: Use ConfigMaps and Secrets for environment variables
+- **Platform-as-a-Service** (Heroku, Railway, Render, etc.): Set environment variables through their web interfaces or CLI tools
+
+### Using `.env` files
+
+For local development or when running the Paideia binary directly, you can create a `.env` file in the directory where you run the Paideia CLI.
+
+Just create a `.env` file in your project directory and add your environment variables:
+
+```ini title=".env"
+# Database
+DATABASE_URL=postgresql://user:password@localhost:5432/paideia_db
+
+# S3/MinIO
+S3_URL=http://localhost:9000
+S3_ACCESS_KEY=your-access-key
+S3_SECRET_KEY=your-secret-key
+S3_BUCKET=paideia-bucket
+S3_REGION=us-east-1
+
+# Payload
+PAYLOAD_SECRET=your-secure-random-string
+
+# Ports
+PORT=3001
+FRONTEND_PORT=3000
+
+# CORS
+CORS_ORIGINS=*
+
+# Email
+EMAIL_FROM_ADDRESS=info@paideialms.com
+EMAIL_FROM_NAME=Paideia LMS
+```
+
+When you run the Paideia binary, it will automatically load environment variables from the `.env` file in the current directory.
+
+:::tip[Security best practice]
+Never commit your `.env` file to version control. Add `.env` to your `.gitignore` file to keep sensitive credentials safe.
+:::
+
+### Using the command line
+
+You can also set environment variables directly when running the Paideia binary:
+
+```bash
+DATABASE_URL="postgresql://user:password@localhost:5432/paideia_db" \
+S3_URL="http://localhost:9000" \
+S3_ACCESS_KEY="your-access-key" \
+S3_SECRET_KEY="your-secret-key" \
+S3_BUCKET="paideia-bucket" \
+./paideia
+```
+
+## Environment variables reference
+
+For a complete list of all available environment variables, including descriptions, default values, and whether they are required, see the [Installation and Setup guide](/en/install-and-setup/#environment-variables).
+
+The environment variables include:
+
+- **Database**: `DATABASE_URL` for PostgreSQL connection
+- **Storage**: `S3_URL`, `S3_ACCESS_KEY`, `S3_SECRET_KEY`, `S3_BUCKET`, `S3_REGION` for S3-compatible storage
+- **Security**: `PAYLOAD_SECRET` for encryption, `CORS_ORIGINS` for CORS configuration
+- **Ports**: `PORT` for backend API, `FRONTEND_PORT` for frontend
+- **Email**: `EMAIL_FROM_ADDRESS`, `EMAIL_FROM_NAME`, `SMTP_HOST`, `SMTP_USER`, `SMTP_PASS`, `RESEND_API_KEY`
+- **Other**: `SANDBOX_MODE` for sandbox functionality
+
+## Priority order
+
+When Paideia LMS looks for environment variables, it uses the following priority order (highest to lowest):
+
+1. **`.env` file**: Variables defined in the `.env` file in the current directory
+2. **System environment variables**: Variables set in your system environment
+3. **Default values**: Built-in defaults (if available)
+
+This means that if you set an environment variable both in your system environment and in a `.env` file, the `.env` file value will take precedence.
+
+## Security recommendations
+
+1. **Never commit secrets**: Always add `.env` to your `.gitignore` file
+2. **Use strong secrets**: Generate cryptographically secure random strings for `PAYLOAD_SECRET`
+3. **Restrict CORS**: Replace `CORS_ORIGINS: "*"` with your actual domain(s) in production
+4. **Use secure connections**: Use HTTPS URLs for `S3_URL` and `DATABASE_URL` in production
+5. **Rotate secrets regularly**: Change passwords and API keys periodically
+
+For more security best practices, see the [Installation and Setup guide](/en/install-and-setup/#security-recommendations).

@@ -1,0 +1,31 @@
+---
+import { cachedFetch } from '~/util/cachedFetch';
+
+export interface Props {
+	pkgName?: string;
+	owner?: string;
+	repo?: string;
+}
+
+const { pkgName, owner = 'paideia-lms', repo = 'Paideia' } = Astro.props as Props;
+
+// Default to Paideia LMS repository
+const repositoryOwner = owner;
+const repositoryName = repo;
+
+const url = `https://ungh.cc/repos/${repositoryOwner}/${repositoryName}/releases/latest`;
+
+const response = await cachedFetch(url);
+const json = await response.json();
+
+if (!response.ok) {
+	throw new Error(
+		`GitHub releases API call failed: GET "${url}" returned status ${response.status}: ${JSON.stringify(json)}`
+	);
+}
+
+// Extract version from tag (e.g., "v1.2.3" -> "1.2.3")
+const version = json.release?.tag?.replace(/^v/, '') || 'unknown';
+---
+
+<span>v{version}</span>

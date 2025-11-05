@@ -1,0 +1,87 @@
+---
+title: 入门指南
+description: 帮助你开始使用 Paideia LMS——现代、轻量的学习管理系统——的指南、资源和 API 参考。
+i18nReady: true
+tableOfContents: false
+editUrl: false
+next: false
+
+hero:
+  title: Paideia LMS 文档
+  tagline: 指南、资源和 API 参考，帮助你部署和管理 Paideia LMS。
+  actions:
+    - text: 安装 Paideia
+      icon: rocket
+      link: /zh-cn/install-and-setup/
+    - text: 了解 Paideia 的特性
+      icon: right-arrow
+      variant: minimal
+      link: /zh-cn/concepts/why-paideia/
+  facepile:
+    tagline: 由 Bun、React Router 和我们的开源贡献者提供支持。
+    linkText: 加入我们！
+    link: /zh-cn/contribute/
+---
+
+import { CardGrid, Tabs, TabItem } from '@astrojs/starlight/components'
+import Card from '~/components/Landing/Card.astro'
+import ListCard from '~/components/Landing/ListCard.astro'
+import SplitCard from '~/components/Landing/SplitCard.astro'
+import Discord from '~/components/Landing/Discord.astro'
+
+<CardGrid>
+  <Card title="什么是 Paideia LMS？" icon="laptop">
+    Paideia LMS 是一个现代、轻量的学习管理系统，使用 [Bun](https://bun.sh) 和 [React Router v7](https://reactrouter.com/) 构建。设计为单一可执行文件，极其易于管理和部署。
+  </Card>
+
+  <Card title="快速开始" icon="star">
+    几秒内即可开始！下载预构建的二进制文件，并通过我们的[安装指南](/zh-cn/install-and-setup/)启动你的 LMS。或者[试用演示沙盒](https://demo.paideialms.com)无需安装即可探索 Paideia LMS。
+  </Card>
+
+  <SplitCard title="安装 Paideia" icon="rocket">
+    <Tabs syncKey="paideia-install">
+      <TabItem label="macOS ARM64">
+        ```sh
+        curl -L -o paideia https://github.com/paideia-lms/paideia/releases/latest/download/paideia-macos-arm64
+        chmod +x paideia
+        xattr -c paideia        
+        ./paideia
+        ```
+      </TabItem>
+      <TabItem label="Linux ARM64">
+        ```sh
+        curl -L -o paideia https://github.com/paideia-lms/paideia/releases/latest/download/paideia-linux-arm64
+        chmod +x paideia        
+        ./paideia
+        ```
+      </TabItem>
+      <TabItem label="Linux x64">
+        ```sh
+        curl -L -o paideia https://github.com/paideia-lms/paideia/releases/latest/download/paideia-linux-x64
+        chmod +x paideia
+        ./paideia
+        ```
+      </TabItem>
+    </Tabs>
+
+    我们的[安装指南](/zh-cn/install-and-setup/)提供了在 macOS、Linux 上安装 Paideia 以及使用 Docker Compose 的逐步说明。
+  </SplitCard>
+
+  <ListCard title="核心功能" icon="open-book">
+    - [课程管理](/zh-cn/concepts/course-management/)
+    - [用户管理](/zh-cn/concepts/user-management/)
+    - [访问控制](/zh-cn/concepts/access-control/)
+    - [支付集成](/zh-cn/concepts/payment-integration/)
+    - [版本控制](/zh-cn/concepts/version-control/)
+  </ListCard>
+
+  <ListCard title="开始使用" icon="puzzle">
+    - [安装与设置](/zh-cn/install-and-setup/)
+    - [配置](/zh-cn/guides/configuration/)
+    - [课程管理](/zh-cn/guides/course-management/)
+    - [用户管理](/zh-cn/guides/user-management/)
+    - [API 参考](/zh-cn/reference/api-reference/)
+  </ListCard>
+</CardGrid>
+
+{/* <Discord title="有疑问或想参与其中？" cta="加入我们的 Discord"/> */}

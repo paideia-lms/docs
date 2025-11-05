@@ -1,0 +1,94 @@
+---
+title: 從 Moodle 遷移
+description: 將現有的 Moodle 安裝遷移到 Paideia LMS 的提示
+sidebar:
+  label: Moodle
+type: migration
+stub: true
+framework: Moodle
+i18nReady: true
+---
+
+import { LinkCard, CardGrid } from '@astrojs/starlight/components';
+
+[Moodle](https://moodle.org) 是一個用 PHP 構建的開源學習管理系統。
+
+## Moodle 和 Paideia LMS 的主要相似之處
+
+Moodle 和 Paideia LMS 有一些相似之處，可以幫助你遷移課程和內容：
+
+- Moodle 和 Paideia LMS 都是功能完整的學習管理系統，具有課程管理、使用者管理、作業、測驗和成績簿。
+
+- 兩者都支援透過章節、類別和模組組織課程內容。
+
+- 兩者都包括使用者角色和權限（管理員、講師、學生等）。
+
+- 兩者都支援各種活動類型，包括作業、測驗、討論和頁面。
+
+## Moodle 和 Paideia LMS 的主要區別
+
+當你從 Moodle 遷移到 Paideia LMS 時，你會注意到一些重要的差異：
+
+- **部署:** Moodle 需要 PHP、Web 伺服器和資料庫，而 Paideia LMS 作為單個二進制檔案部署。這使安裝和更新變得更加簡單。
+
+- **技術棧:** Moodle 使用 PHP 和舊技術構建，而 Paideia LMS 使用現代技術（Bun、React Router v7、Elysia、TypeScript）以獲得更好的效能和可維護性。
+
+- **插件架構:** Moodle 在功能上嚴重依賴插件，這可能導致相容性問題和管理開銷。Paideia LMS 包含所有基本功能作為內建功能，消除了對插件的需求。
+
+- **使用者介面:** Moodle 使用自己的模板系統，而 Paideia LMS 使用 React 與 Mantine 元件來提供現代、一致的 UI。
+
+- **資料庫:** Moodle 使用 MySQL/MariaDB/PostgreSQL，而 Paideia LMS 專門使用 PostgreSQL，這提供了更好的效能和可擴展性。
+
+## 從 Moodle 遷移到 Paideia LMS
+
+要將你的 Moodle 安裝遷移到 Paideia LMS，請按照以下步驟操作：
+
+1. **匯出你的 Moodle 資料:**
+   - 匯出課程內容（課程、章節、活動）
+   - 匯出使用者帳戶和註冊資料
+   - 匯出成績簿資料和評估結果
+   - 匯出討論論壇和提交
+
+2. **安裝 Paideia LMS:**
+   - 下載適用於你平台的 Paideia LMS 二進制檔案
+   - 設定 PostgreSQL 資料庫
+   - 設定 S3 相容儲存
+   - 啟動 Paideia LMS 伺服器
+
+3. **匯入你的資料:**
+   - 使用 Paideia LMS 匯入工具遷移課程
+   - 匯入使用者帳戶並設定註冊
+   - 傳輸成績簿資料
+   - 遷移討論論壇和活動提交
+
+4. **設定你的 LMS:**
+   - 設定使用者角色和權限
+   - 設定課程類別
+   - 自訂外觀和品牌
+
+## 遷移注意事項
+
+從 Moodle 遷移到 Paideia LMS 時，請記住：
+
+- **插件:** Moodle 插件在 Paideia LMS 中不起作用。檢查你需要的功能是否在 Paideia LMS 中作為內建功能提供。如果需要自訂功能，Paideia LMS 的現代程式碼庫更容易擴展。
+
+- **主題:** Moodle 主題與 Paideia LMS 不相容。Paideia LMS 使用 React 與 Mantine 元件，開箱即用地提供現代、可自訂的 UI。
+
+- **自訂區塊:** Moodle 區塊在 Paideia LMS 中不受支援。類似的功能可以透過 Paideia LMS 的內建功能或自訂開發來實現。
+
+- **活動模組:** 大多數標準 Moodle 活動模組（作業、測驗、論壇等）在 Paideia LMS 中都有對應的功能。請查看 Paideia LMS 文件以了解功能對等性。
+
+## 社群資源
+
+<CardGrid>
+
+  <LinkCard title="從 Moodle 遷移到現代 LMS 平台" href="#"/>
+
+  <LinkCard title="LMS 遷移最佳實踐" href="#"/>
+
+</CardGrid>
+
+:::note[有想要分享的資源嗎？]
+如果你找到（或製作）了一個關於將 Moodle 安裝轉換為 Paideia LMS 的有用的影片或部落格文章，請將其 [添加到這個列表中](https://github.com/withastro/docs/edit/main/src/content/docs/zh-tw/guides/migrate-to-paideia/from-moodle.mdx)！
+:::
+

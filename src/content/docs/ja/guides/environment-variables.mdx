@@ -1,0 +1,106 @@
+---
+title: 環境変数の使用
+sidebar:
+  label: 環境変数
+description: 環境変数を使用してPaideia LMSを設定する方法を学びます。
+i18nReady: true
+---
+
+Paideia LMSは環境変数を使用して、データベース接続、ファイルストレージ、API設定、その他のシステムパラメータを設定します。ホスティング環境で環境変数を設定するか、Paideia CLIを実行するディレクトリで `.env` ファイルを使用できます。
+
+## 環境変数の設定
+
+### ホスティング環境で
+
+Paideia LMSをホスティングプラットフォームにデプロイする場合、通常はホスティングプロバイダーのコントロールパネルまたは設定インターフェースを通じて環境変数を設定します。これは本番デプロイメントの推奨方法です。
+
+一般的なホスティングプラットフォームには以下があります：
+- **クラウドVPS**（Hetzner、DigitalOcean、AWS EC2など）：systemdサービスファイル、`.bashrc`、またはシステム環境で環境変数を設定
+- **Docker**：`docker-compose.yml`ファイルまたはDockerの環境変数システムを通じて環境変数を設定
+- **Kubernetes**：ConfigMapsとSecretsを使用して環境変数を管理
+- **プラットフォーム即サービス**（Heroku、Railway、Renderなど）：WebインターフェースまたはCLIツールを通じて環境変数を設定
+
+### `.env` ファイルの使用
+
+ローカル開発またはPaideiaバイナリを直接実行する場合は、Paideia CLIを実行するディレクトリに `.env` ファイルを作成できます。
+
+プロジェクトディレクトリに `.env` ファイルを作成し、環境変数を追加します：
+
+```ini title=".env"
+# データベース
+DATABASE_URL=postgresql://user:password@localhost:5432/paideia_db
+
+# S3/MinIO
+S3_URL=http://localhost:9000
+S3_ACCESS_KEY=your-access-key
+S3_SECRET_KEY=your-secret-key
+S3_BUCKET=paideia-bucket
+S3_REGION=us-east-1
+
+# Payload
+PAYLOAD_SECRET=your-secure-random-string
+
+# ポート
+PORT=3001
+FRONTEND_PORT=3000
+
+# CORS
+CORS_ORIGINS=*
+
+# メール
+EMAIL_FROM_ADDRESS=info@paideialms.com
+EMAIL_FROM_NAME=Paideia LMS
+```
+
+Paideiaバイナリを実行すると、現在のディレクトリの `.env` ファイルから環境変数が自動的に読み込まれます。
+
+:::tip[セキュリティのベストプラクティス]
+`.env` ファイルをバージョン管理にコミットしないでください。機密情報を保護するために、`.env` を `.gitignore` ファイルに追加してください。
+:::
+
+### コマンドラインの使用
+
+Paideiaバイナリを実行する際に、環境変数を直接設定することもできます：
+
+```bash
+DATABASE_URL="postgresql://user:password@localhost:5432/paideia_db" \
+S3_URL="http://localhost:9000" \
+S3_ACCESS_KEY="your-access-key" \
+S3_SECRET_KEY="your-secret-key" \
+S3_BUCKET="paideia-bucket" \
+./paideia
+```
+
+## 環境変数リファレンス
+
+利用可能なすべての環境変数の完全なリスト、説明、デフォルト値、必須かどうかについては、[インストールとセットアップガイド](/ja/install-and-setup/#環境変数)を参照してください。
+
+環境変数には以下が含まれます：
+
+- **データベース**：PostgreSQL接続用の `DATABASE_URL`
+- **ストレージ**：S3互換ストレージ用の `S3_URL`、`S3_ACCESS_KEY`、`S3_SECRET_KEY`、`S3_BUCKET`、`S3_REGION`
+- **セキュリティ**：暗号化用の `PAYLOAD_SECRET`、CORS設定用の `CORS_ORIGINS`
+- **ポート**：バックエンドAPI用の `PORT`、フロントエンド用の `FRONTEND_PORT`
+- **メール**：`EMAIL_FROM_ADDRESS`、`EMAIL_FROM_NAME`、`SMTP_HOST`、`SMTP_USER`、`SMTP_PASS`、`RESEND_API_KEY`
+- **その他**：サンドボックス機能用の `SANDBOX_MODE`
+
+## 優先順位
+
+Paideia LMSが環境変数を検索する際、以下の優先順位（高から低）を使用します：
+
+1. **`.env` ファイル**：現在のディレクトリの `.env` ファイルで定義された変数
+2. **システム環境変数**：システム環境で設定された変数
+3. **デフォルト値**：組み込みのデフォルト値（利用可能な場合）
+
+これは、システム環境と `.env` ファイルの両方で環境変数を設定した場合、`.env` ファイルの値が優先されることを意味します。
+
+## セキュリティの推奨事項
+
+1. **シークレットをコミットしない**：常に `.env` を `.gitignore` ファイルに追加してください
+2. **強力なシークレットを使用**：`PAYLOAD_SECRET` には暗号的に安全なランダム文字列を生成してください
+3. **CORSを制限**：本番環境では `CORS_ORIGINS: "*"` を実際のドメインに置き換えてください
+4. **安全な接続を使用**：本番環境では `S3_URL` と `DATABASE_URL` にHTTPS URLを使用してください
+5. **シークレットを定期的にローテーション**：定期的にパスワードとAPIキーを変更してください
+
+セキュリティのベストプラクティスの詳細については、[インストールとセットアップガイド](/ja/install-and-setup/#セキュリティの推奨事項)を参照してください。
+
