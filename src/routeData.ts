@@ -51,12 +51,22 @@ function updateHead(context: APIContext) {
 	// head.push({ tag: 'meta', attrs: { name: 'pagefind:language', content: lang } });
 
 	// Fathom analytics
+	// head.push({
+	// 	tag: 'script',
+	// 	attrs: {
+	// 		src: 'https://cdn.usefathom.com/script.js',
+	// 		'data-site': 'EZBHTSIG',
+	// 		'data-canonical': is404 ? 'false' : 'true',
+	// 		defer: true,
+	// 	},
+	// });
+
+	// Umami analytics
 	head.push({
 		tag: 'script',
 		attrs: {
-			src: 'https://cdn.usefathom.com/script.js',
-			'data-site': 'EZBHTSIG',
-			'data-canonical': is404 ? 'false' : 'true',
+			src: 'https://cloud.umami.is/script.js',
+			'data-website-id': '63b7582a-1ce5-46fd-8635-612cbba6cd1c',
 			defer: true,
 		},
 	});

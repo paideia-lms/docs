@@ -86,37 +86,8 @@ export const sidebar = [
 	// Reference tab
 	group('reference', {
 		items: [
-			group('reference.syntax', {
-				items: ['reference/astro-syntax', 'reference/directives-reference'],
-			}),
 			'reference/configuration-reference',
 			'reference/cli-reference',
-			'guides/imports',
-			'reference/routing-reference',
-			group('reference.runtime', {
-				items: [
-					'reference/api-reference',
-					'reference/modules/astro-actions',
-					'reference/modules/astro-assets',
-					'reference/modules/astro-config',
-					'reference/modules/astro-content',
-					'reference/modules/astro-env',
-					'reference/modules/astro-i18n',
-					'reference/modules/astro-middleware',
-					'reference/modules/astro-transitions',
-				],
-			}),
-			group('reference.other', {
-				items: [
-					'reference/integrations-reference',
-					'reference/adapter-reference',
-					'reference/content-loader-reference',
-					'reference/image-service-reference',
-					'reference/dev-toolbar-app-reference',
-					'reference/container-reference',
-					'reference/programmatic-reference',
-				],
-			}),
 			group('reference.experimental', {
 				items: [
 					'reference/experimental-flags',

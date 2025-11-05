@@ -1,0 +1,499 @@
+---
+title: 設定リファレンス
+description: Paideia LMS のすべての設定オプションの完全なリファレンス。
+i18nReady: true
+---
+
+以下のリファレンスは、Paideia LMS でサポートされているすべての設定オプションをカバーしています。Paideia LMS は、環境変数、`.env` ファイル、および `paideia.config.json` ファイルを通じて設定できます。
+
+## 設定の優先順位
+
+Paideia LMS は、次の優先順位（優先順位が高いものほど優先される）で複数のソースから設定を読み込みます：
+
+1. **`paideia.config.json`** - システム設定ファイル（システム設定の最高優先順位）
+2. **`.env` ファイル** - ローカル環境変数（ホスティング環境より優先順位が高い）
+3. **ホスティング環境変数** - ホスティングプラットフォームによって設定される変数（最低優先順位）
+
+## 環境変数
+
+環境変数は、ホスティング環境で設定するか、アプリケーションを実行するパスにある `.env` ファイルで設定できます。`.env` ファイルはホスティング環境変数よりも優先順位が高くなります。
+
+### データベース設定
+
+#### `DATABASE_URL`
+
+**型:** `string`  
+**必須:** `true`  
+**機密:** `true`
+
+データベースへの接続 URL。これは Paideia LMS がデータベースに接続するために必要です。
+
+```env
+DATABASE_URL=postgresql://user:password@localhost:5432/paideia
+```
+
+### サーバー設定
+
+#### `PORT`
+
+**型:** `number`  
+**必須:** `false`  
+**機密:** `true`  
+**デフォルト:** `3001`
+
+Paideia LMS バックエンドサーバーのポート番号。
+
+```env
+PORT=3001
+```
+
+#### `FRONTEND_PORT`
+
+**型:** `number`  
+**必須:** `false`  
+**機密:** `true`  
+**デフォルト:** `3000`
+
+Paideia LMS フロントエンドアプリケーションのポート番号。
+
+```env
+FRONTEND_PORT=3000
+```
+
+### ストレージ設定（S3/MinIO）
+
+#### `S3_URL`
+
+**型:** `string`  
+**必須:** `true`  
+**機密:** `true`
+
+S3 互換ストレージサービス（例：MinIO、AWS S3）の URL エンドポイント。
+
+```env
+S3_URL=https://s3.amazonaws.com
+```
+
+#### `S3_ACCESS_KEY`
+
+**型:** `string`  
+**必須:** `true`  
+**機密:** `true`
+
+S3 互換ストレージサービスのアクセスキー ID。
+
+```env
+S3_ACCESS_KEY=your-access-key
+```
+
+#### `S3_SECRET_KEY`
+
+**型:** `string`  
+**必須:** `true`  
+**機密:** `true`
+
+S3 互換ストレージサービスの秘密アクセスキー。
+
+```env
+S3_SECRET_KEY=your-secret-key
+```
+
+#### `S3_REGION`
+
+**型:** `string`  
+**必須:** `false`  
+**機密:** `true`  
+**デフォルト:** `"us-east-1"`
+
+S3 互換ストレージサービスのリージョン。
+
+```env
+S3_REGION=us-east-1
+```
+
+#### `S3_BUCKET`
+
+**型:** `string`  
+**必須:** `false`  
+**機密:** `true`
+
+S3 互換ストレージサービスのバケット名。バケット名は MinIO 設定のバケット名と一致する必要があります。
+
+```env
+S3_BUCKET=paideia-media
+```
+
+#### `S3_ENDPOINT_URL`
+
+**型:** `string`  
+**必須:** `true`  
+**機密:** `true`
+
+S3 互換ストレージサービスのエンドポイント URL（バケット名を除く）。これは MinIO 設定のエンドポイント URL と一致する必要があります。
+
+```env
+S3_ENDPOINT_URL=https://storage.example.com
+```
+
+### 認証とセキュリティ
+
+#### `PAYLOAD_SECRET`
+
+**型:** `string`  
+**必須:** `true`  
+**機密:** `true`
+
+Payload CMS が認証と暗号化に使用する秘密キー。これは長く、ランダムに生成された文字列である必要があります。
+
+```env
+PAYLOAD_SECRET=your-secret-key-here
+```
+
+### メール設定
+
+#### `SMTP_HOST`
+
+**型:** `string`  
+**必須:** `false`  
+**機密:** `true`
+
+メール送信に使用する SMTP サーバーのホスト名。
+
+```env
+SMTP_HOST=smtp.example.com
+```
+
+#### `SMTP_USER`
+
+**型:** `string`  
+**必須:** `false`  
+**機密:** `true`
+
+認証に使用する SMTP ユーザー名。
+
+```env
+SMTP_USER=your-smtp-username
+```
+
+#### `SMTP_PASS`
+
+**型:** `string`  
+**必須:** `false`  
+**機密:** `true`
+
+認証に使用する SMTP パスワード。
+
+```env
+SMTP_PASS=your-smtp-password
+```
+
+#### `RESEND_API_KEY`
+
+**型:** `string`  
+**必須:** `false`  
+**機密:** `true`
+
+Resend メールサービスの API キー（SMTP の代替）。
+
+```env
+RESEND_API_KEY=re_your-api-key
+```
+
+#### `EMAIL_FROM_ADDRESS`
+
+**型:** `string`  
+**必須:** `false`  
+**機密:** `false`  
+**デフォルト:** `"info@paideialms.com"`
+
+システムメールの「送信元」アドレスとして使用されるメールアドレス。
+
+```env
+EMAIL_FROM_ADDRESS=noreply@yourdomain.com
+```
+
+#### `EMAIL_FROM_NAME`
+
+**型:** `string`  
+**必須:** `false`  
+**機密:** `false`  
+**デフォルト:** `"Paideia LMS"`
+
+システムメールの「送信元」名として使用される表示名。
+
+```env
+EMAIL_FROM_NAME=Your School Name
+```
+
+### システムモード
+
+#### `SANDBOX_MODE`
+
+**型:** `string`  
+**必須:** `false`  
+**機密:** `false`  
+**デフォルト:** `"0"`
+
+開発とテスト用のサンドボックスモードを有効にします。有効にすると（`"1"` または `"true"`）、システムは初期設定に `seed.json` のシードデータを使用します。
+
+```env
+SANDBOX_MODE=1
+```
+
+### CORS 設定
+
+#### `CORS_ORIGINS`
+
+**型:** `string`  
+**必須:** `false`  
+**機密:** `false`  
+**デフォルト:** `""`
+
+許可される CORS オリジンのカンマ区切りリスト。空の場合は、フロントエンドとバックエンドのポートの localhost URL がデフォルトになります。`"*"` を使用してすべてのオリジンを許可できます（本番環境では推奨されません）。
+
+```env
+CORS_ORIGINS=http://localhost:3000,https://yourdomain.com
+```
+
+**特殊な値:**
+- 空の文字列: `http://localhost:3000` と `http://localhost:3001` がデフォルト
+- `"*"`: すべてのオリジンを許可
+- カンマ区切りの URL: 特定のオリジンを許可
+
+### CSRF 設定
+
+#### `CSRF_ORIGINS`
+
+**型:** `string`  
+**必須:** `false`  
+**機密:** `false`  
+**デフォルト:** `""`
+
+許可される CSRF オリジンのカンマ区切りリスト。空の場合は、localhost フロントエンドポートと "localhost" ホスト名がデフォルトになります。セキュリティ上の理由から、ワイルドカード `"*"` はサポートされていません。
+
+```env
+CSRF_ORIGINS=http://localhost:3000,https://yourdomain.com
+```
+
+**特殊な値:**
+- 空の文字列: `http://localhost:3000` と `"localhost"` がデフォルト
+- カンマ区切りの URL/ドメイン: 特定のオリジンを許可
+
+## シードデータ設定
+
+`SANDBOX_MODE` が有効な場合、Paideia LMS は `seed.json` ファイルのシードデータを使用して、初期テストデータでデータベースを設定できます。このファイルは、アプリケーションを実行するパスに配置する必要があります。
+
+### シードデータスキーマ
+
+`seed.json` ファイルは次の構造に従う必要があります：
+
+```json
+{
+  "admin": {
+    "email": "admin@example.com",
+    "password": "password123",
+    "firstName": "Admin",
+    "lastName": "User"
+  },
+  "users": {
+    "student": {
+      "email": "student@example.com",
+      "password": "password123",
+      "firstName": "Student",
+      "lastName": "User"
+    },
+    "teacher": {
+      "email": "teacher@example.com",
+      "password": "password123",
+      "firstName": "Teacher",
+      "lastName": "User"
+    },
+    "ta": {
+      "email": "ta@example.com",
+      "password": "password123",
+      "firstName": "Teaching",
+      "lastName": "Assistant"
+    },
+    "additionalStudents": [
+      {
+        "email": "student2@example.com",
+        "password": "password123",
+        "firstName": "Student",
+        "lastName": "Two"
+      }
+    ]
+  },
+  "courses": [
+    {
+      "title": "コンピュータサイエンス入門",
+      "description": "初心者向けのコース",
+      "slug": "intro-cs",
+      "status": "published"
+    }
+  ],
+  "modules": {
+    "page": {
+      "title": "ウェルカムページ",
+      "description": "ウェルカムページモジュール",
+      "content": "# ようこそ"
+    },
+    "additional": [
+      {
+        "type": "quiz",
+        "title": "クイズ 1",
+        "description": "最初のクイズ",
+        "status": "published",
+        "instructions": "すべての質問に答えてください",
+        "points": 100,
+        "timeLimit": 60
+      }
+    ]
+  },
+  "sections": [
+    {
+      "title": "第 1 週",
+      "description": "イントロダクション"
+    }
+  ],
+  "enrollmentStatuses": ["active", "inactive", "completed"]
+}
+```
+
+### シードデータフィールド
+
+#### `admin`
+
+**型:** `object`  
+**必須:** `true`
+
+作成する管理者ユーザーアカウント。
+
+- `email` - 管理者メールアドレス
+- `password` - 管理者パスワード
+- `firstName` - 管理者の名
+- `lastName` - 管理者の姓
+
+#### `users`
+
+**型:** `object`  
+**必須:** `true`
+
+テスト用の事前定義されたユーザーアカウント。
+
+- `student` - デフォルトの学生アカウント
+- `teacher` - デフォルトの教師アカウント
+- `ta` - デフォルトのティーチングアシスタントアカウント
+- `additionalStudents` - 追加の学生アカウントの配列
+
+各ユーザーオブジェクトには以下が必要です：
+- `email` - ユーザーメールアドレス
+- `password` - ユーザーパスワード
+- `firstName` - ユーザーの名
+- `lastName` - ユーザーの姓
+
+#### `courses`
+
+**型:** `array`  
+**必須:** `true`
+
+作成するコースの配列。
+
+各コースオブジェクトには以下が必要です：
+- `title` - コースタイトル
+- `description` - コース説明
+- `slug` - コース URL スラッグ
+- `status` - コースステータス：`"published"`、`"draft"`、または `"archived"`
+
+#### `modules`
+
+**型:** `object`  
+**必須:** `true`
+
+テスト用に作成するモジュール。
+
+- `page` - デフォルトのページモジュール
+  - `title` - モジュールタイトル
+  - `description` - モジュール説明
+  - `content` - モジュールコンテンツ（markdown）
+- `additional` - 追加モジュールの配列
+
+各追加モジュールは次のいずれかです：
+- **ページ** (`type: "page"`)
+  - `title`、`description`、`status`、`content`
+- **クイズ** (`type: "quiz"`)
+  - `title`、`description`、`status`、`instructions`、`points`、`timeLimit`
+- **課題** (`type: "assignment"`)
+  - `title`、`description`、`status`、`instructions`、`dueDate`、`maxAttempts`
+- **ディスカッション** (`type: "discussion"`)
+  - `title`、`description`、`status`、`instructions`、`minReplies`、`threadSorting`
+- **ホワイトボード** (`type: "whiteboard"`)
+  - `title`、`description`、`status`
+
+#### `sections`
+
+**型:** `array`  
+**必須:** `true`
+
+作成するコースセクションの配列。
+
+各セクションオブジェクトには以下が必要です：
+- `title` - セクションタイトル
+- `description` - セクション説明
+
+#### `enrollmentStatuses`
+
+**型:** `array`  
+**必須:** `true`
+
+使用する登録ステータスの配列。有効な値：`"active"`、`"inactive"`、`"completed"`
+
+## システム設定ファイル
+
+複雑で構造化された設定（通常はシステム設定）の場合、Paideia LMS はアプリケーションを実行するパスにある `paideia.config.json` ファイルから読み込みます。
+
+### 設定ファイルの優先順位
+
+`paideia.config.json` ファイルは、システム設定の最高優先順位を持ちます。このファイルで定義された値は：
+- **常に**データベースに保存された値を上書きします
+- **編集フィールドをロック**します - UI で、設定ファイルで定義された設定は管理者でも変更できません
+
+例えば、システム名が `paideia.config.json` で定義されている場合、システム名入力フィールドは UI で無効になり、管理者でも変更できません。
+
+### 設定ファイルの例
+
+```json
+{
+  "systemName": "私の学校 LMS",
+  "featureFlags": {
+    "enableNewFeature": true,
+    "enableBetaFeatures": false
+  },
+  "systemSettings": {
+    "maxFileSize": 10485760,
+    "allowedFileTypes": ["pdf", "doc", "docx"]
+  }
+}
+```
+
+### 設定ファイルの動作
+
+`paideia.config.json` で設定が定義されている場合：
+- 設定値はファイルから読み込まれます
+- 設定は UI でロックされます（入力フィールドが無効になります）
+- 管理者は UI を通じて値を上書きできません
+- 設定ファイルの値がデータベースの値より優先されます
+
+これにより、重要なシステム設定は UI ではなく、バージョン管理された設定ファイルを通じて管理できます。
+
+## ベストプラクティス
+
+Paideia LMS を設定する際：
+
+- **`.env` ファイルを使用**してローカル開発と機密情報を管理
+- **ホスティング環境変数を使用**して本番デプロイメントを管理
+- **`paideia.config.json` を使用**してバージョン管理すべきシステム全体の設定を管理
+- **`.env` ファイルを**バージョン管理にコミットしない
+- **常に `paideia.config.json` を**バージョン管理にコミット（機密データを適切に削除）
+- **`seed.json` を**サンドボックスモードでのみ開発とテストに使用
+- **機密値**（パスワード、API キー）を設定ファイルではなく環境変数に保持
+

@@ -1,0 +1,499 @@
+---
+title: 配置參考
+description: Paideia LMS 所有配置選項的完整參考。
+i18nReady: true
+---
+
+以下參考涵蓋了 Paideia LMS 所有支持的配置選項。Paideia LMS 可以通過環境變數、`.env` 檔案和 `paideia.config.json` 檔案進行配置。
+
+## 配置優先級
+
+Paideia LMS 按以下優先級順序從多個來源載入配置（優先級高的會覆蓋優先級低的）：
+
+1. **`paideia.config.json`** - 系統配置檔案（系統設置的優先級最高）
+2. **`.env` 檔案** - 本地環境變數（優先級高於託管環境）
+3. **託管環境變數** - 由託管平台設置的變數（優先級最低）
+
+## 環境變數
+
+環境變數可以在託管環境中設置，也可以在運行應用程式的路徑下的 `.env` 檔案中設置。`.env` 檔案的優先級高於託管環境變數。
+
+### 資料庫配置
+
+#### `DATABASE_URL`
+
+**類型:** `string`  
+**必需:** `true`  
+**敏感:** `true`
+
+資料庫連接 URL。這是 Paideia LMS 連接資料庫所必需的。
+
+```env
+DATABASE_URL=postgresql://user:password@localhost:5432/paideia
+```
+
+### 伺服器配置
+
+#### `PORT`
+
+**類型:** `number`  
+**必需:** `false`  
+**敏感:** `true`  
+**預設值:** `3001`
+
+Paideia LMS 後端伺服器的端口號。
+
+```env
+PORT=3001
+```
+
+#### `FRONTEND_PORT`
+
+**類型:** `number`  
+**必需:** `false`  
+**敏感:** `true`  
+**預設值:** `3000`
+
+Paideia LMS 前端應用程式的端口號。
+
+```env
+FRONTEND_PORT=3000
+```
+
+### 儲存配置（S3/MinIO）
+
+#### `S3_URL`
+
+**類型:** `string`  
+**必需:** `true`  
+**敏感:** `true`
+
+S3 相容儲存服務的 URL 端點（例如 MinIO、AWS S3）。
+
+```env
+S3_URL=https://s3.amazonaws.com
+```
+
+#### `S3_ACCESS_KEY`
+
+**類型:** `string`  
+**必需:** `true`  
+**敏感:** `true`
+
+S3 相容儲存服務的存取金鑰 ID。
+
+```env
+S3_ACCESS_KEY=your-access-key
+```
+
+#### `S3_SECRET_KEY`
+
+**類型:** `string`  
+**必需:** `true`  
+**敏感:** `true`
+
+S3 相容儲存服務的秘密存取金鑰。
+
+```env
+S3_SECRET_KEY=your-secret-key
+```
+
+#### `S3_REGION`
+
+**類型:** `string`  
+**必需:** `false`  
+**敏感:** `true`  
+**預設值:** `"us-east-1"`
+
+S3 相容儲存服務的區域。
+
+```env
+S3_REGION=us-east-1
+```
+
+#### `S3_BUCKET`
+
+**類型:** `string`  
+**必需:** `false`  
+**敏感:** `true`
+
+S3 相容儲存服務的儲存桶名稱。儲存桶名稱必須與 MinIO 配置中的儲存桶名稱匹配。
+
+```env
+S3_BUCKET=paideia-media
+```
+
+#### `S3_ENDPOINT_URL`
+
+**類型:** `string`  
+**必需:** `true`  
+**敏感:** `true`
+
+S3 相容儲存服務的端點 URL（不包含儲存桶名稱）。這應該與 MinIO 配置中的端點 URL 匹配。
+
+```env
+S3_ENDPOINT_URL=https://storage.example.com
+```
+
+### 身份驗證和安全
+
+#### `PAYLOAD_SECRET`
+
+**類型:** `string`  
+**必需:** `true`  
+**敏感:** `true`
+
+Payload CMS 用於身份驗證和加密的密鑰。這應該是一個長且隨機生成的字串。
+
+```env
+PAYLOAD_SECRET=your-secret-key-here
+```
+
+### 電子郵件配置
+
+#### `SMTP_HOST`
+
+**類型:** `string`  
+**必需:** `false`  
+**敏感:** `true`
+
+用於發送電子郵件的 SMTP 伺服器主機名。
+
+```env
+SMTP_HOST=smtp.example.com
+```
+
+#### `SMTP_USER`
+
+**類型:** `string`  
+**必需:** `false`  
+**敏感:** `true`
+
+用於身份驗證的 SMTP 使用者名稱。
+
+```env
+SMTP_USER=your-smtp-username
+```
+
+#### `SMTP_PASS`
+
+**類型:** `string`  
+**必需:** `false`  
+**敏感:** `true`
+
+用於身份驗證的 SMTP 密碼。
+
+```env
+SMTP_PASS=your-smtp-password
+```
+
+#### `RESEND_API_KEY`
+
+**類型:** `string`  
+**必需:** `false`  
+**敏感:** `true`
+
+Resend 電子郵件服務的 API 金鑰（SMTP 的替代方案）。
+
+```env
+RESEND_API_KEY=re_your-api-key
+```
+
+#### `EMAIL_FROM_ADDRESS`
+
+**類型:** `string`  
+**必需:** `false`  
+**敏感:** `false`  
+**預設值:** `"info@paideialms.com"`
+
+用作系統電子郵件「發件人」地址的電子郵件地址。
+
+```env
+EMAIL_FROM_ADDRESS=noreply@yourdomain.com
+```
+
+#### `EMAIL_FROM_NAME`
+
+**類型:** `string`  
+**必需:** `false`  
+**敏感:** `false`  
+**預設值:** `"Paideia LMS"`
+
+用作系統電子郵件「發件人」名稱的顯示名稱。
+
+```env
+EMAIL_FROM_NAME=Your School Name
+```
+
+### 系統模式
+
+#### `SANDBOX_MODE`
+
+**類型:** `string`  
+**必需:** `false`  
+**敏感:** `false`  
+**預設值:** `"0"`
+
+啟用沙盒模式以進行開發和測試。啟用時（`"1"` 或 `"true"`），系統將使用 `seed.json` 中的種子資料進行初始設置。
+
+```env
+SANDBOX_MODE=1
+```
+
+### CORS 配置
+
+#### `CORS_ORIGINS`
+
+**類型:** `string`  
+**必需:** `false`  
+**敏感:** `false`  
+**預設值:** `""`
+
+允許的 CORS 來源的逗號分隔清單。如果為空，則預設為前端和後端端口的 localhost URL。使用 `"*"` 允許所有來源（不推薦用於生產環境）。
+
+```env
+CORS_ORIGINS=http://localhost:3000,https://yourdomain.com
+```
+
+**特殊值:**
+- 空字串：預設為 `http://localhost:3000` 和 `http://localhost:3001`
+- `"*"`：允許所有來源
+- 逗號分隔的 URL：允許特定來源
+
+### CSRF 配置
+
+#### `CSRF_ORIGINS`
+
+**類型:** `string`  
+**必需:** `false`  
+**敏感:** `false`  
+**預設值:** `""`
+
+允許的 CSRF 來源的逗號分隔清單。如果為空，則預設為 localhost 前端端口和 "localhost" 主機名。出於安全原因，不支持通配符 `"*"`。
+
+```env
+CSRF_ORIGINS=http://localhost:3000,https://yourdomain.com
+```
+
+**特殊值:**
+- 空字串：預設為 `http://localhost:3000` 和 `"localhost"`
+- 逗號分隔的 URL/域名：允許特定來源
+
+## 種子資料配置
+
+啟用 `SANDBOX_MODE` 時，Paideia LMS 可以使用 `seed.json` 檔案中的種子資料來填充資料庫的初始測試資料。此檔案應放置在運行應用程式的路徑下。
+
+### 種子資料架構
+
+`seed.json` 檔案必須遵循以下結構：
+
+```json
+{
+  "admin": {
+    "email": "admin@example.com",
+    "password": "password123",
+    "firstName": "Admin",
+    "lastName": "User"
+  },
+  "users": {
+    "student": {
+      "email": "student@example.com",
+      "password": "password123",
+      "firstName": "Student",
+      "lastName": "User"
+    },
+    "teacher": {
+      "email": "teacher@example.com",
+      "password": "password123",
+      "firstName": "Teacher",
+      "lastName": "User"
+    },
+    "ta": {
+      "email": "ta@example.com",
+      "password": "password123",
+      "firstName": "Teaching",
+      "lastName": "Assistant"
+    },
+    "additionalStudents": [
+      {
+        "email": "student2@example.com",
+        "password": "password123",
+        "firstName": "Student",
+        "lastName": "Two"
+      }
+    ]
+  },
+  "courses": [
+    {
+      "title": "計算機科學導論",
+      "description": "適合初學者的課程",
+      "slug": "intro-cs",
+      "status": "published"
+    }
+  ],
+  "modules": {
+    "page": {
+      "title": "歡迎頁面",
+      "description": "歡迎頁面模組",
+      "content": "# 歡迎"
+    },
+    "additional": [
+      {
+        "type": "quiz",
+        "title": "測驗 1",
+        "description": "第一個測驗",
+        "status": "published",
+        "instructions": "回答所有問題",
+        "points": 100,
+        "timeLimit": 60
+      }
+    ]
+  },
+  "sections": [
+    {
+      "title": "第 1 週",
+      "description": "介紹"
+    }
+  ],
+  "enrollmentStatuses": ["active", "inactive", "completed"]
+}
+```
+
+### 種子資料欄位
+
+#### `admin`
+
+**類型:** `object`  
+**必需:** `true`
+
+要建立的管理員使用者帳戶。
+
+- `email` - 管理員電子郵件地址
+- `password` - 管理員密碼
+- `firstName` - 管理員名字
+- `lastName` - 管理員姓氏
+
+#### `users`
+
+**類型:** `object`  
+**必需:** `true`
+
+用於測試的預定義使用者帳戶。
+
+- `student` - 預設學生帳戶
+- `teacher` - 預設教師帳戶
+- `ta` - 預設助教帳戶
+- `additionalStudents` - 附加學生帳戶陣列
+
+每個使用者物件需要：
+- `email` - 使用者電子郵件地址
+- `password` - 使用者密碼
+- `firstName` - 使用者名字
+- `lastName` - 使用者姓氏
+
+#### `courses`
+
+**類型:** `array`  
+**必需:** `true`
+
+要建立的課程陣列。
+
+每個課程物件需要：
+- `title` - 課程標題
+- `description` - 課程描述
+- `slug` - 課程 URL 別名
+- `status` - 課程狀態：`"published"`、`"draft"` 或 `"archived"`
+
+#### `modules`
+
+**類型:** `object`  
+**必需:** `true`
+
+用於測試的模組。
+
+- `page` - 預設頁面模組
+  - `title` - 模組標題
+  - `description` - 模組描述
+  - `content` - 模組內容（markdown）
+- `additional` - 附加模組陣列
+
+每個附加模組可以是以下之一：
+- **頁面** (`type: "page"`)
+  - `title`、`description`、`status`、`content`
+- **測驗** (`type: "quiz"`)
+  - `title`、`description`、`status`、`instructions`、`points`、`timeLimit`
+- **作業** (`type: "assignment"`)
+  - `title`、`description`、`status`、`instructions`、`dueDate`、`maxAttempts`
+- **討論** (`type: "discussion"`)
+  - `title`、`description`、`status`、`instructions`、`minReplies`、`threadSorting`
+- **白板** (`type: "whiteboard"`)
+  - `title`、`description`、`status`
+
+#### `sections`
+
+**類型:** `array`  
+**必需:** `true`
+
+要建立的課程部分陣列。
+
+每個部分物件需要：
+- `title` - 部分標題
+- `description` - 部分描述
+
+#### `enrollmentStatuses`
+
+**類型:** `array`  
+**必需:** `true`
+
+要使用的註冊狀態陣列。有效值：`"active"`、`"inactive"`、`"completed"`
+
+## 系統配置檔案
+
+對於複雜和結構化的設置（通常是系統配置），Paideia LMS 從運行應用程式的路徑下的 `paideia.config.json` 檔案中讀取。
+
+### 配置檔案優先級
+
+`paideia.config.json` 檔案對系統設置具有最高優先級。此檔案中定義的值將：
+- **始終覆蓋**資料庫中儲存的值
+- **鎖定編輯欄位**在 UI 中 - 管理員無法更改在配置檔案中定義的設置
+
+例如，如果系統名稱在 `paideia.config.json` 中定義，系統名稱輸入欄位將在 UI 中禁用，即使管理員也無法更改它。
+
+### 範例配置檔案
+
+```json
+{
+  "systemName": "我的學校 LMS",
+  "featureFlags": {
+    "enableNewFeature": true,
+    "enableBetaFeatures": false
+  },
+  "systemSettings": {
+    "maxFileSize": 10485760,
+    "allowedFileTypes": ["pdf", "doc", "docx"]
+  }
+}
+```
+
+### 配置檔案行為
+
+當在 `paideia.config.json` 中定義設置時：
+- 從檔案讀取設置值
+- 在 UI 中鎖定設置（輸入欄位被禁用）
+- 管理員無法通過 UI 覆蓋值
+- 配置檔案值優先於資料庫值
+
+這確保了關鍵系統設置可以通過版本控制的配置檔案進行管理，而不是通過 UI。
+
+## 最佳實踐
+
+配置 Paideia LMS 時：
+
+- **使用 `.env` 檔案**進行本地開發和敏感憑證
+- **使用託管環境變數**進行生產部署
+- **使用 `paideia.config.json`**用於應該進行版本控制的系統範圍設置
+- **永遠不要將 `.env` 檔案**提交到版本控制
+- **始終將 `paideia.config.json`**提交到版本控制（適當刪除敏感資料）
+- **僅在沙盒模式中使用 `seed.json`**進行開發和測試
+- **將敏感值**（密碼、API 金鑰）保存在環境變數中，而不是配置檔案中
+
