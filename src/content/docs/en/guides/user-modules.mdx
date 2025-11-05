@@ -52,4 +52,37 @@ When a module is first created, it starts in the `draft` status, allowing you to
 
 Modules are organized within courses and can be arranged in a specific order. Instructors can reorder modules to control the learning sequence, ensuring students progress through content in a logical order.
 
+## Activity Modules and Courses
+
+**Activity modules and courses are different entities** in Paideia LMS. You can create activity modules independently without having a course.
+
+In this sense, it is better to understand them as **"user modules"** and **"course modules"**:
+
+- **User modules** are activity modules that you create and own. You have full control over these modules - you can create, update, and delete them (subject to dependency checks).
+- **Course modules** are activity modules that have been added to a course. Once added, the course maintains its own reference to the module, independent of your personal access.
+
+This terminology helps clarify the relationship: user modules are personal content you create, while course modules are shared content used within courses.
+
+### Access Control
+
+Users will only see modules they have access to, and they can only add modules that they have access to their courses. When a module is added to a course, it becomes a "course module" - the course "has access" to the activity module. Even if a user loses access to a module afterwards, it does not affect the course - the course retains access to that module as a course module.
+
+### Module Dependencies
+
+An activity module **cannot be deleted** if some courses depend on it. This ensures that course content remains intact even if module permissions change. When you attempt to delete a user module, the system checks if it's being used as a course module in any courses. If it is, the deletion is prevented to protect course integrity.
+
+This dependency system means that:
+- You can freely delete user modules that aren't used in any courses
+- User modules that are used as course modules cannot be deleted until they're removed from all courses
+- Course modules remain accessible to their courses even if the original creator loses access
+
+### Course Instructor Access
+
+When a user module is added to a course (becoming a course module), the course gives its instructors **read-only access** to that module. Instructors can:
+- View the module content
+- Add the module to other courses they have access to (making it a course module in multiple courses)
+- **Cannot** update or delete the module (only the module creator or users with appropriate permissions can do this)
+
+This design allows user modules to be shared across multiple courses as course modules while maintaining proper access control and preventing unintended modifications. An instructor might discover a useful user module created by another user, add it to their course as a course module, and even add it to additional courses - all without needing edit permissions on the original user module.
+
 <ReadMore>Learn more about each module type in their respective documentation pages.</ReadMore>

@@ -8,18 +8,18 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "format": "pnpm run format:code",
-    "format:ci": "pnpm run format:imports && pnpm run format:code",
+    "format": "bun run format:code",
+    "format:ci": "bun run format:imports && bun run format:code",
     "format:code": "prettier -w . --cache --plugin-search-dir=.",
     "format:imports": "echo 'Skipped formatting imports'",
     "docgen": "node ./scripts/docgen.mjs",
     "docgen:errors": "node ./scripts/error-docgen.mjs",
-    "lint:linkcheck": "SKIP_OG=true pnpm build && tsm --require=./scripts/lib/filter-warnings.cjs ./scripts/lint-linkcheck.ts",
+    "lint:linkcheck": "SKIP_OG=true bun run build && tsm --require=./scripts/lib/filter-warnings.cjs ./scripts/lint-linkcheck.ts",
     "lint:linkcheck:nobuild": "tsm --require=./scripts/lib/filter-warnings.cjs ./scripts/lint-linkcheck.ts",
     "lint:slugcheck": "node ./scripts/lint-slugcheck.mjs",
     "lint:eslint": "eslint .",
     "lint:ja": "textlint --cache --config .textlintrc.ja.json src/content/docs/ja/**/*.{md,mdx}",
-    "netlify:build": "pnpm ${NETLIFY_BUILD_SCRIPT:-build}",
+    "netlify:build": "bun run ${NETLIFY_BUILD_SCRIPT:-build}",
     "lunaria:build": "tsm ./scripts/lunaria.mts"
   },
   "devDependencies": {
@@ -68,23 +68,16 @@
     "@astrojs/starlight": "^0.35.3",
     "@expressive-code/plugin-collapsible-sections": "^0.41.3",
     "@lunariajs/core": "https://pkg.pr.new/lunariajs/lunaria/@lunariajs/core@f07e1a3",
+    "astro-d2": "^0.8.1",
+    "astro-mermaid": "^1.1.0",
     "canvas-confetti": "^1.9.4",
     "jsdoc-api": "^9.3.5",
+    "mermaid": "^11.12.1",
     "rehype-slug": "^6.0.0",
     "remark-gfm": "^4.0.1",
     "remark-smartypants": "^3.0.2",
     "sharp": "^0.34.4",
     "starlight-llms-txt": "^0.6.0"
   },
-  "packageManager": "pnpm@10.15.1",
-  "pnpm": {
-    "peerDependencyRules": {
-      "ignoreMissing": [
-        "@types/react",
-        "react",
-        "react-dom",
-        "vite"
-      ]
-    }
-  }
+  "packageManager": "bun@latest"
 }

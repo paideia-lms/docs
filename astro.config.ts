@@ -1,6 +1,8 @@
 import starlight from '@astrojs/starlight';
 import { pluginCollapsibleSections } from '@expressive-code/plugin-collapsible-sections';
 import { defineConfig, sharpImageService } from 'astro/config';
+import astroD2 from 'astro-d2';
+import mermaid from 'astro-mermaid';
 import rehypeSlug from 'rehype-slug';
 import remarkSmartypants from 'remark-smartypants';
 import { sidebar } from './astro.sidebar';
@@ -27,6 +29,11 @@ export default defineConfig({
 			'./src/content/nav/*.ts', // Sidebar labels
 			'./src/content/docs/**/*.mdx', // Docs content
 		]),
+		mermaid({
+			theme: 'forest',
+			autoTheme: true,
+		}),
+		astroD2(),
 		starlight({
 			title: 'Docs',
 			expressiveCode: {
