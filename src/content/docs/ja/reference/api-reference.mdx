@@ -1,0 +1,55 @@
+---
+title: API リファレンス
+description: Paideia LMS REST API の完全なリファレンス。
+i18nReady: true
+---
+
+:::note[開発中]
+API リファレンスドキュメントは現在開発中です。API 仕様は OpenAPI 経由で利用可能で、Paideia LMS インスタンスの `/openapi.json` でアクセスできます。
+:::
+
+Paideia LMS は、システムへのプログラムによるアクセスを提供する REST API を提供します。API は OpenAPI 仕様を使用して文書化されており、利用可能なエンドポイント、リクエスト/レスポンススキーマ、認証要件を探索できます。
+
+## OpenAPI 仕様
+
+Paideia LMS は OpenAPI（旧 Swagger）をサポートし、以下の場所で API 仕様を提供します：
+
+```
+/openapi.json
+```
+
+このエンドポイントは、Paideia LMS インスタンスでアクセスして、完全な API 仕様を表示できます。OpenAPI 仕様には以下が含まれます：
+
+- 利用可能なすべての API エンドポイント
+- リクエストとレスポンススキーマ
+- 認証要件
+- パラメータの説明
+- リクエストとレスポンスの例
+
+## OpenAPI 仕様の使用
+
+OpenAPI 仕様を使用して：
+
+- **API クライアントを生成** - OpenAPI Generator などのツールを使用して、お好みのプログラミング言語のクライアントライブラリを作成
+- **エンドポイントをテスト** - Swagger UI や Postman などのツールを使用して API と対話
+- **統合を文書化** - 仕様を参照として使用して、Paideia LMS との統合を構築
+
+## API へのアクセス
+
+OpenAPI 仕様は、Paideia LMS インスタンスの `/openapi.json` で公開アクセス可能です。これにより、開発者とツールは、認証なしで利用可能な API エンドポイントを発見し、理解できます。
+
+実際の API アクセスの場合、Paideia LMS インスタンスで設定された適切な認証方法を使用して認証する必要があります。
+
+## 使用例
+
+OpenAPI 仕様を表示するには、以下を実行できます：
+
+1. **直接 URL アクセス**：ブラウザで `https://your-paideia-instance.com/openapi.json` に移動
+2. **curl を使用**：`curl https://your-paideia-instance.com/openapi.json`
+3. **OpenAPI ツール**：多くの OpenAPI ツールが URL から直接仕様を取得して解析できます
+
+## 関連ドキュメント
+
+- [設定リファレンス](/ja/reference/configuration-reference/) - 環境変数と設定オプション
+- [CLI コマンド](/ja/reference/cli-reference/) - Paideia LMS のコマンドラインインターフェース
+

@@ -5,8 +5,8 @@ const LogoCheck = <T extends Record<string, { file: string; padding: string }>>(
 
 export const logos = LogoCheck({
 	alpinejs: { file: 'alpine-js.svg', padding: '.1875em' },
-	moodle: { file: 'alpine-js.svg', padding: '.1875em' },
-	canvas: { file: 'alpine-js.svg', padding: '.1875em' },
+	moodle: { file: 'Moodle-logo.svg', padding: '.1875em' },
+	canvas: { file: 'Canvas_Icon_Color_CMYK.png', padding: '.1875em' },
 	aws: { file: 'aws.svg', padding: '.1875em' },
 	buddy: { file: 'buddy.svg', padding: '.1625em' },
 	deployhq: { file: 'deployhq.svg', padding: '.1625em' },

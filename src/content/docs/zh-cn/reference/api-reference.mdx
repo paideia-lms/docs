@@ -1,0 +1,55 @@
+---
+title: API 参考
+description: Paideia LMS REST API 的完整参考。
+i18nReady: true
+---
+
+:::note[开发中]
+API 参考文档目前正在开发中。API 规范可通过 OpenAPI 获取，可在您的 Paideia LMS 实例的 `/openapi.json` 访问。
+:::
+
+Paideia LMS 提供了一个 REST API，用于以编程方式访问系统。API 使用 OpenAPI 规范进行文档化，允许您探索可用的端点、请求/响应模式以及身份验证要求。
+
+## OpenAPI 规范
+
+Paideia LMS 支持 OpenAPI（原 Swagger），并在以下位置提供 API 规范：
+
+```
+/openapi.json
+```
+
+您可以在任何 Paideia LMS 实例上访问此端点以查看完整的 API 规范。OpenAPI 规范包括：
+
+- 所有可用的 API 端点
+- 请求和响应模式
+- 身份验证要求
+- 参数描述
+- 示例请求和响应
+
+## 使用 OpenAPI 规范
+
+您可以使用 OpenAPI 规范来：
+
+- **生成 API 客户端** - 使用 OpenAPI Generator 等工具为您首选的编程语言创建客户端库
+- **测试端点** - 使用 Swagger UI 或 Postman 等工具与 API 交互
+- **文档集成** - 使用规范作为构建与 Paideia LMS 集成的参考
+
+## 访问 API
+
+OpenAPI 规范可在您的 Paideia LMS 实例的 `/openapi.json` 公开访问。这允许开发人员和工具发现和理解可用的 API 端点，而无需身份验证。
+
+对于实际的 API 访问，您需要使用在您的 Paideia LMS 实例中配置的适当身份验证方法进行身份验证。
+
+## 使用示例
+
+要查看 OpenAPI 规范，您可以：
+
+1. **直接 URL 访问**：在浏览器中导航到 `https://your-paideia-instance.com/openapi.json`
+2. **使用 curl**：`curl https://your-paideia-instance.com/openapi.json`
+3. **OpenAPI 工具**：许多 OpenAPI 工具可以直接从 URL 获取并解析规范
+
+## 相关文档
+
+- [配置参考](/zh-cn/reference/configuration-reference/) - 环境变量和配置选项
+- [CLI 命令](/zh-cn/reference/cli-reference/) - Paideia LMS 的命令行界面
+

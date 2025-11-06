@@ -1,0 +1,75 @@
+---
+title: 整合
+description: 了解 Paideia LMS 中可用的整合。
+sidebar:
+  label: 整合概覽
+i18nReady: true
+---
+
+Paideia LMS 支援與外部系統和服務的整合，以增強功能並簡化教育機構的工作流程。
+
+## 概覽
+
+整合允許 Paideia LMS 連接到外部工具和服務，實現無縫的資料交換、身份驗證和增強功能。這對於使用多個系統並需要它們協同工作的教育機構尤其重要。
+
+## 學習工具互通性 (LTI)
+
+Paideia LMS 支援**學習工具互通性 (LTI)**，這是由 1EdTech（原 IMS Global Learning Consortium）開發的標準，可實現學習系統與外部教育工具之間的無縫整合。
+
+LTI 允許 Paideia LMS：
+
+- 託管由外部或第三方系統提供的課程內容和工具
+- 允許學習者存取外部工具而無需單獨登入
+- 與外部系統共享學習者資訊和學習上下文
+- 使外部工具能夠將成績結果發送回 Paideia LMS
+
+LTI 使用 OAuth2、OpenID Connect 和 JSON Web Tokens (JWT) 進行安全的身份驗證和資料交換。該標準被主要的教育內容提供商和學習管理系統廣泛採用。
+
+:::note[LTI 標準]
+LTI 是一個行業標準，可實現不同教育技術平台之間的互通性。有關更多資訊，請參閱 [學習工具互通性維基百科文章](https://en.wikipedia.org/wiki/Learning_Tools_Interoperability)。
+:::
+
+## Microsoft 整合
+
+Paideia LMS 包含內建的 **Microsoft 整合**，支援：
+
+### Microsoft Teams
+
+與 Microsoft Teams 的整合允許您：
+
+- 與 Teams 同步課程內容和活動
+- 實現 Teams 和 Paideia LMS 之間的無縫協作
+- 直接從 Teams 存取課程材料
+
+### Microsoft 多因素身份驗證 (MFA)
+
+許多學校使用 Microsoft MFA 來增強安全性。Paideia LMS 支援 Microsoft MFA 配置，允許機構：
+
+- 使用 Microsoft 的身份驗證系統進行使用者登入
+- 利用現有的 Microsoft Active Directory (Azure AD) 基礎設施
+- 在系統間保持一致的身份驗證策略
+- 為使用者提供單一登入體驗
+
+對於已經投資於 Microsoft 生態系統並希望利用其現有身份驗證基礎設施的教育機構來說，此整合特別有價值。
+
+## 未來整合
+
+我們願意新增更多與複雜系統的整合，以增強 Paideia LMS 功能。我們正在考慮的一些潛在整合包括：
+
+- 其他身份驗證提供商
+- 視訊會議平台
+- 學生資訊系統 (SIS)
+- 圖書館管理系統
+- 評估和監考工具
+- 預訂和調度系統
+
+## 建議新整合
+
+我們歡迎新整合的建議！如果您有對您的機構或更廣泛的 Paideia LMS 社群有益的整合想法，請隨時：
+
+- 在 [GitHub Discussions](https://github.com/paideia-lms/paideia/discussions) 上開啟討論
+- 分享您的使用案例和需求
+- 描述整合將如何使使用者受益
+
+我們致力於構建為使用 Paideia LMS 的教育機構帶來真正價值的整合。您的回饋有助於我們確定優先開發哪些整合。
+

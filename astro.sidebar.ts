@@ -88,6 +88,7 @@ export const sidebar = [
 		items: [
 			'reference/configuration-reference',
 			'reference/cli-reference',
+			'reference/api-reference',
 			// group('reference.experimental', {
 			// 	items: [
 			// 		'reference/experimental-flags',

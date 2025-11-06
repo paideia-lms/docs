@@ -1,0 +1,55 @@
+---
+title: API Reference
+description: Complete reference for Paideia LMS REST API.
+i18nReady: true
+---
+
+:::note[Under Development]
+The API reference documentation is currently under development. The API specification is available via OpenAPI and can be accessed at `/openapi.json` on your Paideia LMS instance.
+:::
+
+Paideia LMS provides a REST API for programmatic access to the system. The API is documented using the OpenAPI specification, which allows you to explore the available endpoints, request/response schemas, and authentication requirements.
+
+## OpenAPI Specification
+
+Paideia LMS supports OpenAPI (formerly Swagger) and provides the API specification at:
+
+```
+/openapi.json
+```
+
+You can access this endpoint on any Paideia LMS instance to view the complete API specification. The OpenAPI specification includes:
+
+- All available API endpoints
+- Request and response schemas
+- Authentication requirements
+- Parameter descriptions
+- Example requests and responses
+
+## Using the OpenAPI Specification
+
+You can use the OpenAPI specification to:
+
+- **Generate API clients** - Use tools like OpenAPI Generator to create client libraries for your preferred programming language
+- **Test endpoints** - Use tools like Swagger UI or Postman to interact with the API
+- **Document integration** - Use the specification as a reference for building integrations with Paideia LMS
+
+## Accessing the API
+
+The OpenAPI specification is publicly accessible at `/openapi.json` on your Paideia LMS instance. This allows developers and tools to discover and understand the available API endpoints without requiring authentication.
+
+For actual API access, you will need to authenticate using the appropriate authentication method configured in your Paideia LMS instance.
+
+## Example Usage
+
+To view the OpenAPI specification, you can:
+
+1. **Direct URL access**: Navigate to `https://your-paideia-instance.com/openapi.json` in your browser
+2. **Using curl**: `curl https://your-paideia-instance.com/openapi.json`
+3. **OpenAPI tools**: Many OpenAPI tools can directly fetch and parse the specification from the URL
+
+## Related Documentation
+
+- [Configuration Reference](/en/reference/configuration-reference/) - Environment variables and configuration options
+- [CLI Commands](/en/reference/cli-reference/) - Command-line interface for Paideia LMS
+
