@@ -78,4 +78,17 @@ const links = category === 'informative'
 	.modules-nav {
 		margin-bottom: 2rem;
 	}
+
+	/* Make module icons visible in both light and dark themes */
+	.modules-nav :global(.logo img) {
+		/* In dark theme: invert black icons to white for visibility on dark background */
+		filter: invert(1);
+		opacity: 0.9;
+	}
+
+	/* In light theme: keep icons black (no invert) for visibility on light background */
+	:global(:root[data-theme='light']) .modules-nav :global(.logo img) {
+		filter: none;
+		opacity: 0.9;
+	}
 </style>

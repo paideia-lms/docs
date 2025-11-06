@@ -38,12 +38,18 @@ const pixelSize = unit === 'px' ? valueAsNumber : valueAsNumber * 16;
 		font-size: var(--logo-size);
 		width: 1em;
 		height: 1em;
-		/* Allows logos to be visible in both light/dark. Hardcoded because variant colours adjust to theme */
+		/* Theme-aware background for logos */
 		background-color: hsl(224, 10%, 10%);
 		border: 1px solid hsl(224, 10%, 23%);
 		/* Indicates the brand logo boundaries for forced colors users, transparent is changed to a solid color */
 		outline: 1px solid transparent;
 		overflow: hidden;
+	}
+
+	/* Light theme: use lighter background */
+	:global(:root[data-theme='light']) .logo {
+		background-color: hsl(224, 10%, 90%);
+		border: 1px solid hsl(224, 10%, 75%);
 	}
 
 	.circle {

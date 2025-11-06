@@ -113,11 +113,11 @@ export const logos = LogoCheck({
 	optimizely: { file: 'optimizely.svg', padding: '.2em' },
 	zephyr: { file: 'zephyr.svg', padding: '0' },
 	seenode: { file: 'seenode.svg', padding: '.2em' },
-	'user-module-page': { file: 'alpine-js.svg', padding: '.1875em' },
-	'user-module-whiteboard': { file: 'alpine-js.svg', padding: '.1875em' },
-	'user-module-assignment': { file: 'alpine-js.svg', padding: '.1875em' },
-	'user-module-quiz': { file: 'alpine-js.svg', padding: '.1875em' },
-	'user-module-discussion': { file: 'alpine-js.svg', padding: '.1875em' },
+	'user-module-page': { file: 'page-svgrepo-com.svg', padding: '.1875em' },
+	'user-module-whiteboard': { file: 'whiteboard-9-svgrepo-com.svg', padding: '.1875em' },
+	'user-module-assignment': { file: 'assignment-svgrepo-com.svg', padding: '.1875em' },
+	'user-module-quiz': { file: 'exam-a-plus-svgrepo-com.svg', padding: '.1875em' },
+	'user-module-discussion': { file: 'discussion-svgrepo-com.svg', padding: '.1875em' },
 });
 
 export type LogoKey = keyof typeof logos;
