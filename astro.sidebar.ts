@@ -14,6 +14,7 @@ export const sidebar = [
 	group('start', {
 		items: [
 			'getting-started',
+			'gallery',
 			'tutorial/0-introduction',
 			group('start.welcome', {
 				items: [
@@ -26,7 +27,11 @@ export const sidebar = [
 				items: ['install-and-setup'],
 			}),
 			group('start.config', {
-				items: ['guides/configuring-paideia', 'guides/environment-variables', 'guides/build-with-ai'],
+				items: [
+					'guides/configuring-paideia',
+					'guides/environment-variables',
+					'guides/build-with-ai',
+				],
 			}),
 			group('start.migrate', {
 				collapsed: true,

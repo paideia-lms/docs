@@ -24,7 +24,7 @@ Paideia LMS 提供两种安装方法：**单文件二进制**（推荐用于快�
 ### Docker Compose 安装
 - **Docker**：Docker Engine 20.10 或更高版本
 - **Docker Compose**：Docker Compose v2.0 或更高版本
-- **端口**：端口 3000、3001、5432、9000、9001 和 4983 应该可用
+- **端口**：端口 3000、3001、5432、9000、9001 应该可用
 
 ## 单文件二进制安装
 
@@ -86,7 +86,7 @@ Paideia LMS 提供两种安装方法：**单文件二进制**（推荐用于快�
 
 ## Docker Compose 安装
 
-对于生产部署或需要完全控制基础设施的情况，使用 Docker Compose。此设置包括 Paideia LMS、PostgreSQL 数据库、MinIO（S3 兼容存储）和 Drizzle Gateway。
+对于生产部署或需要完全控制基础设施的情况，使用 Docker Compose。此设置包括 Paideia LMS、PostgreSQL 数据库、MinIO（S3 兼容存储）。
 
 <Steps>
 1. 创建 `docker-compose.yml` 文件：
@@ -176,28 +176,9 @@ Paideia LMS 提供两种安装方法：**单文件二进制**（推荐用于快�
          paideia_net:
            ipv4_address: 172.28.0.4
 
-     drizzle-gateway:
-       image: ghcr.io/drizzle-team/gateway:latest
-       container_name: drizzle-gateway
-       restart: unless-stopped
-       ports:
-         - "4983:4983"
-       environment:
-         PORT: 4983
-         STORE_PATH: ./app
-         DATABASE_URL: postgresql://paideia:paideia_password@postgres:5432/paideia_db
-       volumes:
-         - drizzle-gateway:/app
-       networks:
-         paideia_net:
-           ipv4_address: 172.28.0.5
-       depends_on:
-         - postgres
-
    volumes:
      minio_data:
      postgres_data:
-     drizzle-gateway:
 
    networks:
      paideia_net:
@@ -228,14 +209,13 @@ Paideia LMS 提供两种安装方法：**单文件二进制**（推荐用于快�
    docker-compose ps
    ```
 
-   你应该看到所有四个服务（paideia、postgres、minio、drizzle-gateway）都处于 "Up" 状态。
+   你应该看到所有三个服务（paideia、postgres、minio）都处于 "Up" 状态。
 
 5. 访问 Paideia LMS：
 
    - **前端**：[`http://localhost:3000`](http://localhost:3000)
    - **API**：[`http://localhost:3001`](http://localhost:3001)
    - **MinIO 控制台**：[`http://localhost:9001`](http://localhost:9001)（使用 `paideia_minio` / `paideia_minio_secret` 登录）
-   - **Drizzle Gateway**：[`http://localhost:4983`](http://localhost:4983)
    - **PostgreSQL**：`localhost:5432`
 
 6. 创建管理员用户：

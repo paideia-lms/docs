@@ -24,7 +24,7 @@ The demo is hosted on a Hetzner CPX21 instance (3 vCPU, 4GB RAM, 80GB local disk
 ### Docker Compose Installation
 - **Docker**: Docker Engine 20.10 or higher
 - **Docker Compose**: Docker Compose v2.0 or higher
-- **Ports**: Ports 3000, 3001, 5432, 9000, 9001, and 4983 should be available
+- **Ports**: Ports 3000, 3001, 5432, 9000, and 9001 should be available
 
 ## Single Binary Installation
 
@@ -86,7 +86,7 @@ The single binary installation is the fastest way to get Paideia LMS running. In
 
 ## Docker Compose Installation
 
-For production deployments or when you need full control over the infrastructure, use Docker Compose. This setup includes Paideia LMS, PostgreSQL database, MinIO (S3-compatible storage), and Drizzle Gateway.
+For production deployments or when you need full control over the infrastructure, use Docker Compose. This setup includes Paideia LMS, PostgreSQL database, MinIO (S3-compatible storage).
 
 <Steps>
 1. Create a `docker-compose.yml` file:
@@ -176,28 +176,9 @@ For production deployments or when you need full control over the infrastructure
          paideia_net:
            ipv4_address: 172.28.0.4
 
-     drizzle-gateway:
-       image: ghcr.io/drizzle-team/gateway:latest
-       container_name: drizzle-gateway
-       restart: unless-stopped
-       ports:
-         - "4983:4983"
-       environment:
-         PORT: 4983
-         STORE_PATH: ./app
-         DATABASE_URL: postgresql://paideia:paideia_password@postgres:5432/paideia_db
-       volumes:
-         - drizzle-gateway:/app
-       networks:
-         paideia_net:
-           ipv4_address: 172.28.0.5
-       depends_on:
-         - postgres
-
    volumes:
      minio_data:
      postgres_data:
-     drizzle-gateway:
 
    networks:
      paideia_net:
@@ -228,14 +209,13 @@ For production deployments or when you need full control over the infrastructure
    docker-compose ps
    ```
 
-   You should see all four services (paideia, postgres, minio, drizzle-gateway) in "Up" status.
+   You should see all three services (paideia, postgres, minio) in "Up" status.
 
 5. Access Paideia LMS:
 
    - **Frontend**: [`http://localhost:3000`](http://localhost:3000)
    - **API**: [`http://localhost:3001`](http://localhost:3001)
    - **MinIO Console**: [`http://localhost:9001`](http://localhost:9001) (login with `paideia_minio` / `paideia_minio_secret`)
-   - **Drizzle Gateway**: [`http://localhost:4983`](http://localhost:4983)
    - **PostgreSQL**: `localhost:5432`
 
 6. Create your admin user:

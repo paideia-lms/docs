@@ -1,0 +1,212 @@
+---
+import 'photoswipe/style.css';
+
+interface Props {
+	images: Array<{ src: string; title: string; alt?: string; width?: number; height?: number }>;
+	galleryId?: string;
+}
+
+const { images } = Astro.props;
+const galleryId = Astro.props.galleryId || `gallery-${Math.random().toString(36).substring(7)}`;
+---
+
+<div class="gallery-container" data-gallery-id={galleryId}>
+	<div id={galleryId} class="gallery-grid">
+		{images.map((image) => (
+			<a
+				href={image.src}
+				data-pswp-width={image.width || 'auto'}
+				data-pswp-height={image.height || 'auto'}
+				data-pswp-title={image.title}
+				class="gallery-item"
+				aria-label={image.alt || image.title}
+			>
+				<img 
+					src={image.src} 
+					alt={image.alt || image.title} 
+					loading="lazy"
+					data-pswp-width={image.width}
+					data-pswp-height={image.height}
+				/>
+				<div class="gallery-item-overlay">
+					<span class="gallery-item-title">{image.title}</span>
+				</div>
+			</a>
+		))}
+	</div>
+</div>
+
+<script>
+	import PhotoSwipeLightbox from 'photoswipe/lightbox';
+
+	// Find all gallery containers and initialize each one
+	(function() {
+		function initAllGalleries() {
+			const galleryContainers = document.querySelectorAll('[data-gallery-id]');
+			
+			galleryContainers.forEach((container) => {
+				if (!(container instanceof HTMLElement)) return;
+				const galleryId = container.dataset.galleryId;
+				if (!galleryId) return;
+				
+				const gallery = document.querySelector(`#${galleryId}`);
+				if (!gallery || !(gallery instanceof HTMLElement)) return;
+
+				// Check if already initialized
+				if (gallery.dataset.pswpInitialized === 'true') return;
+
+				// Load actual image dimensions for images without explicit dimensions
+				const links = gallery.querySelectorAll('a');
+				links.forEach((link) => {
+					const img = link.querySelector('img');
+					if (img && (!link.dataset.pswpWidth || link.dataset.pswpWidth === 'auto')) {
+						img.addEventListener('load', function() {
+							link.dataset.pswpWidth = img.naturalWidth.toString();
+							link.dataset.pswpHeight = img.naturalHeight.toString();
+						});
+						// If already loaded
+						if (img.complete && img.naturalWidth) {
+							link.dataset.pswpWidth = img.naturalWidth.toString();
+							link.dataset.pswpHeight = img.naturalHeight.toString();
+						}
+					}
+				});
+
+				// Prevent default link behavior
+				links.forEach((link) => {
+					link.addEventListener('click', (e) => {
+						e.preventDefault();
+					}, { capture: true });
+				});
+
+				const lightboxInstance = new PhotoSwipeLightbox({
+					gallery: `#${galleryId}`,
+					children: 'a',
+					pswpModule: () => import('photoswipe'),
+					loop: false,
+				});
+
+				// Override itemData to use actual image dimensions
+				lightboxInstance.on('itemData', (e) => {
+					const links = gallery.querySelectorAll('a');
+					const link = Array.from(links).find((l) => l.href === e.itemData.src || l.getAttribute('href') === e.itemData.src);
+					
+					if (link) {
+						const img = link.querySelector('img');
+						if (img) {
+							// If image is already loaded, use its natural dimensions
+							if (img.complete && img.naturalWidth) {
+								e.itemData.width = img.naturalWidth;
+								e.itemData.height = img.naturalHeight;
+							} else {
+								// Wait for image to load
+								img.addEventListener('load', function() {
+									e.itemData.width = img.naturalWidth;
+									e.itemData.height = img.naturalHeight;
+								}, { once: true });
+							}
+						}
+						
+						// Fallback to data attributes if available
+						if (!e.itemData.width && link.dataset.pswpWidth && link.dataset.pswpWidth !== 'auto') {
+							e.itemData.width = parseInt(link.dataset.pswpWidth);
+							e.itemData.height = parseInt(link.dataset.pswpHeight || '1080');
+						}
+					}
+				});
+
+				// Handle clicks manually to ensure PhotoSwipe opens
+				links.forEach((link, index) => {
+					link.addEventListener('click', (e) => {
+						e.preventDefault();
+						e.stopPropagation();
+						lightboxInstance.loadAndOpen(index);
+					});
+				});
+
+				lightboxInstance.init();
+				gallery.dataset.pswpInitialized = 'true';
+			});
+		}
+
+		// Wait for DOM to be ready
+		if (document.readyState === 'loading') {
+			document.addEventListener('DOMContentLoaded', initAllGalleries);
+		} else {
+			// DOM already ready, but wait a bit for Astro hydration
+			setTimeout(initAllGalleries, 100);
+		}
+	})();
+</script>
+
+<style>
+	.gallery-container {
+		width: 100%;
+		margin: 2rem 0;
+	}
+
+	.gallery-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+		gap: 1rem;
+		margin: 0;
+		padding: 0;
+	}
+
+	.gallery-item {
+		position: relative;
+		display: block;
+		aspect-ratio: 1;
+		overflow: hidden;
+		border-radius: 0.5rem;
+		border: 1px solid var(--sl-color-gray-5);
+		cursor: pointer;
+		transition: transform 0.2s ease, box-shadow 0.2s ease;
+		background: var(--sl-color-gray-6);
+	}
+
+	.gallery-item:hover {
+		transform: translateY(-2px);
+		box-shadow: var(--sl-shadow-md);
+		border-color: var(--sl-color-gray-3);
+	}
+
+	.gallery-item img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+	}
+
+	.gallery-item-overlay {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+		padding: 1rem;
+		opacity: 0;
+		transition: opacity 0.2s ease;
+		pointer-events: none;
+	}
+
+	.gallery-item:hover .gallery-item-overlay {
+		opacity: 1;
+	}
+
+	.gallery-item-title {
+		color: white;
+		font-size: 0.875rem;
+		font-weight: 500;
+		display: block;
+		text-align: center;
+	}
+
+	@media (max-width: 768px) {
+		.gallery-grid {
+			grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+			gap: 0.75rem;
+		}
+	}
+</style>
+

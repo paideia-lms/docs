@@ -24,7 +24,7 @@ Paideia LMSには2つのインストール方法があります：**単一バイ
 ### Docker Composeインストール
 - **Docker**: Docker Engine 20.10以上
 - **Docker Compose**: Docker Compose v2.0以上
-- **ポート**: ポート3000、3001、5432、9000、9001、4983が利用可能である必要があります
+- **ポート**: ポート3000、3001、5432、9000、9001が利用可能である必要があります
 
 ## 単一バイナリインストール
 
@@ -86,7 +86,7 @@ Paideia LMSには2つのインストール方法があります：**単一バイ
 
 ## Docker Composeインストール
 
-本番デプロイまたはインフラストラクチャの完全な制御が必要な場合は、Docker Composeを使用します。このセットアップには、Paideia LMS、PostgreSQLデータベース、MinIO（S3互換ストレージ）、およびDrizzle Gatewayが含まれます。
+本番デプロイまたはインフラストラクチャの完全な制御が必要な場合は、Docker Composeを使用します。このセットアップには、Paideia LMS、PostgreSQLデータベース、MinIO（S3互換ストレージ）が含まれます。
 
 <Steps>
 1. `docker-compose.yml`ファイルを作成：
@@ -176,28 +176,9 @@ Paideia LMSには2つのインストール方法があります：**単一バイ
          paideia_net:
            ipv4_address: 172.28.0.4
 
-     drizzle-gateway:
-       image: ghcr.io/drizzle-team/gateway:latest
-       container_name: drizzle-gateway
-       restart: unless-stopped
-       ports:
-         - "4983:4983"
-       environment:
-         PORT: 4983
-         STORE_PATH: ./app
-         DATABASE_URL: postgresql://paideia:paideia_password@postgres:5432/paideia_db
-       volumes:
-         - drizzle-gateway:/app
-       networks:
-         paideia_net:
-           ipv4_address: 172.28.0.5
-       depends_on:
-         - postgres
-
    volumes:
      minio_data:
      postgres_data:
-     drizzle-gateway:
 
    networks:
      paideia_net:
@@ -228,14 +209,13 @@ Paideia LMSには2つのインストール方法があります：**単一バイ
    docker-compose ps
    ```
 
-   4つのサービス（paideia、postgres、minio、drizzle-gateway）すべてが「Up」ステータスで表示されるはずです。
+   3つのサービス（paideia、postgres、minio）すべてが「Up」ステータスで表示されるはずです。
 
 5. Paideia LMSにアクセス：
 
    - **フロントエンド**: [`http://localhost:3000`](http://localhost:3000)
    - **API**: [`http://localhost:3001`](http://localhost:3001)
    - **MinIOコンソール**: [`http://localhost:9001`](http://localhost:9001)（`paideia_minio` / `paideia_minio_secret`でログイン）
-   - **Drizzle Gateway**: [`http://localhost:4983`](http://localhost:4983)
    - **PostgreSQL**: `localhost:5432`
 
 6. 管理者ユーザーを作成：

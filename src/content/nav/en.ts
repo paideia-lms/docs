@@ -4,6 +4,7 @@ export default {
 	'start.newProject': 'Start a new project',
 	'start.config': 'Configuration',
 	'start.migrate': 'Migrate to Paideia',
+	gallery: 'Gallery',
 
 	guides: 'Concepts and learnings',
 	'guides.userRoles': 'User and roles',

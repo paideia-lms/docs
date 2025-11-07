@@ -6,6 +6,7 @@ export default navDictionary({
 	'start.newProject': '新規プロジェクトの作成',
 	'start.config': '設定ファイルの構成',
 	'start.migrate': 'Paideiaへの移行',
+	gallery: 'ギャラリー',
 
 	guides: '概念と学習',
 	'guides.userRoles': 'ユーザーとロール',
