@@ -55,18 +55,18 @@ export const Meta = html`
 	<title>Astro Docs Translation Status</title>
 	<meta
 		name="description"
-		content="Translation progress tracker for the Astro Docs site. See how much has been translated in your language and get involved!"
+		content="Translation progress tracker for the Paideia LMS Docs site. See how much has been translated in your language and get involved!"
 	/>
 	<meta property="last-build" content="${new Date(Date.now()).toString()}" />
-	<link rel="canonical" href="https://i18n.docs.astro.build/" />
-	<meta property="og:title" content="Astro Docs Translation Status" />
+	<!-- <link rel="canonical" href="https://i18n.docs.paideialms.com/" /> -->
+	<meta property="og:title" content="Paideia LMS Docs Translation Status" />
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://i18n.docs.astro.build/" />
+	<!-- <meta property="og:url" content="https://i18n.docs.paideialms.com/" /> -->
 	<meta
 		property="og:description"
 		content="Translation progress tracker for the Astro Docs site. See how much has been translated in your language and get involved!"
 	/>
-	<link rel="icon" href="https://docs.astro.build/favicon.ico" type="image/x-icon" />
+	<link rel="icon" href="https://docs.paideialms.com/favicon.ico" type="image/x-icon" />
 	<!-- <link rel="icon" href="https://docs.astro.build/favicon.svg" type="image/svg+xml" /> -->
 `;
 
@@ -141,9 +141,8 @@ export const LocaleDetails = (
 				${ProgressBar(status.length, outdatedFiles.length, missingFiles.length)}
 			</summary>
 			${outdatedFiles.length > 0 ? OutdatedFiles(outdatedFiles, lang, lunaria) : ''}
-			${
-				missingFiles.length > 0
-					? html`<h3 class="capitalize">Missing</h3>
+			${missingFiles.length > 0
+				? html`<h3 class="capitalize">Missing</h3>
 						<ul>
 							${missingFiles.map((file) => {
 								const localization = file.localizations.find(
@@ -157,13 +156,10 @@ export const LocaleDetails = (
 								`;
 							})}
 						</ul>`
-					: ''
-			}
-			${
-				missingFiles.length == 0 && outdatedFiles.length == 0
-					? html`<p>This translation is complete, amazing job! 🎉</p>`
-					: ''
-			}
+				: ''}
+			${missingFiles.length == 0 && outdatedFiles.length == 0
+				? html`<p>This translation is complete, amazing job! 🎉</p>`
+				: ''}
 		</details>
 	`;
 };
@@ -186,9 +182,8 @@ export const OutdatedFiles = (
 
 				return html`
 					<li>
-						${
-							isMissingKeys
-								? html`
+						${isMissingKeys
+							? html`
 									<details>
 										<summary>${ContentDetailsLinks(file, lang, lunaria)}</summary>
 										<h4>Missing keys</h4>
@@ -197,8 +192,7 @@ export const OutdatedFiles = (
 										</ul>
 									</details>
 								`
-								: html` ${ContentDetailsLinks(file, lang, lunaria)} `
-						}
+							: html` ${ContentDetailsLinks(file, lang, lunaria)} `}
 					</li>
 				`;
 			})}
@@ -343,6 +337,8 @@ export const ProgressBar = (
 	const getBlocks = (size: number, type: 'missing' | 'outdated' | 'up-to-date') => {
 		const items = [];
 		for (let i = 0; i < size; i++) {
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore
 			items.push(html`<div class="${type}-bar"></div>`);
 		}
 		return items;
@@ -359,13 +355,13 @@ export const ProgressBar = (
 export const TitleParagraph = html`
 	<p>
 		If you're interested in helping us translate
-		<a href="https://docs.astro.build/">docs.astro.build</a> into one of the languages listed below,
-		you've come to the right place! This auto-updating page always lists all the content that could
-		use your help right now.
+		<a href="https://docs.paideialms.com/">docs.paideialms.com</a> into one of the languages listed
+		below, you've come to the right place! This auto-updating page always lists all the content that
+		could use your help right now.
 	</p>
 	<p>
 		Before starting, please read our
-		<a href="https://contribute.docs.astro.build/guides/i18n/">i18n Guide</a>
+		<a href="https://contribute.docs.paideialms.com/guides/i18n/">i18n Guide</a>
 		to learn about our translation process and how you can get involved.
 	</p>
 `;
@@ -428,12 +424,10 @@ function SvgLocaleSummary(
 				>${label} (${lang})</text
 			>
 			<text x="0" y="26" font-size="9" fill="#999">
-				${
-					missingFiles.length == 0 && outdatedFiles.length == 0
-						? '100% complete, amazing job! 🎉'
-						: html`${doneLength} done, ${outdatedFiles.length} outdated, ${missingFiles.length}
-						missing`
-				}
+				${missingFiles.length == 0 && outdatedFiles.length == 0
+					? '100% complete, amazing job! 🎉'
+					: html`${doneLength} done, ${outdatedFiles.length} outdated, ${missingFiles.length}
+						missing`}
 			</text>
 			<rect x="0" y="34" width="${barWidth}" height="8" fill="#999" opacity="0.25"></rect>
 			<rect x="0" y="34" width="${outdatedWidth}" height="8" fill="#fb923c"></rect>
