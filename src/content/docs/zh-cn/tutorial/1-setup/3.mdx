@@ -1,70 +1,105 @@
 ---
 type: tutorial
-title: 你的第一行 Astro 代码
+title: 配置环境
 description: |-
-  教程：搭建你的 Astro 博客 —
-   对教程项目主页的首次编辑
+  Paideia LMS 入门教程 —
+  设置数据库和存储，并配置环境变量
 ---
+
 import Checklist from '~/components/Checklist.astro';
 import Box from '~/components/tutorial/Box.astro';
-import InstallGuideTabGroup from '~/components/TabGroup/InstallGuideTabGroup.astro';
-import PackageManagerTabs from '~/components/tabs/PackageManagerTabs.astro';
 import PreCheck from '~/components/tutorial/PreCheck.astro';
 import { Steps } from '@astrojs/starlight/components';
 
 <PreCheck>
-  - 对新网站的第一次编辑
+  - 设置 PostgreSQL 数据库
+  - 配置 S3 兼容存储
+  - 设置环境变量
 </PreCheck>
 
-## 编辑你的主页
+## 配置环境
+
+在运行 Paideia LMS 之前，你需要设置数据库和存储，并配置环境变量。
+
+### 设置 PostgreSQL
 
 <Steps>
-1. 打开你的代码编辑器，然后在资源管理器文件窗口中导航至 `src/pages/index.astro`，并单击文件名打开文件内容。
+1. 确保 PostgreSQL 正在运行且可访问。如果你使用 Docker Compose，PostgreSQL 将包含在内。
 
-    `index.astro` 文件的内容应该如下所示：
+2. 为 Paideia LMS 创建数据库：
 
-    ```astro title="src/pages/index.astro"
-    ---
-    ---
+   ```bash
+   createdb paideia_db
+   ```
 
-    <html lang="zh-cn">
-      <head>
-        <meta charset="utf-8" />
-        <link rel="icon" type ="image/svg+xml" href="/favicon.svg" />
-        <meta name="viewport" content="width=device-width" />
-        <meta name="generator" content = {Astro.generator} >
-        <title>Astro</title>
-      </head>
-      <body>
-        <h1>Astro</h1>
-      </body>
-    </html>
-    ```
-
-2. 编辑页面 `<body>` 的内容。
-
-    在编辑器中更改页面上的标题文本并保存。
-
-    ```astro title="src/pages/index.astro" del={2} ins={3}
-    <body>
-      <h1>Astro</h1>
-      <h1>我的 Astro 站点</h1>
-    </body>
-    ```
-
-3. 检查浏览器预览，你应该会看到你的页面内容已更新。
+   或者，如果你使用远程数据库，请通过数据库管理工具创建。
 </Steps>
 
-恭喜！你现在是一名 Astro 开发人员！
+### 设置 S3 兼容存储
 
-本单元的其余部分，将教会你版本控制和发布可以炫耀的网站。
+<Steps>
+3. 设置 MinIO 或其他 S3 兼容存储服务。如果你使用 Docker Compose，MinIO 将包含在内。
+
+   对于本地 MinIO 设置，你可以使用 Docker：
+
+   ```bash
+   docker run -d \
+     -p 9000:9000 \
+     -p 9001:9001 \
+     -e MINIO_ROOT_USER=paideia_minio \
+     -e MINIO_ROOT_PASSWORD=paideia_minio_secret \
+     minio/minio server /data --console-address ":9001"
+   ```
+
+4. 为 Paideia LMS 创建存储桶。访问 `http://localhost:9001` 的 MinIO 控制台，创建一个名为 `paideia-bucket` 的存储桶。
+</Steps>
+
+### 配置环境变量
+
+<Steps>
+5. 在运行 Paideia LMS 之前设置环境变量：
+
+   ```bash
+   export DATABASE_URL="postgresql://user:password@localhost:5432/paideia_db"
+   export S3_URL="http://localhost:9000"
+   export S3_ACCESS_KEY="paideia_minio"
+   export S3_SECRET_KEY="paideia_minio_secret"
+   export S3_BUCKET="paideia-bucket"
+   export PAYLOAD_SECRET="your-secure-random-string-here"
+   ```
+
+   :::caution[安全性]
+   确保在生产环境中为 `PAYLOAD_SECRET` 使用安全的随机字符串。你可以使用以下命令生成：
+   
+   ```bash
+   openssl rand -base64 32
+   ```
+   :::
+
+6. 可选地，你可以在与二进制文件相同的目录中创建 `.env` 文件：
+
+   ```bash
+   cat > .env << EOF
+   DATABASE_URL=postgresql://user:password@localhost:5432/paideia_db
+   S3_URL=http://localhost:9000
+   S3_ACCESS_KEY=paideia_minio
+   S3_SECRET_KEY=paideia_minio_secret
+   S3_BUCKET=paideia-bucket
+   PAYLOAD_SECRET=your-secure-random-string-here
+   EOF
+   ```
+</Steps>
+
+恭喜！你的环境现在已经配置好，可以运行 Paideia LMS 了！
 
 <Box icon="check-list">
 
 ## 任务清单
 
 <Checklist>
-- [ ] 我可以更改页面内容，并在浏览器中查看。
-- [ ] 我是 Astro 开发者！
+- [ ] 我已经设置了 PostgreSQL 数据库。
+- [ ] 我已经配置了 S3 兼容存储。
+- [ ] 我已经设置了环境变量。
+- [ ] 我准备好运行 Paideia LMS 了！
 </Checklist>
 </Box>

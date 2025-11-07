@@ -1,9 +1,9 @@
 ---
 type: tutorial
-title: 将你的网站部署到网络
+title: 启动 Paideia LMS 并访问你的实例
 description: |-
-  教程：搭建你的 Astro 博客 —
-   将教程项目的 GitHub 仓库连接到 Netlify 并部署到网络
+  Paideia LMS 入门教程 —
+  启动 Paideia LMS 服务器并在浏览器中访问你的实例
 ---
 import Checklist from '~/components/Checklist.astro';
 import Box from '~/components/tutorial/Box.astro';
@@ -14,55 +14,94 @@ import { Steps } from '@astrojs/starlight/components';
 import Badge from "~/components/Badge.astro"
 
 <PreCheck>
-  - 将你的 GitHub 仓库添加为新的 Netlify 应用程序
-  - 将你的 Astro 网站部署到网络
+  - 启动 Paideia LMS 服务器
+  - 在浏览器中访问 Paideia LMS
+  - 创建管理员账户
 </PreCheck>
 
-在这里，你会将 GitHub 仓库连接到 Netlify。每次你提交代码更改时，Netlify 都会使用该项目在网络上实时构建和部署你的站点。
+## 启动 Paideia LMS
 
-:::tip[我们将使用……]
-本教程将使用 **Netlify**，但你可以使用任何你喜欢的网站托管服务来将你的站点部署到网络。
-:::
-
-## 创建一个新的 Netlify 站点
+现在你的环境已经配置好了，你可以启动 Paideia LMS 服务器。
 
 <Steps>
-1. 如果你还没有账号，请在 [Netlify](https://netlify.com) 创建一个免费账号。
+1. 启动 Paideia LMS 服务器：
 
-     记下你的用户名。你可以在 `https://app.netlify.com/teams/username` 查看仪表板和你创建的网站
+   ```bash
+   ./paideia server
+   ```
 
-2. 单击<kbd>Add new site</kbd> > <kbd>Import an existing project</kbd>。
+   或者简单地：
 
-     系统会要求你连接到 Git 提供商。选择 GitHub 并按照屏幕上的步骤验证你的 GitHub 账号。然后，从提供的列表中选择你的 Astro 项目的 GitHub 仓库。
+   ```bash
+   ./paideia
+   ```
 
-3. 在最后一步，Netlify 将向你显示应用程序的站点设置。对于你的 Astro 项目，默认值应该是正确的，因此你可以向下滚动并单击 <kbd>Deploy site</kbd>。
+   服务器将启动并在配置的端口上监听（默认：后端 API 为 `3001`，前端为 `3000`）。
+
+2. 等待服务器启动。你应该在终端中看到 Paideia LMS 正在运行的确认信息。
+
+   :::tip[服务器启动]
+   如果有待处理的迁移，服务器将在启动时自动运行数据库迁移。
+   :::
 </Steps>
 
-恭喜你拥有一个 Astro 网站！
+## 访问 Paideia LMS
 
-## 更改你的项目名称
+<Steps>
+3. 打开浏览器并导航到 `http://localhost:3000`（或通过 `FRONTEND_PORT` 环境变量配置的端口）。
 
-在 Netlify 中你网站的预览页面上，你将看到随机生成的项目名称，以及格式为`https://project-name-123456.netlify.app`的网站 URL。你可以将项目名称更改为更容易记住的名称，这个操作将会自动更新你的 URL。
+   你应该看到 Paideia LMS 登录页面。
 
-## 访问你的新网站
+4. 首次访问时，系统会提示你创建管理员账户。按照屏幕上的说明创建管理员用户。
 
-单击站点设置中的 URL，或将其输入在浏览器地址栏来查看你的新网站。
+   :::caution[首次设置]
+   确保记住你的管理员凭据！你需要它们来登录和管理你的 Paideia LMS 实例。
+   :::
+
+5. 创建管理员账户后，登录以访问 Paideia LMS 仪表板。
+</Steps>
+
+恭喜！你现在已经运行并可以访问 Paideia LMS 了！
+
+## 验证安装
+
+<Steps>
+6. 探索 Paideia LMS 界面：
+
+   - 检查仪表板
+   - 浏览不同的部分
+   - 验证所有功能都可以访问
+
+7. 检查 API 端点：
+
+   导航到 `http://localhost:3001` 以验证 API 正在运行（你应该看到 API 文档或健康检查响应）。
+</Steps>
+
+:::tip[运行 Paideia LMS]
+
+当 Paideia LMS 服务器正在运行时，你可以：
+- 在 `http://localhost:3000` 访问 Web 界面
+- 在 `http://localhost:3001` 访问 API
+- 通过在终端中按 <kbd>Ctrl + C</kbd> 随时停止服务器
+
+服务器将继续运行，直到你停止它或关闭终端。
+:::
 
 <Box icon="question-mark">
 
 ### 小测试
 
-你现在想更新现有网站的主页。应该采取以下哪些步骤？
+你想在更改配置后重新启动 Paideia LMS。应该采取哪些步骤？
 
   <MultipleChoice>
     <Option>
-      打开一个终端，运行 `create astro`，然后访问我的 Netlify URL。
-    </Option>
-    <Option>
-      在 Netlify 应用程序中更改我的设置，然后在 Astro.new 上开始一个新的 Astro 项目。
+      打开终端，运行 `./paideia migrate fresh`，然后访问我的 localhost URL。
     </Option>
     <Option isCorrect>
-      对 `index.astro` 进行编辑。将更改提交并推送到 GitHub。Netlify 将处理剩下的事情！
+      使用 Ctrl+C 停止服务器，更新环境变量，然后再次运行 `./paideia server`。
+    </Option>
+    <Option>
+      在 Web 界面中更改设置，然后重启计算机。
     </Option>
   </MultipleChoice>
  </Box>
@@ -72,11 +111,14 @@ import Badge from "~/components/Badge.astro"
 ## 任务清单
 
 <Checklist>
-- [ ] 我可以在线查看我更新后的网站。
-- [ ] 我准备好去编写代码了！
+- [ ] 我可以启动 Paideia LMS 服务器。
+- [ ] 我可以在浏览器中访问 Paideia LMS。
+- [ ] 我已经创建了管理员账户。
+- [ ] 我准备好创建第一个课程了！
 </Checklist>
 </Box>
 
 ### 相关资源
 
-- <p>[在 Netlify 上进行部署的详细指南](https://www.netlify.com/blog/2016/09/29/a-step-by-step-guide-deploying-on-netlify/) <Badge class="neutral-badge" text="外部链接" /></p>
+- <p>[安装和设置指南](/zh-cn/install-and-setup/) <Badge class="neutral-badge" text="内部链接" /> — 完整的安装和配置指南</p>
+- <p>[CLI 参考](/zh-cn/reference/cli-reference/) <Badge class="neutral-badge" text="内部链接" /> — 所有 CLI 命令的参考</p>

@@ -1,10 +1,10 @@
 ---
 type: tutorial
-unitTitle: 初めてのAstroサイトの作成とデプロイ
+unitTitle: Paideia LMSのインストールとセットアップ
 title: 'ユニット1の導入 - 準備'
 description: >-
-  「初めてのAstroブログ」チュートリアル -
-  開発環境を準備し、初めてのAstroサイトを作成してデプロイする
+  Paideia LMSの始め方チュートリアル -
+  環境を準備し、Paideia LMSをインストールして最初のインスタンスを設定する
 i18nReady: true
 ---
 
@@ -14,58 +14,32 @@ import { Steps } from '@astrojs/starlight/components';
 
 これから何を作成するのかわかったところで、必要なツールを準備していきましょう！
 
-このユニットでは、開発環境の準備とNetlifyへのデプロイ方法を説明します。すでに開発環境やワークフローについて理解している場合は、[ユニット2](/ja/tutorial/2-pages/)に進んでください。
+このユニットでは、Paideia LMSのインストール、データベースとストレージのセットアップ、環境の設定方法を説明します。すでにPaideia LMSをインストールして設定している場合は、[ユニット2](/ja/tutorial/2-users/)に進んでください。
 
-:::tip[stackblitzを使う]
+:::tip[インストール前に試す]
 
-チュートリアルをオンラインのコードエディターで進めたいですか？
-<details>
-<summary>以下の手順に従って、ユニット2に進んでください！</summary>
+インストール前にPaideia LMSを試したいですか？[demo.paideialms.com](https://demo.paideialms.com)にアクセスして、インストールなしですべての機能を探索できます。
 
-**StackBlitzを設定する**
-
-<Steps>
-1. [astro.new](https://astro.new)にアクセスし、「Empty Project」テンプレートの「Open in StackBlitz」ボタンをクリックします。
-
-2. 右上にある「Sign in」ボタンをクリックして、GitHubの認証情報を使いログインします。
-
-3. StackBlitzのエディタウィンドウの左上にある「Fork」をクリックして、テンプレートを保存します。
-
-4. プロジェクトが読み込まれるまで待つと、「Empty Project」スターターのライブプレビューが表示されます。
-</Steps>
-
-**変更を加える**
-
-ファイルペインに`src/pages/index.astro`があるはずです。これをクリックして開き、[初めてのAstroコードを書く](/ja/tutorial/1-setup/3/)に従ってこのファイルを変更します。
-
-**GitHubリポジトリを作成する**
-
-<Steps>
-1. ファイルリストの一番上にある<kbd>Connect Repository</kbd>ボタンを押して、新しいリポジトリの名前を入力し、<kbd>Create repo & push</kbd>をクリックします。
-
-2. GitHubにコミットすべき変更があると、ワークスペースの左上に「Commit」ボタンが表示されます。これをクリックすると、コミットメッセージを入力してリポジトリを更新できます。
-</Steps>
-
-**サイトをデプロイする**
-
-Netlifyにデプロイする場合は、[サイトをウェブにデプロイする](/ja/tutorial/1-setup/5/)に進んでください。その他の場合は[ユニット2](/ja/tutorial/2-pages/)に進み、Astroでの開発を始めてください！
-
-</details>
+デモは、Hetzner CPX21インスタンス（3 vCPU、4GB RAM、80GBローカルディスク）でホストされ、毎日のバックアップ付きで、月額$10未満のコストで、Paideia LMSの効率的なリソース使用を実証しています。
 :::
 
 ## これから向かう場所
 
-このユニットでは、**GitHubに保存**され、**Netlifyに接続**された**新しいプロジェクトの作成**をおこないます。
+このユニットでは、**Paideia LMSをダウンロードしてインストール**し、**データベースとストレージをセットアップ**し、**環境を設定**します。
 
-コードを書いている途中で、変更を定期的にGitHubにコミットします。Netlifyは、GitHubリポジトリ内のファイルを使用してウェブサイトをビルドし、誰でも閲覧できる一意のアドレスでインターネット上に公開します。
+次のことを学びます：
+- Paideia LMSバイナリのインストール
+- PostgreSQLデータベースのセットアップ
+- S3互換ストレージの設定
+- 環境変数の設定
+- Paideia LMSインスタンスへのアクセス
 
-GitHubに変更をコミットするたびに、Netlifyに通知が送信されます。すると、Netlifyは自動的にサイトを再ビルドし、変更を反映した上でサイトを再公開します。
-
+インストールが完了したら、次のユニットで最初のコースを作成する準備が整います！
 
 <Box icon="check-list">
 ## チェックリスト
 
 <Checklist>
-- [ ] Astroプロジェクトの開発環境を準備する用意ができた！
+- [ ] Paideia LMSをインストールしてセットアップする用意ができた！
 </Checklist>
 </Box>

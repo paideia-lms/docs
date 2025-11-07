@@ -1,0 +1,144 @@
+---
+type: tutorial
+title: Manage student enrolments
+description: |-
+  Tutorial: Getting Started with Paideia LMS —
+  Enrol students in your course and manage their roles and access
+i18nReady: true
+---
+import Box from '~/components/tutorial/Box.astro';
+import Checklist from '~/components/Checklist.astro';
+import MultipleChoice from '~/components/tutorial/MultipleChoice.astro';
+import Option from '~/components/tutorial/Option.astro';
+import PreCheck from '~/components/tutorial/PreCheck.astro';
+import { Steps } from '@astrojs/starlight/components';
+import Badge from "~/components/Badge.astro"
+
+Now that your course has content, it's time to enrol students! Enrolments connect users to courses and define their permissions within that course.
+
+<PreCheck>
+  - Enrol users in your course
+  - Assign enrolment roles (student, teacher, TA, manager)
+  - Manage enrolment status
+</PreCheck>
+
+## Enrol users in your course
+
+<Steps>
+1. Navigate to the course enrolment management interface. You can usually find this by clicking "Enrolments" or "Manage Students" in your course.
+
+2. Click "Add Enrolment" or "Enrol User".
+
+3. Select a user to enrol:
+   - Search for users by name or email
+   - Select the user you want to enrol
+   - Choose their enrolment role (see roles below)
+
+4. Set enrolment details:
+   - **Role**: Choose from Student, Teacher, Teaching Assistant (TA), or Manager
+   - **Status**: Set to Active (default), Inactive, Completed, or Dropped
+   - **Groups** (optional): Assign the user to groups (we'll cover this in the next step)
+
+5. Save the enrolment.
+
+   :::tip[Enrolment roles]
+   Paideia LMS has four distinct enrolment roles:
+   - **Student**: Standard learner role
+   - **Teacher**: Primary instructor with full course control
+   - **Teaching Assistant (TA)**: Support role with limited instructor permissions
+   - **Manager**: Administrative support role
+   :::
+</Steps>
+
+## Understanding enrolment roles
+
+<Steps>
+6. Understand what each role can do:
+
+   **Student**:
+   - View course content
+   - Submit assignments
+   - Take quizzes
+   - Participate in discussions
+
+   **Teacher**:
+   - Manage all course content
+   - Grade student work
+   - Manage enrolments
+   - Access course settings
+
+   **Teaching Assistant (TA)**:
+   - Grade student work
+   - View course settings
+   - Assist with course management tasks
+
+   **Manager**:
+   - Manage enrolments
+   - Access course settings
+   - View reports and analytics
+</Steps>
+
+## Manage enrolment status
+
+<Steps>
+7. Update enrolment status as needed:
+
+   - **Active** (default): User is actively enrolled and participating
+   - **Inactive**: Enrolment is temporarily paused
+   - **Completed**: User has successfully completed the course
+   - **Dropped**: User has withdrawn from the course
+
+8. View enrolment information:
+   - See all course participants in the enrolment interface
+   - View user details (name, email)
+   - Check current role and status
+   - See last access information
+</Steps>
+
+<Box icon="question-mark">
+### Test your knowledge
+
+1. Which enrolment role has full course control and can grade student work?
+
+    <MultipleChoice>
+      <Option>
+        Student
+      </Option>
+      <Option isCorrect>
+        Teacher
+      </Option>
+      <Option>
+        Manager
+      </Option>
+    </MultipleChoice>
+
+2. What is the default enrolment status when a user is enrolled?
+
+    <MultipleChoice>
+      <Option isCorrect>
+        Active
+      </Option>
+      <Option>
+        Inactive
+      </Option>
+      <Option>
+        Completed
+      </Option>
+    </MultipleChoice>
+</Box>
+
+<Box icon="check-list">
+## Checklist
+
+<Checklist>
+- [ ] I can enrol users in my course.
+- [ ] I understand the different enrolment roles.
+- [ ] I can manage enrolment status.
+- [ ] I'm ready to organize students into groups!
+</Checklist>
+</Box>
+
+### Resources
+
+- [Enrolments Overview](/en/guides/enrolments-overview/) - Learn more about enrolments and course roles
+- [User Overview](/en/basics/user-overview/) - Learn about system-wide roles vs. course roles

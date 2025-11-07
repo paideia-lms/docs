@@ -1,0 +1,121 @@
+---
+type: tutorial
+title: Organize students into groups
+description: |-
+  Tutorial: Getting Started with Paideia LMS —
+  Create groups and assign students for collaborative activities and flexible organization
+i18nReady: true
+---
+import Box from '~/components/tutorial/Box.astro';
+import Checklist from '~/components/Checklist.astro';
+import PreCheck from '~/components/tutorial/PreCheck.astro';
+import { Steps } from '@astrojs/starlight/components';
+import Badge from "~/components/Badge.astro"
+
+Now that you have students enrolled, let's organize them into groups! Groups enable collaborative activities, flexible permission management, and better course organization.
+
+<PreCheck>
+  - Create groups within your course
+  - Assign students to groups during enrolment
+  - Organize groups hierarchically
+</PreCheck>
+
+## Create groups in your course
+
+<Steps>
+1. Navigate to the course groups management interface. You can usually find this by clicking "Groups" or "Manage Groups" in your course.
+
+2. Click "Create Group" or "New Group".
+
+3. Enter group information:
+   - **Name**: Enter a descriptive name, for example: "Section A" or "Project Team 1"
+   - **Description** (optional): Add a brief description of the group's purpose
+   - **Parent Group** (optional): Select a parent group if creating a nested group
+
+4. Save the group.
+
+   :::tip[Hierarchical groups]
+   Groups can be organized hierarchically with parent and child groups. This enables complex organizational structures like:
+   - "Fall 2024" → "Section A" → "Team 1"
+   - "Lab Groups" → "Monday Lab" → "Group A"
+   :::
+</Steps>
+
+## Assign students to groups
+
+<Steps>
+5. Assign students to groups during enrolment:
+
+   - When enrolling a student, you can assign them to one or more groups
+   - Students can belong to multiple groups simultaneously
+   - For example, a student might belong to both "Section A" and "Project Team 1"
+
+6. Assign existing students to groups:
+   - Go to the enrolment management interface
+   - Edit a student's enrolment
+   - Add or remove group memberships
+   - Save the changes
+
+7. View group membership:
+   - Group membership is displayed as colored badges in the enrolment interface
+   - This makes it easy to see which groups each student belongs to
+</Steps>
+
+## Use groups for course activities
+
+<Steps>
+8. Understand how groups enable course activities:
+
+   **Group Assignments**:
+   - Configure assignments for group work
+   - All group members collaborate on a single submission
+   - Promotes teamwork and reduces grading workload
+
+   **Group Forums**:
+   - Set discussion forums to visible groups or separate groups mode
+   - Students can see other groups' discussions (visible groups) or only their own (separate groups)
+
+   **Group Quizzes**:
+   - Restrict quizzes to group members
+   - Enable group-based assessment or collaborative quiz activities
+
+   **Module Access Control**:
+   - Control which students have access to specific course modules based on group membership
+   - Display different content to different groups
+   - Create group-specific activities and resources
+</Steps>
+
+## Group organization example
+
+Your course groups might be organized like this:
+
+```
+Fall 2024 Course
+├── Section A
+│   ├── Team 1
+│   ├── Team 2
+│   └── Team 3
+├── Section B
+│   ├── Team 1
+│   └── Team 2
+└── Lab Groups
+    ├── Monday Lab
+    └── Wednesday Lab
+```
+
+<Box icon="check-list">
+## Checklist
+
+<Checklist>
+- [ ] I can create groups within my course.
+- [ ] I can assign students to groups during enrolment.
+- [ ] I can organize groups hierarchically.
+- [ ] I understand how groups enable collaborative activities.
+- [ ] I'm ready to explore more Paideia LMS features!
+</Checklist>
+</Box>
+
+### Resources
+
+- [Groups Guide](/en/guides/enrolments-overview/groups/) - Learn more about organizing students into groups
+- [Enrolments Overview](/en/guides/enrolments-overview/) - Learn about enrolments and course roles

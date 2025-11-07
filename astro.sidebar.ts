@@ -14,6 +14,7 @@ export const sidebar = [
 	group('start', {
 		items: [
 			'getting-started',
+			'tutorial/0-introduction',
 			group('start.welcome', {
 				items: [
 					'concepts/why-paideia',

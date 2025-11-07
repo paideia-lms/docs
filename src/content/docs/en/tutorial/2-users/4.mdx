@@ -1,0 +1,137 @@
+---
+type: tutorial
+title: Create a quiz module
+description: |-
+  Tutorial: Getting Started with Paideia LMS —
+  Create a quiz module with questions and auto-grading
+i18nReady: true
+---
+import Checklist from '~/components/Checklist.astro';
+import Box from '~/components/tutorial/Box.astro';
+import PreCheck from '~/components/tutorial/PreCheck.astro';
+import { Steps } from '@astrojs/starlight/components';
+
+Now let's create a **Quiz** module! Quizzes are interactive modules that allow you to create assessments with auto-grading capabilities.
+
+<PreCheck>
+  - Create a quiz module
+  - Add questions using the visual quiz builder
+  - Configure scoring settings
+  - Save and publish your quiz
+</PreCheck>
+
+## Create a quiz module
+
+<Steps>
+1. Navigate to your module library or course where you want to add a module.
+
+2. Click "Add Module" or "Create Activity" button.
+
+3. Select "Quiz" from the list of module types.
+
+4. Choose between:
+   - **Regular Quiz**: For simple assessments with questions organized across pages
+   - **Container Quiz**: For multi-section exams with independent timers and grading
+
+   For this tutorial, select "Regular Quiz".
+</Steps>
+
+## Add questions to your quiz
+
+<Steps>
+5. Enter a title for your quiz module, for example: "Paideia LMS Basics Quiz"
+
+6. Add a description: "Test your knowledge of Paideia LMS fundamentals."
+
+7. Use the visual quiz builder to add questions:
+
+   The quiz builder supports **10 question types**:
+   - **Multiple Choice**: Radio buttons with one correct answer
+   - **Short Answer**: Single-line text input
+   - **Long Answer**: Multi-line textarea
+   - **Fill in the Blank**: Multiple inline text inputs
+   - **Choice**: Checkbox group for multiple selections
+   - **Ranking**: Drag-and-drop list for ordering items
+   - **Single Selection Matrix**: Radio buttons in table layout
+   - **Multiple Selection Matrix**: Select dropdowns per row
+   - **Whiteboard**: Excalidraw canvas for drawing-based responses
+   - **Article**: Rich text content for instructions
+
+8. Add your first question:
+   - Click "Add Question" or drag a question type from the sidebar
+   - Select "Multiple Choice"
+   - Enter the question: "What database does Paideia LMS use?"
+   - Add options:
+     - "PostgreSQL" (correct)
+     - "MySQL"
+     - "MongoDB"
+   - Set the correct answer
+
+9. Add a second question:
+   - Select "Short Answer"
+   - Enter the question: "What is the default frontend port for Paideia LMS?"
+   - Set the correct answer: "3000"
+   - Configure scoring (Simple, Weighted, Partial Match, etc.)
+</Steps>
+
+## Configure quiz settings
+
+<Steps>
+10. Configure quiz settings:
+
+    - **Time limit**: Set a maximum time for completing the quiz (optional)
+    - **Attempts**: Choose unlimited, limited, or single attempt
+    - **Scoring**: Configure how scores are calculated
+    - **Open/Close dates**: Control when the quiz is available
+
+11. Configure scoring for each question:
+    - **Simple**: All-or-nothing points
+    - **Weighted**: Partial credit with weight multipliers
+    - **Rubric**: Links to a rubric for manual grading
+    - **Manual**: Instructor assigns points manually
+    - **Partial Match**: Text matching with configurable threshold
+    - **Ranking**: Points based on correct order
+    - **Matrix**: Points per row with configurable modes
+</Steps>
+
+## Save and publish your quiz
+
+<Steps>
+12. Review your quiz in the preview pane.
+
+13. Choose your module status:
+    - **Draft**: Save as draft if you want to continue editing later
+    - **Published**: Publish if you're ready to make it available to students
+
+14. Click "Save" or "Publish" to save your quiz module.
+
+15. Verify your quiz appears in your module library or course.
+</Steps>
+
+:::tip[Quiz best practices]
+
+- Choose the right question type for each learning objective
+- Configure scoring carefully to match each question type
+- Use the visual builder for efficient quiz creation
+- Set realistic time limits
+- Test your quiz before publishing to students
+:::
+
+Congratulations! You've created your first quiz module!
+
+<Box icon="check-list">
+## Checklist
+
+<Checklist>
+- [ ] I can create a quiz module.
+- [ ] I have added questions using the visual quiz builder.
+- [ ] I have configured scoring settings.
+- [ ] I have saved or published my quiz module.
+- [ ] I'm ready to create assignment and discussion modules!
+</Checklist>
+</Box>
+
+### Resources
+
+- [Quiz Module Guide](/en/guides/user-modules/quiz/) - Learn more about creating quiz modules
+- [User Modules Overview](/en/guides/user-modules/) - Learn about all module types

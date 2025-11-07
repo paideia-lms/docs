@@ -1,7 +1,7 @@
 ---
 type: tutorial
 title: このチュートリアルについて
-description: 「初めてのAstroブログ」チュートリアルの始め方。
+description: 「Paideia LMSの始め方」チュートリアルの始め方。
 i18nReady: true
 ---
 
@@ -11,9 +11,12 @@ import Box from '~/components/tutorial/Box.astro';
 
 ## 始めるために必要な知識は何ですか？
 
-**HTML**、**Markdown**、**CSS**、そして多少の**JavaScript**についての基本的な知識があれば、まったく問題ありません！指示に従っていくだけで、すべてのチュートリアルを完了できます。Astroはすべての人のためにあるのです！🧑‍🚀 👩‍🚀 👨‍🚀
+**コマンドラインインターフェース**と**ウェブアプリケーション**についての基本的な知識があれば、まったく問題ありません！指示に従っていくだけで、すべてのチュートリアルを完了できます。Paideia LMSは、すべての人にとってアクセスしやすいように設計されています！🧑‍🚀 👩‍🚀 👨‍🚀
 
-プロジェクトをウェブ上に公開するためには、[GitHub](https://github.com)（または類似のサービス）のアカウントが必要になります。
+次のものが必要です：
+- macOSまたはLinuxを実行しているコンピューター
+- 基本的なターミナル/コマンドラインの知識
+- PostgreSQLデータベースとS3互換ストレージをセットアップするアクセス（またはDocker Composeを使用）
 
 <details>
 <summary>ページの下部にあるチェックリストはどのように使えばいいですか？</summary>
@@ -24,29 +27,29 @@ import Box from '~/components/tutorial/Box.astro';
 
 トラッカーの利用は任意ですが、数回に分けてチュートリアルを進める場合には、自分の進捗状況を思い出すのに役立ちます。また、チェックリストの一部をチェックしないでおくことで、あとで見直したいユニットの目印としても使えます。
 
-（このデータはブラウザのローカルストレージにのみ保存され、他の場所で利用されることはありません。Astroにデータが送信されたり、保存されたりすることはありません。）
+（このデータはブラウザのローカルストレージにのみ保存され、他の場所で利用されることはありません。Paideia LMSにデータが送信されたり、保存されたりすることはありません。）
 </details>
 
 <details>
 <summary>ユニット1はすでに知っている内容です。スキップしてもいいですか？</summary>
 
-[ユニット1](/ja/tutorial/1-setup/)の各レッスンでは、チュートリアルを完了するために必要な開発ツールとオンラインアカウントを確認できます。また、新しいAstroプロジェクトの作成、GitHubへの保存、Netlifyへのデプロイの手順を説明しています。
+[ユニット1](/ja/tutorial/1-setup/)の各レッスンでは、チュートリアルを完了するために必要なツールとセットアップを確認できます。Paideia LMSのインストール、データベースとストレージのセットアップ、環境の設定の手順を説明しています。
 
-[空の新しいAstroプロジェクトを作成](/ja/install-and-setup/)し、セットアップすることに慣れている場合は、そのまま[ユニット2](/ja/tutorial/2-pages/)に進み、プロジェクトに新しいページを作成していっても問題ありません。
+[すでにPaideia LMSをインストール](/ja/install-and-setup/)し、セットアップすることに慣れている場合は、そのまま[ユニット2](/ja/tutorial/2-users/)に進み、最初のコースを作成していっても問題ありません。
 </details>
 
 <details>
-<summary>困ったときや、Astroについてもっと知りたいときはどうすればいいですか？</summary>
+<summary>困ったときや、Paideia LMSについてもっと知りたいときはどうすればいいですか？</summary>
 
-[AstroのフレンドリーなDiscordサーバー](https://astro.build/chat)に参加しましょう！
+[GitHub Discussions](https://github.com/paideia-lms/paideia/discussions)に参加しましょう！
 
-サポートフォーラムチャンネルで質問したり、`#general`や`#off-topic`で誰かに話しかけてみてください。
+ディスカッションで質問したり、アイデアを共有したり、コミュニティから助けを得ることができます。
 </details>
 
 <details>
 <summary>チュートリアルについてのフィードバックはどこに送ればいいですか？</summary>
 
-このチュートリアルは、AstroのDocsチームのプロジェクトです。Discordの`#docs`チャンネルで私たちを見つけるか、または[GitHubのDocsリポジトリ](https://github.com/withastro/docs/issues)にイシューを投稿してください。
+このチュートリアルは、Docsチームのプロジェクトです。[GitHubのDocsリポジトリ](https://github.com/paideia-lms/docs/issues)にイシューを投稿するか、[GitHub Discussions](https://github.com/paideia-lms/docs/discussions)でディスカッションを開始してください。
 </details>
 
 <Box icon="check-list">
@@ -54,6 +57,6 @@ import Box from '~/components/tutorial/Box.astro';
 ## 次に進むためのチェックリスト
 
 <Checklist>
-- [ ] ビルドの準備ができた！
+- [ ] Paideia LMSを始める準備ができた！
 </Checklist>
 </Box>

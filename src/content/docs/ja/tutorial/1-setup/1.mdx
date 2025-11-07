@@ -1,9 +1,9 @@
 ---
 type: tutorial
-title: 開発環境の準備
+title: 環境の準備
 description: |-
-  「初めてのAstroブログ」チュートリアル -
-  チュートリアルを完了するために必要なローカル用ツールをインストールする
+  Paideia LMSの始め方チュートリアル -
+  チュートリアルを完了するために必要な前提条件とツールをインストールする
 i18nReady: true
 ---
 import Checklist from '~/components/Checklist.astro';
@@ -15,84 +15,98 @@ import { Steps } from '@astrojs/starlight/components';
 import Badge from "~/components/Badge.astro"
 
 <PreCheck>
-  - Astroウェブサイトの作成に使用するツールをインストールする
+  - Paideia LMSを実行するために使用するツールと前提条件をインストールする
 </PreCheck>
 
-## 必要な開発ツールを手に入れる
+## 必要な前提条件を手に入れる
+
+### オペレーティングシステム
+
+Paideia LMSは**macOS**（ARM64またはx64）または**Linux**（ARM64またはx64）で実行されます。互換性のあるオペレーティングシステムにアクセスできることを確認してください。
 
 ### ターミナル
 
-Astroプロジェクトを作成し、サイトをビルド、開発、テストするための主要コマンドを実行するために、**コマンドライン（ターミナル）** を使用します。 
+Paideia LMSをダウンロード、インストール、実行し、環境を設定するために、**コマンドライン（ターミナル）** を使用します。
 
-コマンドラインは、オペレーティングシステムのローカルターミナルプログラムからアクセスできます。一般的なアプリケーションとしては、**ターミナル**（MacOS/Linux）、**コマンドプロンプト**（Windows）、**Termux**（Android）などがあります。これらのうちの1つは、おそらくすでにあなたのマシンに入っているはずです。
+コマンドラインは、オペレーティングシステムのローカルターミナルプログラムからアクセスできます。一般的なアプリケーションとしては、**ターミナル**（macOS/Linux）、**コマンドプロンプト**（Windows）、**Termux**（Android）などがあります。これらのうちの1つは、おそらくすでにあなたのマシンに入っているはずです。
 
-### Node.js
+### PostgreSQLデータベース
 
-Astroをシステム上で実行するには、バージョン`v18.14.1`以降の[**Node.js**](https://nodejs.org/ja/)をインストールする必要があります。
+Paideia LMSには**PostgreSQL**データベースが必要です。次のいずれかが必要です：
+- ローカルのPostgreSQLインストール
+- リモートPostgreSQLデータベースへのアクセス
+- Docker Compose（PostgreSQLが含まれます）
 
-互換性のあるバージョンがインストール済みかどうかを確認するには、ターミナルで次のコマンドを実行します。
+ローカルにPostgreSQLがインストールされているかどうかを確認するには、次を実行します：
 
 ```sh
-node -v
+psql --version
 
-// 出力例
-v18.14.1
+# 出力例
+psql (PostgreSQL) 18.0
 ```
 
-コマンドが`v18.14.1`よりも高いバージョン番号を返していれば、問題ありません！
+PostgreSQLがインストールされていない場合は、次のことができます：
+- PostgreSQLをローカルにインストール
+- Docker Composeを使用（インストール手順で説明します）
+- クラウドPostgreSQLサービスを使用
 
-コマンドが`'node'コマンドが見つかりません`のようなエラーメッセージを返すか、バージョン番号が`v18.14.1`よりも低い場合は、[互換性のあるバージョンのNode.jsのインストール](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)が必要です。
+### S3互換ストレージ
 
-### コードエディタ
+Paideia LMSにはファイルストレージ用の**S3互換ストレージ**が必要です。次のいずれかが必要です：
+- MinIO（S3互換ストレージ）- Docker Composeに含まれます
+- S3互換サービス（AWS S3、DigitalOcean Spacesなど）
+- ローカルのMinIOインストール
 
-さらに、コードを書くために**コードエディタ**をダウンロードしてインストールする必要があります。
+### コードエディタ（オプション）
+
+必須ではありませんが、**コードエディタ**は設定ファイルの編集に役立ちます。
 
 :::tip[ここで使うのは...]
 このチュートリアルでは**VS Code**を使用しますが、お使いのオペレーティングシステムに対応したエディタであれば何でも構いません。
 :::
 
 <Steps>
-1. [VS Code](https://code.visualstudio.com/#alt-downloads)またはお好みのコードエディタをダウンロードしてインストールしてください。
+1. [VS Code](https://code.visualstudio.com/#alt-downloads)またはお好みのコードエディタをダウンロードしてインストールしてください（オプション）。
 </Steps>
-
 
 <Box icon="question-mark">
 
 ### 確認テスト
 
 正しいものを選んでください。
-1. ファイルやその内容を変更するためのコードエディタはどれですか？
+1. Paideia LMSに必要なデータベースシステムはどれですか？
 
     <MultipleChoice>
       <Option>
-        ウェブブラウザ
-      </Option>
-      <Option>
-        ターミナル
+        MySQL
       </Option>
       <Option isCorrect>
-        VS Code
+        PostgreSQL
+      </Option>
+      <Option>
+        MongoDB
       </Option>
     </MultipleChoice>
 
-2. リポジトリを保存するための、オンラインのバージョン管理プロバイダーはどれですか？
+2. Paideia LMSに必要なストレージシステムはどれですか？
 
     <MultipleChoice>
+      <Option>
+        ローカルファイルシステム
+      </Option>
       <Option isCorrect>
-        GitHub
+        S3互換ストレージ
       </Option>
       <Option>
-        ターミナル
-      </Option>
-      <Option>
-        VS Code
+        Google Drive
       </Option>
     </MultipleChoice>
 
 3. コマンドを実行するためのアプリケーションはどれですか？
     <MultipleChoice>
       <Option>
-        GitHub
+        VS Code
       </Option>
       <Option isCorrect>
         ターミナル
@@ -109,12 +123,13 @@ v18.14.1
 
 <Checklist>
 - [ ] ターミナルでコマンドラインにアクセスできる。
-- [ ] Node.jsをインストールした。
-- [ ] VS Codeなどのコードエディタをインストールした。
+- [ ] PostgreSQLが利用可能（またはDocker Composeを使用する）。
+- [ ] S3互換ストレージが利用可能（またはDocker Composeを使用する）。
+- [ ] VS Codeなどのコードエディタをインストールした（オプション）。
 </Checklist>
 </Box>
 
-
 ### 参考
 
-- <p>[FreeCodeCamp.org](https://freecodecamp.org) <Badge class="neutral-badge" text="外部サイト" /> — HTML、CSS、JSなどのコースや復習教材を無料で提供している教育サイト。</p>
+- <p>[PostgreSQL Documentation](https://www.postgresql.org/docs/) <Badge class="neutral-badge" text="外部サイト" /> — PostgreSQLの公式ドキュメント</p>
+- <p>[MinIO Documentation](https://min.io/docs/) <Badge class="neutral-badge" text="外部サイト" /> — MinIO S3互換ストレージのドキュメント</p>

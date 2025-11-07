@@ -1,9 +1,9 @@
 ---
 type: tutorial
-title: Prepare your dev environment
+title: Prepare your environment
 description: |-
-  Tutorial: Build your first Astro blog —
-  Install the local tools that you’ll need to complete the tutorial
+  Tutorial: Getting Started with Paideia LMS —
+  Install the prerequisites and tools you'll need to complete the tutorial
 i18nReady: true
 ---
 import Checklist from '~/components/Checklist.astro';
@@ -15,90 +15,104 @@ import { Steps } from '@astrojs/starlight/components';
 import Badge from "~/components/Badge.astro"
 
 <PreCheck>
-  - Install any tools that you will use to build your Astro website
+  - Install any tools and set up prerequisites that you will use to run Paideia LMS
 </PreCheck>
 
-## Get the dev tools you need
+## Get the prerequisites you need
+
+### Operating System
+
+Paideia LMS runs on **macOS** (ARM64 or x64) or **Linux** (ARM64 or x64). Make sure you have access to a compatible operating system.
 
 ### Terminal
 
-You will use a **command line (terminal)** to create your Astro project and to run key commands to build, develop, and test your site.
+You will use a **command line (terminal)** to download, install, and run Paideia LMS, and to configure your environment.
 
-You can access the command line through a local terminal program for your operating system. Common applications include **Terminal** (MacOS/Linux), **Command Prompt** (Windows), and **Termux** (Android). One of these will probably already be on your machine. 
+You can access the command line through a local terminal program for your operating system. Common applications include **Terminal** (macOS/Linux), **Command Prompt** (Windows), and **Termux** (Android). One of these will probably already be on your machine.
 
-### Node.js
+### PostgreSQL Database
 
-For Astro to run on your system, you will also need to have a compatible version of [**Node.js**](https://nodejs.org/en/) installed. Astro supports **even-numbered** Node.js versions. The current minimum supported versions of each are:  `v18.20.8`, `v20.3.0`, and `v22.0.0`. (`v19` and `v21` are not supported.)
+Paideia LMS requires a **PostgreSQL** database. You'll need either:
+- A local PostgreSQL installation
+- Access to a remote PostgreSQL database
+- Docker Compose (which includes PostgreSQL)
 
-To check to see whether you already have a compatible version installed, run the following command in your terminal:
+To check if you have PostgreSQL installed locally, run:
 
 ```sh
-node -v
+psql --version
 
-// Example output
-v18.20.8
+# Example output
+psql (PostgreSQL) 18.0
 ```
 
-If the command returns a version number supported by Astro, you're good to go!
+If you don't have PostgreSQL installed, you can:
+- Install PostgreSQL locally
+- Use Docker Compose (which we'll cover in the installation steps)
+- Use a cloud PostgreSQL service
 
-If the command returns an error message like `Command 'node' not found`, or a version number lower than the required, then you need to [install a compatible Node.js version](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
+### S3-Compatible Storage
 
-### Code Editor
+Paideia LMS requires **S3-compatible storage** for file storage. You'll need either:
+- MinIO (S3-compatible storage) - included with Docker Compose
+- An S3-compatible service (AWS S3, DigitalOcean Spaces, etc.)
+- Local MinIO installation
 
-Additionally, you will need to download and install a **code editor** to write your code. 
+### Code Editor (Optional)
+
+While not required, a **code editor** can be helpful for editing configuration files. 
 
 :::tip[We'll use...]
 This tutorial will use **VS Code**, but you can use any editor for your operating system.
 :::
 
 <Steps>
-1. [Download and install VS Code](https://code.visualstudio.com/#alt-downloads) or another code editor of your choice. 
+1. [Download and install VS Code](https://code.visualstudio.com/#alt-downloads) or another code editor of your choice (optional).
 </Steps>
-
 
 <Box icon="question-mark">
 
 ### Test your knowledge
 
 Which of the following is...
-1. A code editor, for making changes to your files and their content?
+1. A database system required by Paideia LMS?
 
     <MultipleChoice>
       <Option>
-        web browser
-      </Option>
-      <Option>
-        Terminal
+        MySQL
       </Option>
       <Option isCorrect>
-        VS Code
+        PostgreSQL
+      </Option>
+      <Option>
+        MongoDB
       </Option>
     </MultipleChoice>
 
-2. An online version control provider for your repository?
+2. Storage system required by Paideia LMS?
 
     <MultipleChoice>
+      <Option>
+        Local file system
+      </Option>
       <Option isCorrect>
-        GitHub
+        S3-compatible storage
       </Option>
       <Option>
-        Terminal
-      </Option>
-      <Option>
-        VS Code
+        Google Drive
       </Option>
     </MultipleChoice>
 
 3. An application for running commands?
     <MultipleChoice>
       <Option>
-        GitHub
+        VS Code
       </Option>
       <Option isCorrect>
         Terminal
       </Option>
       <Option>
-        web browser
+        Web browser
       </Option>
     </MultipleChoice>
 
@@ -109,12 +123,13 @@ Which of the following is...
 
 <Checklist>
 - [ ] I can access the command line in a terminal.
-- [ ] I have Node.js installed.
-- [ ] I have a code editor like VS Code.
+- [ ] I have PostgreSQL available (or will use Docker Compose).
+- [ ] I have S3-compatible storage available (or will use Docker Compose).
+- [ ] I have a code editor like VS Code (optional).
 </Checklist>
 </Box>
 
-
 ### Resources
 
-- <p>[FreeCodeCamp.org](https://freecodecamp.org) <Badge class="neutral-badge" text="external" /> — a free educational site with full courses or quick refreshers in HTML, CSS, JS, and more.</p>
+- <p>[PostgreSQL Documentation](https://www.postgresql.org/docs/) <Badge class="neutral-badge" text="external" /> — official PostgreSQL documentation</p>
+- <p>[MinIO Documentation](https://min.io/docs/) <Badge class="neutral-badge" text="external" /> — MinIO S3-compatible storage documentation</p>

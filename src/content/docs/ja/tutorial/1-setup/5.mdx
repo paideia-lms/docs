@@ -1,9 +1,9 @@
 ---
 type: tutorial
-title: サイトをウェブにデプロイする
+title: Paideia LMSを起動してインスタンスにアクセスする
 description: |-
-  「初めてのAstroブログ」チュートリアル -
-  チュートリアルプロジェクトのGitHubリポジトリをNetlifyに接続し、ウェブ上にデプロイする
+  Paideia LMSの始め方チュートリアル —
+  Paideia LMSサーバーを起動し、ブラウザでインスタンスにアクセスする
 i18nReady: true
 ---
 import Checklist from '~/components/Checklist.astro';
@@ -15,58 +15,94 @@ import { Steps } from '@astrojs/starlight/components';
 import Badge from "~/components/Badge.astro"
 
 <PreCheck>
-  - GitHubのリポジトリを新しいNetlifyアプリとして追加する
-  - ウェブ上にAstroサイトをデプロイする
+  - Paideia LMSサーバーを起動する
+  - ブラウザでPaideia LMSにアクセスする
+  - 管理者アカウントを作成する
 </PreCheck>
 
-ここでは、GitHubリポジトリをNetlifyに接続します。Netlifyは、あなたがコードに変更をコミットするたびに、そのプロジェクトを使用してサイトをビルドし、ウェブ上にデプロイします。
+## Paideia LMSを起動する
 
-:::tip[ここで使うのは...]
-このチュートリアルでは**Netlify**を使用しますが、サイトをインターネットにデプロイするにあたり、お好きなホスティングサービスを使用して構いません。
-:::
-
-## 新しいNetlifyサイトを作成する
+環境が設定されたので、Paideia LMSサーバーを起動できます。
 
 <Steps>
-1. もしまだであれば、[Netlify](https://netlify.com)で無料アカウントを作成します。
+1. Paideia LMSサーバーを起動：
 
-    ユーザー名をメモしておきます。`https://app.netlify.com/teams/username`で、ダッシュボードと作成済みのサイトが表示されます。
+   ```bash
+   ./paideia server
+   ```
 
-2. <kbd>Add new site</kbd> > <kbd>Import an existing project</kbd>をクリックします。
+   または単に：
 
-    Gitプロバイダーに接続するように求められます。GitHubを選択し、画面の指示に従ってGitHubアカウントを認証します。次に、提供されたリストからAstroプロジェクトのGitHubリポジトリを選択します。
+   ```bash
+   ./paideia
+   ```
 
-3. 最後のステップでは、Netlifyがアプリのサイト設定を表示します。Astroプロジェクトの場合はデフォルトのままで問題ないため、下にスクロールして<kbd>Deploy site</kbd>をクリックします。
+   サーバーが起動し、設定されたポート（デフォルト：バックエンドAPI用`3001`、フロントエンド用`3000`）でリッスンします。
+
+2. サーバーが起動するまで待ちます。ターミナルでPaideia LMSが実行中であることを確認できるはずです。
+
+   :::tip[サーバー起動]
+   保留中のマイグレーションがある場合、サーバーは起動時に自動的にデータベースマイグレーションを実行します。
+   :::
 </Steps>
 
-おめでとうございます、Astroウェブサイトが作成できました！
+## Paideia LMSにアクセスする
 
-## プロジェクト名を変更する
+<Steps>
+3. ブラウザを開き、`http://localhost:3000`（または`FRONTEND_PORT`環境変数で設定されたポート）に移動します。
 
-Netlifyのサイト概要ページでは、ランダムに生成されたプロジェクト名と、`https://project-name-123456.netlify.app`という形式のウェブサイトURLが表示されます。プロジェクト名をより覚えやすいものに変更すると、URLは自動的に更新されます。
+   Paideia LMSのログインページが表示されるはずです。
 
-## 新しいウェブサイトにアクセスする
+4. 初回アクセス時に、管理者アカウントの作成を求められます。画面上の指示に従って管理者ユーザーを作成してください。
 
-サイト設定に表示されているURLをクリックするか、URLをブラウザのウィンドウに入力して、新しいウェブサイトを表示します。
+   :::caution[初回セットアップ]
+   管理者認証情報を忘れないでください！ログインしてPaideia LMSインスタンスを管理するために必要です。
+   :::
 
+5. 管理者アカウントを作成したら、ログインしてPaideia LMSダッシュボードにアクセスします。
+</Steps>
+
+おめでとうございます！Paideia LMSが実行中でアクセス可能になりました！
+
+## インストールの確認
+
+<Steps>
+6. Paideia LMSインターフェースを探索：
+
+   - ダッシュボードを確認
+   - さまざまなセクションをナビゲート
+   - すべての機能にアクセスできることを確認
+
+7. APIエンドポイントを確認：
+
+   `http://localhost:3001`に移動して、APIが実行中であることを確認します（APIドキュメントまたはヘルスチェック応答が表示されるはずです）。
+</Steps>
+
+:::tip[Paideia LMSの実行]
+
+Paideia LMSサーバーが実行中の場合：
+- `http://localhost:3000`でウェブインターフェースにアクセス
+- `http://localhost:3001`でAPIにアクセス
+- ターミナルで<kbd>Ctrl + C</kbd>を押すことで、いつでもサーバーを停止
+
+サーバーは、停止するかターミナルを閉じるまで実行を続けます。
+:::
 
 <Box icon="question-mark">
 
 ### 確認テスト
 
-
-
-既存ウェブサイトのホームページを更新したいとします。どのような手順を踏めばよいでしょうか？
+設定変更後にPaideia LMSを再起動したいとします。どのような手順を踏めばよいでしょうか？
 
   <MultipleChoice>
     <Option>
-      ターミナルを開いて`create astro`を実行し、NetlifyのURLにアクセスする。
-    </Option>
-    <Option>
-      Netlifyアプリの設定を変更し、StackBlitzで新しいAstroプロジェクトをフォークする。
+      ターミナルを開いて`./paideia migrate fresh`を実行し、localhostのURLにアクセスする。
     </Option>
     <Option isCorrect>
-      `index.astro`を編集し、変更をGitHubにコミットしてプッシュする。残りはNetlifyにお任せ！
+      Ctrl+Cでサーバーを停止し、環境変数を更新してから、再度`./paideia server`を実行する。
+    </Option>
+    <Option>
+      ウェブインターフェースで設定を変更し、コンピューターを再起動する。
     </Option>
   </MultipleChoice>
  </Box>
@@ -75,11 +111,14 @@ Netlifyのサイト概要ページでは、ランダムに生成されたプロ�
 ## チェックリスト
 
 <Checklist>
-- [ ] 更新されたウェブサイトをオンラインで表示できる。
-- [ ] コーディングに戻る準備ができている！
+- [ ] Paideia LMSサーバーを起動できる。
+- [ ] ブラウザでPaideia LMSにアクセスできる。
+- [ ] 管理者アカウントを作成した。
+- [ ] 最初のコースを作成する準備ができた！
 </Checklist>
 </Box>
 
 ### 参考
 
-- <p>[A step-by-step guide to deploying on Netlify](https://www.netlify.com/blog/2016/09/29/a-step-by-step-guide-deploying-on-netlify/) <Badge class="neutral-badge" text="外部サイト" /></p>
+- <p>[インストールとセットアップガイド](/ja/install-and-setup/) <Badge class="neutral-badge" text="内部" /> — 完全なインストールと設定ガイド</p>
+- <p>[CLIリファレンス](/ja/reference/cli-reference/) <Badge class="neutral-badge" text="内部" /> — すべてのCLIコマンドのリファレンス</p>

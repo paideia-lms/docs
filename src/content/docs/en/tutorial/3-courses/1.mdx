@@ -1,0 +1,101 @@
+---
+type: tutorial
+title: Create a course and organize with sections
+description: |-
+  Tutorial: Getting Started with Paideia LMS —
+  Create your first course and organize it with sections and categories
+i18nReady: true
+---
+import Box from '~/components/tutorial/Box.astro';
+import Checklist from '~/components/Checklist.astro';
+import PreCheck from '~/components/tutorial/PreCheck.astro';
+import { Steps } from '@astrojs/starlight/components';
+import Badge from "~/components/Badge.astro"
+
+Now that you have activity modules created, it's time to organize them into a course! Courses provide structure for your learning content and allow you to manage student access.
+
+<PreCheck>
+  - Create a new course
+  - Organize the course with sections
+  - Assign the course to a category (optional)
+</PreCheck>
+
+## Create a new course
+
+<Steps>
+1. Navigate to the course creation area. You can usually find this by clicking "Create Course" or "New Course" in the course management interface.
+
+2. Enter course information:
+   - **Title**: Enter a descriptive title for your course, for example: "Introduction to Paideia LMS"
+   - **Description**: Add a brief description of what the course covers
+   - **Category** (optional): Select or create a category to organize your course
+
+3. Click "Create" or "Save" to create your course.
+
+   :::tip[Course categories]
+   Categories help organize your course catalog. You can create nested categories for hierarchical organization. For example, "Computer Science" → "Programming" → "Web Development".
+   :::
+</Steps>
+
+## Organize your course with sections
+
+<Steps>
+4. Create course sections to organize your content:
+
+   Sections provide a way to structure your course content logically. You can create:
+   - **Top-level sections**: Main units or weeks
+   - **Nested sections**: Subsections within main sections
+
+5. Create your first section:
+   - Click "Add Section" or "New Section" in your course
+   - Enter a section name, for example: "Week 1: Introduction"
+   - Optionally add a description
+   - Save the section
+
+6. Create nested sections (optional):
+   - Within a section, you can create child sections
+   - For example, within "Week 1: Introduction", create:
+     - "Day 1: Getting Started"
+     - "Day 2: Basic Concepts"
+
+   :::tip[Section organization]
+   Sections can be nested to create hierarchical structures. This allows you to organize content at multiple levels, such as weeks → days → topics.
+   :::
+
+7. Reorder sections as needed:
+   - Use drag-and-drop or ordering controls to arrange sections
+   - Sections and modules are ordered within each section, controlling the sequence students encounter content
+</Steps>
+
+## Course structure
+
+Your course now has a structure like this:
+
+```
+Introduction to Paideia LMS
+├── Week 1: Introduction
+│   ├── Day 1: Getting Started
+│   └── Day 2: Basic Concepts
+├── Week 2: Advanced Topics
+└── Week 3: Final Project
+```
+
+Each section can contain:
+- **Child sections** (nested subsections)
+- **Activity modules** (pages, quizzes, assignments, etc.)
+
+<Box icon="check-list">
+## Checklist
+
+<Checklist>
+- [ ] I can create a new course.
+- [ ] I can organize my course with sections.
+- [ ] I can create nested sections for hierarchical organization.
+- [ ] I'm ready to add modules to my course!
+</Checklist>
+</Box>
+
+### Resources
+
+- [Course Overview](/en/basics/course-overview/) - Learn more about course structure and organization
+- [Adding Modules to Courses](/en/basics/adding-modules-to-courses/) - Learn how to add modules to courses

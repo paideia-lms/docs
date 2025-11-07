@@ -1,0 +1,110 @@
+---
+type: tutorial
+title: Add modules to your course
+description: |-
+  Tutorial: Getting Started with Paideia LMS —
+  Link activity modules to course sections and configure course-specific settings
+i18nReady: true
+---
+import Checklist from '~/components/Checklist.astro';
+import Box from '~/components/tutorial/Box.astro';
+import PreCheck from '~/components/tutorial/PreCheck.astro';
+import { Steps } from '@astrojs/starlight/components';
+import Badge from "~/components/Badge.astro"
+
+Now that you have a course with sections, it's time to add your activity modules to the course! Modules are linked to courses, allowing you to reuse the same module in multiple courses.
+
+<PreCheck>
+  - Link activity modules to course sections
+  - Configure course-specific module settings
+  - Reorder modules within sections
+</PreCheck>
+
+## Link modules to course sections
+
+<Steps>
+1. Navigate to the section where you want to add a module.
+
+2. Click "Add Module" or "Link Module" in the section.
+
+3. Select a module from your module library:
+   - You'll see a list of modules you have access to
+   - Select the module you want to add to this section
+   - The module will be linked to the course section
+
+4. Configure the module order:
+   - Specify the order of the module within the section
+   - You can reorder modules later using drag-and-drop or ordering controls
+
+   :::tip[Module reusability]
+   A single activity module can be linked to multiple courses. This means you can create a module once and reuse it across different courses, saving time and ensuring consistency.
+   :::
+</Steps>
+
+## Configure course-specific settings
+
+<Steps>
+5. Configure course-specific settings for the module:
+
+   When a module is added to a course, it becomes a **course module** with course-specific settings. These settings allow you to customize how the module behaves within this particular course.
+
+6. Set module-specific options:
+   - **Custom module name**: Override the default module name for this course
+   - **Due dates** (for interactive modules): Set submission deadlines
+   - **Open/Close dates**: Control when the module is available to students
+   - **Cutoff dates**: Allow late submissions with penalties
+
+   :::note[Course module settings]
+   Course module settings only affect how the module appears and behaves in this specific course. They don't change the module's default configuration or affect its use in other courses.
+   :::
+
+7. Save your course module settings.
+</Steps>
+
+## Add multiple modules
+
+<Steps>
+8. Add more modules to your course:
+
+   - Repeat the process to add modules to different sections
+   - You can add the same module to multiple sections or courses
+   - Organize modules logically within each section
+
+9. Reorder modules as needed:
+   - Use drag-and-drop or ordering controls
+   - Modules are ordered within each section, controlling the learning sequence
+</Steps>
+
+## Module organization example
+
+Your course might now look like this:
+
+```
+Introduction to Paideia LMS
+├── Week 1: Introduction
+│   ├── Day 1: Getting Started
+│   │   ├── Welcome Page (page module)
+│   │   └── Course Overview Quiz (quiz module)
+│   └── Day 2: Basic Concepts
+│       ├── Concepts Page (page module)
+│       └── Practice Quiz (quiz module)
+└── Week 2: Advanced Topics
+    ├── Advanced Concepts (page module)
+    └── Final Assignment (assignment module)
+```
+
+<Box icon="check-list">
+## Checklist
+
+<Checklist>
+- [ ] I can link activity modules to course sections.
+- [ ] I can configure course-specific module settings.
+- [ ] I can reorder modules within sections.
+- [ ] I'm ready to manage student enrolments!
+</Checklist>
+</Box>
+
+### Resources
+
+- [Adding Modules to Courses](/en/basics/adding-modules-to-courses/) - Learn more about adding modules to courses
+- [User Modules Overview](/en/guides/user-modules/) - Learn about all module types

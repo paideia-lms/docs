@@ -1,0 +1,114 @@
+---
+type: tutorial
+title: Create your first page module
+description: |-
+  Tutorial: Getting Started with Paideia LMS —
+  Create a page module with rich text content
+i18nReady: true
+---
+import Checklist from '~/components/Checklist.astro';
+import Box from '~/components/tutorial/Box.astro';
+import PreCheck from '~/components/tutorial/PreCheck.astro';
+import { Steps } from '@astrojs/starlight/components';
+
+Now that your profile is set up, it's time to create your first activity module! We'll start with a **Page** module, which is perfect for creating instructional content.
+
+<PreCheck>
+  - Navigate to the module creation page
+  - Create a page module
+  - Add rich text content to your page
+  - Save and publish your module
+</PreCheck>
+
+## Create a page module
+
+<Steps>
+1. Navigate to your module library or course where you want to add a module.
+
+2. Click "Add Module" or "Create Activity" button.
+
+3. Select "Page" from the list of module types.
+
+   You should see a form with fields for:
+   - **Title** - The name of your page module
+   - **Description** - A brief description of the page content
+   - **Content** - The rich text editor for your page content
+</Steps>
+
+## Add content to your page
+
+<Steps>
+4. Enter a title for your page module, for example: "Introduction to Paideia LMS"
+
+5. Add a description: "This page provides an overview of Paideia LMS features and capabilities."
+
+6. Use the rich text editor to create your page content:
+
+   ```html
+   <h2>Welcome to Paideia LMS</h2>
+   
+   <p>Paideia LMS is a modern, lightweight Learning Management System designed for educational institutions.</p>
+   
+   <h3>Key Features</h3>
+   
+   <ul>
+     <li>Comprehensive course management</li>
+     <li>Interactive activity modules</li>
+     <li>Flexible user roles and permissions</li>
+     <li>Built-in gradebook</li>
+   </ul>
+   
+   <p>This is your first page module! You can use the rich text editor to format your content with headings, lists, links, images, and more.</p>
+   ```
+
+   The rich text editor supports:
+   - **Text formatting**: Bold, italic, underline, strikethrough
+   - **Headings**: Multiple heading levels (H1-H6)
+   - **Lists**: Ordered and unordered lists
+   - **Links**: Internal and external links
+   - **Images**: Inline images with alt text
+   - **Tables**: Create and format tables
+   - **Code blocks**: Syntax-highlighted code snippets
+</Steps>
+
+## Save and publish your module
+
+<Steps>
+7. Review your content in the preview pane (if available).
+
+8. Choose your module status:
+   - **Draft**: Save as draft if you want to continue editing later
+   - **Published**: Publish if you're ready to make it available to students
+
+9. Click "Save" or "Publish" to save your page module.
+
+10. Verify your module appears in your module library or course.
+</Steps>
+
+:::tip[Module status]
+
+- **Draft**: Only visible to you and users with appropriate permissions. Perfect for work in progress.
+- **Published**: Visible to enrolled students. Use this when your content is ready.
+- **Archived**: Hidden from students but preserved. Use this for old content you want to keep.
+
+You can always change the status later!
+:::
+
+Congratulations! You've created your first page module!
+
+<Box icon="check-list">
+## Checklist
+
+<Checklist>
+- [ ] I can navigate to the module creation page.
+- [ ] I have created a page module with a title and description.
+- [ ] I have added rich text content to my page.
+- [ ] I have saved or published my page module.
+- [ ] I'm ready to create more modules!
+</Checklist>
+</Box>
+
+### Resources
+
+- [Page Module Guide](/en/guides/user-modules/page/) - Learn more about creating page modules
+- [User Modules Overview](/en/guides/user-modules/) - Learn about all module types

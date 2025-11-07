@@ -1,72 +1,105 @@
 ---
 type: tutorial
-title: Astroでの最初の一行
+title: 環境の設定
 description: |-
-  「初めてのAstroブログ」チュートリアル -
-  チュートリアルプロジェクトのホームページに最初の編集を加える
+  Paideia LMSの始め方チュートリアル —
+  データベースとストレージをセットアップし、環境変数を設定する
 i18nReady: true
 ---
 
 import Checklist from '~/components/Checklist.astro';
 import Box from '~/components/tutorial/Box.astro';
-import InstallGuideTabGroup from '~/components/TabGroup/InstallGuideTabGroup.astro';
-import PackageManagerTabs from '~/components/tabs/PackageManagerTabs.astro';
 import PreCheck from '~/components/tutorial/PreCheck.astro';
 import { Steps } from '@astrojs/starlight/components';
 
 <PreCheck>
-  - 新しいウェブサイトに最初の編集を加える
+  - PostgreSQLデータベースをセットアップする
+  - S3互換ストレージを設定する
+  - 環境変数を設定する
 </PreCheck>
 
-## ホームページを編集する
+## 環境の設定
+
+Paideia LMSを実行する前に、データベースとストレージをセットアップし、環境変数を設定する必要があります。
+
+### PostgreSQLのセットアップ
 
 <Steps>
-1. コードエディターのファイルエクスプローラーペインで`src/pages/index.astro`に移動し、これをクリックしてファイルの内容を編集可能なタブで開きます。
+1. PostgreSQLが実行中でアクセス可能であることを確認してください。Docker Composeを使用している場合、PostgreSQLが含まれます。
 
-    `index.astro`ファイルの内容は以下のようになっています。
+2. Paideia LMS用のデータベースを作成：
 
-    ```astro title="src/pages/index.astro"
-    ---
-    ---
+   ```bash
+   createdb paideia_db
+   ```
 
-    <html lang="en">
-      <head>
-        <meta charset="utf-8" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <meta name="viewport" content="width=device-width" />
-        <meta name="generator" content={Astro.generator} >
-        <title>Astro</title>
-      </head>
-      <body>
-        <h1>Astro</h1>
-      </body>
-    </html>
-    ```
-
-2. ページの`<body>`の内容を編集します。
-
-    エディターでページの見出しテキストを変更し、変更を保存します。
-
-    ```astro title="src/pages/index.astro" del={2} ins={3}
-    <body>
-      <h1>Astro</h1>
-      <h1>私のAstroサイト</h1>
-    </body>
-    ```
-
-3. ブラウザ上のプレビューを確認すると、ページの内容が新しいテキストに更新されているはずです。
+   または、リモートデータベースを使用している場合は、データベース管理ツールで作成してください。
 </Steps>
 
-おめでとうございます！あなたはもうAstroの開発者です！
+### S3互換ストレージのセットアップ
 
-このユニットの残りの部分では、バージョン管理と、人に自慢できるようウェブサイトを公開する方法について説明します。
+<Steps>
+3. MinIOまたは別のS3互換ストレージサービスをセットアップします。Docker Composeを使用している場合、MinIOが含まれます。
 
+   ローカルMinIOセットアップの場合、Dockerを使用できます：
+
+   ```bash
+   docker run -d \
+     -p 9000:9000 \
+     -p 9001:9001 \
+     -e MINIO_ROOT_USER=paideia_minio \
+     -e MINIO_ROOT_PASSWORD=paideia_minio_secret \
+     minio/minio server /data --console-address ":9001"
+   ```
+
+4. Paideia LMS用のバケットを作成します。`http://localhost:9001`でMinIOコンソールにアクセスし、`paideia-bucket`という名前のバケットを作成してください。
+</Steps>
+
+### 環境変数の設定
+
+<Steps>
+5. Paideia LMSを実行する前に環境変数を設定：
+
+   ```bash
+   export DATABASE_URL="postgresql://user:password@localhost:5432/paideia_db"
+   export S3_URL="http://localhost:9000"
+   export S3_ACCESS_KEY="paideia_minio"
+   export S3_SECRET_KEY="paideia_minio_secret"
+   export S3_BUCKET="paideia-bucket"
+   export PAYLOAD_SECRET="your-secure-random-string-here"
+   ```
+
+   :::caution[セキュリティ]
+   本番環境では、`PAYLOAD_SECRET`に安全なランダム文字列を使用してください。次を使用して生成できます：
+   
+   ```bash
+   openssl rand -base64 32
+   ```
+   :::
+
+6. オプションとして、バイナリと同じディレクトリに`.env`ファイルを作成できます：
+
+   ```bash
+   cat > .env << EOF
+   DATABASE_URL=postgresql://user:password@localhost:5432/paideia_db
+   S3_URL=http://localhost:9000
+   S3_ACCESS_KEY=paideia_minio
+   S3_SECRET_KEY=paideia_minio_secret
+   S3_BUCKET=paideia-bucket
+   PAYLOAD_SECRET=your-secure-random-string-here
+   EOF
+   ```
+</Steps>
+
+おめでとうございます！環境が設定され、Paideia LMSを実行する準備が整いました！
 
 <Box icon="check-list">
 ## チェックリスト
 
 <Checklist>
-- [ ] 変更した内容をブラウザで確認できる。
-- [ ] 私はAstroの開発者だ！
+- [ ] PostgreSQLデータベースをセットアップした。
+- [ ] S3互換ストレージを設定した。
+- [ ] 環境変数を設定した。
+- [ ] Paideia LMSを実行する準備ができた！
 </Checklist>
 </Box>
