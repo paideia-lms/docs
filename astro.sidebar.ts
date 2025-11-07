@@ -25,7 +25,7 @@ export const sidebar = [
 				items: ['install-and-setup'],
 			}),
 			group('start.config', {
-				items: ['guides/configuring-astro', 'guides/environment-variables', 'guides/build-with-ai'],
+				items: ['guides/configuring-paideia', 'guides/environment-variables', 'guides/build-with-ai'],
 			}),
 			group('start.migrate', {
 				collapsed: true,
