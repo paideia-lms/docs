@@ -18,6 +18,8 @@ export default navDictionary({
 	'guides.upgrade.major': '主要版本升級指南',
 	'guides.recipes': '操作指南',
 
+	whitepaper: '白皮書',
+
 	reference: '參考',
 	'reference.runtime': '執行階段 API',
 	'reference.other': '其他開發 API',

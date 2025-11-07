@@ -16,6 +16,8 @@ export default {
 	'guides.upgrade.major': 'Major upgrade guides',
 	'guides.recipes': 'How-to recipes',
 
+	whitepaper: 'Whitepaper',
+
 	reference: 'Reference',
 	'reference.runtime': 'Runtime API',
 	'reference.other': 'Other development APIs',

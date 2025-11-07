@@ -1,23 +1,26 @@
 import starlightLlmsTxt from 'starlight-llms-txt';
 
-/** Starlight plugin that sets up `starlight-llms-txt` with configuration for the Astro docs. */
+/** Starlight plugin that sets up `starlight-llms-txt` with configuration for the Paideia LMS docs. */
 export const starlightPluginLlmsTxt = () =>
 	starlightLlmsTxt({
-		// Basic information about the docs and Astro to display in the main `llms.txt` entry file.
-		projectName: 'Astro',
-		description: 'Astro is an all-in-one web framework for building websites. ',
+		// Basic information about the docs and Paideia LMS to display in the main `llms.txt` entry file.
+		projectName: 'Paideia LMS',
+		description:
+			'Paideia LMS is a modern, lightweight Learning Management System designed for educational institutions. ',
 		details: [
-			'- Astro uses island architecture and server-first design to reduce client-side JavaScript overhead and ship high performance websites.',
-			'- Astro’s friendly content-focused features like content collections and built-in Markdown support make it an excellent choice for blogs, marketing, and e-commerce sites amongst others.',
-			'- The `.astro` templating syntax provides powerful server rendering in a format that follows HTML standards and will feel very familiar to anyone who has used JSX.',
-			'- Astro supports popular UI frameworks like React, Vue, Svelte, Preact, and Solid through official integrations.',
-			'- Astro is powered by Vite, comes with a fast development server, bundles your JavaScript and CSS for you, and makes building websites feel fun.',
+			'- Paideia is built with a modern tech stack including Bun, React Router v7, and Elysia for optimal performance.',
+			'- Paideia features a React-based frontend with Mantine components for a consistent, modern UI.',
+			'- Paideia is feature-complete with comprehensive LMS functionality including courses, enrollments, assignments, quizzes, discussions, and gradebooks.',
+			'- Paideia deploys as a single binary - download and run with no complex setup required.',
+			'- Paideia is built on PostgreSQL and S3 for minimal footprint with massive scalability.',
+			'- Unlike Moodle and Canvas, Paideia avoids plugin hell with a "batteries included" approach - all essential features are built-in.',
+			'- Paideia includes built-in LTI support, AI-native features, and Microsoft integration (Teams, OneDrive, Office 365).',
 		].join('\n'),
 		optionalLinks: [
 			{
-				label: 'The Astro blog',
-				url: 'https://astro.build/blog/',
-				description: 'the latest news about Astro development',
+				label: 'Paideia LMS Website',
+				url: 'https://paideialms.com/',
+				description: 'the official Paideia LMS website',
 			},
 		],
 
@@ -25,92 +28,55 @@ export const starlightPluginLlmsTxt = () =>
 		customSets: [
 			{
 				label: 'API Reference',
-				description: 'terse, structured descriptions of Astro’s APIs',
-				paths: ['en/reference/**', 'en/guides/imports'],
+				description: 'terse, structured descriptions of Paideia LMS APIs',
+				paths: ['en/reference/**'],
 			},
 			{
-				label: 'How-to Recipes',
-				description: 'guided examples of adding features to an Astro project',
-				paths: ['en/recipes/**'],
-			},
-			{
-				label: 'Build a Blog Tutorial',
-				description: 'a step-by-step guide to building a basic blog with Astro',
-				paths: ['en/tutorial/**'],
-			},
-			{
-				label: 'Deployment Guides',
-				description: 'recipes for how to deploy an Astro website to different services',
-				paths: ['en/guides/deploy/**'],
-			},
-			{
-				label: 'CMS Guides',
-				description:
-					'recipes for how to use different content management systems in an Astro project',
-				paths: ['en/guides/cms/**'],
-			},
-			{
-				label: 'Backend Services',
-				description:
-					'advice on how to integrate backend services like Firebase, Sentry, and Supabase in an Astro project',
-				paths: ['en/guides/migrate-to-paideia/**'],
+				label: 'User Modules',
+				description: 'guides for using different content modules in Paideia LMS',
+				paths: ['en/guides/user-modules/**'],
 			},
 			{
 				label: 'Migration Guides',
-				description: 'advice on how to migrate a project built with another tool to Astro',
+				description: 'advice on how to migrate from other LMS platforms to Paideia LMS',
 				paths: ['en/guides/migrate-to-paideia/**'],
 			},
 			{
-				label: 'Additional Guides',
-				description:
-					'guides to e-commerce, authentication, testing, and digital asset management in Astro projects',
-				paths: [
-					'en/guides/ecommerce',
-					'en/guides/authentication',
-					'en/guides/testing',
-					'en/guides/media/**',
-				],
+				label: 'Integration Guides',
+				description: 'guides for integrating Paideia LMS with external services and tools',
+				paths: ['en/guides/integrations-guide/**'],
 			},
 		],
 
 		// Control the order of pages in output files.
 		promote: [
-			'en/concepts/why-astro',
-			'en/concepts/islands',
+			'en/concepts/why-paideia',
+			'en/concepts/design-principles',
+			'en/concepts/operating-principles',
 			'en/install-and-setup',
-			'en/basics/project-structure',
-			'en/develop-and-build',
-			'en/guides/configuring-astro',
+			'en/basics/user-overview',
+			'en/basics/course-overview',
+			'en/guides/user-modules',
 		],
 
 		// Exclude pages from the abridged `llms-small.txt` file designed for smaller context windows.
 		exclude: [
-			// Landing page doesn’t really include any helpful content on its own, so it is excluded.
+			// Landing page doesn't really include any helpful content on its own, so it is excluded.
 			'en/getting-started',
 			// We can exclude this from the abridged docs as nonessential.
 			'en/contribute',
-			// Legacy flags and old upgrade guides also seem reasonable to exclude from the abridged docs.
-			'en/reference/legacy-flags',
-			'en/guides/upgrade-to/v{1..4}',
+			// Whitepaper is a PDF download, not essential for LLM context
+			'en/whitepaper',
 
 			// The following are all excluded because they are split out using `customSets`.
 
-			// How-to Recipes
-			'en/recipes/**',
-			// Build a Blog Tutorial
-			'en/tutorial/**',
 			// API Reference
 			'en/reference/**',
-			'en/guides/imports',
-			// Each of these categories is included in a dedicated custom set.
-			'en/guides/backend/**',
-			'en/guides/cms/**',
-			'en/guides/deploy/**',
+			// User Modules
+			'en/guides/user-modules/**',
+			// Migration Guides
 			'en/guides/migrate-to-paideia/**',
-			// Additional Guides
-			'en/guides/ecommerce',
-			'en/guides/authentication',
-			'en/guides/testing',
-			'en/guides/media/**',
+			// Integration Guides
+			'en/guides/integrations-guide/**',
 		],
 	});

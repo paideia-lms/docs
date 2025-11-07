@@ -18,6 +18,8 @@ export default navDictionary({
 	'guides.upgrade.major': 'メジャーアップグレードガイド',
 	'guides.recipes': '実装レシピ',
 
+	whitepaper: 'ホワイトペーパー',
+
 	reference: 'リファレンス',
 	'reference.runtime': 'ランタイムAPI',
 	'reference.other': 'その他の開発用API',
