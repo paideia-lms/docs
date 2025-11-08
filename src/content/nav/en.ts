@@ -13,6 +13,7 @@ export default {
 	'guides.enrolments': 'Enrolments',
 	'guides.gradebook': 'Gradebook',
 	'guides.notes': 'Notes',
+	'guides.adminAndServer': 'Admin and server',
 	'guides.upgrade': 'Upgrade',
 	'guides.upgrade.major': 'Major upgrade guides',
 	'guides.recipes': 'How-to recipes',

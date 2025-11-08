@@ -68,6 +68,12 @@ export const sidebar = [
 			group('guides.notes', {
 				items: ['concepts/notes'],
 			}),
+			group('guides.adminAndServer', {
+				items: [
+					'guides/admin-and-server/maintenance-mode',
+					'guides/admin-and-server/cron-jobs',
+				],
+			}),
 			group('guides.upgrade', {
 				items: [
 					'upgrade',

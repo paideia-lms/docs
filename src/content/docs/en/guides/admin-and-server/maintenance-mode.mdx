@@ -1,0 +1,159 @@
+---
+title: Maintenance Mode
+description: Learn how to use maintenance mode to restrict system access during maintenance periods.
+i18nReady: true
+---
+
+Maintenance mode allows administrators to restrict system access during maintenance periods. When maintenance mode is enabled, only administrators can access the system, while all other users are blocked from logging in. This feature provides controlled access during maintenance while preventing infinite redirect loops.
+
+## Overview
+
+Maintenance mode is a system-wide feature that allows administrators to:
+
+- **Restrict Access**: Block non-admin users from accessing the system during maintenance
+- **Admin Access**: Administrators can still access the system to perform maintenance tasks
+- **User Communication**: Display clear maintenance messages to users
+- **Easy Toggle**: Enable or disable maintenance mode via the admin interface
+
+## Enabling Maintenance Mode
+
+To enable maintenance mode:
+
+1. Log in as an administrator
+2. Navigate to **Admin → Server → Maintenance mode**
+3. Toggle the **"Enable Maintenance Mode"** switch to on
+4. Click **"Save changes"**
+
+The system is now in maintenance mode. Non-admin users will see a maintenance message when they try to access the system.
+
+![Maintenance Mode Interface](/gallery/maintenance-mode.webp)
+
+## Disabling Maintenance Mode
+
+To disable maintenance mode:
+
+1. Log in as an administrator (if not already logged in)
+2. Navigate to **Admin → Server → Maintenance mode**
+3. Toggle the **"Enable Maintenance Mode"** switch to off
+4. Click **"Save changes"**
+
+The system is now accessible to all users.
+
+## Access Control During Maintenance
+
+When maintenance mode is enabled, the following access rules apply:
+
+### Allowed Routes
+
+- **`/login`** - For administrators to log in
+- **`/admin/maintenance`** - For administrators to disable maintenance mode
+- **`/api/*`** - For API access (may be needed for system operations)
+
+### Blocked Routes
+
+- All other routes for non-admin users
+- Root route (`/`) shows maintenance message for non-admin users
+
+## User Experience
+
+### For Non-Admin Users
+
+When maintenance mode is enabled, non-admin users will:
+
+- See a maintenance message on the root route
+- Be able to access the login page (to allow admin login)
+- See a clear message: "The system is currently under maintenance. Please try again later."
+
+### For Administrators
+
+Administrators can:
+
+- Access all routes normally
+- Access the maintenance page to disable maintenance mode
+- Perform maintenance tasks without restrictions
+
+## Technical Details
+
+### Maintenance Settings
+
+Maintenance mode is stored in the `MaintenanceSettings` global collection in Payload CMS. The settings include:
+
+- **`maintenanceMode`**: Boolean field (default: `false`)
+- Stored in the database for persistence
+- Accessible via admin interface
+
+### Error Handling
+
+The system includes proper error handling to prevent infinite redirect loops:
+
+- Checks if already on root route before redirecting
+- If on root route, throws error instead of redirecting
+- Error boundary displays maintenance message
+- Prevents redirect loop
+
+### HTTP Status Code
+
+When maintenance mode is enabled, the system returns:
+
+- **HTTP 503** (Service Unavailable) status code
+- Clear error message for users
+- Proper error handling in error boundaries
+
+## Best Practices
+
+### Before Enabling Maintenance Mode
+
+1. **Notify Users**: Inform users in advance about scheduled maintenance
+2. **Plan Maintenance**: Schedule maintenance during low-traffic periods
+3. **Test Access**: Verify that administrators can still access the system
+4. **Prepare Rollback**: Know how to disable maintenance mode if needed
+
+### During Maintenance
+
+1. **Monitor Access**: Ensure administrators can access the system
+2. **Complete Tasks**: Perform all necessary maintenance tasks
+3. **Test System**: Verify that the system is working correctly
+4. **Disable Mode**: Disable maintenance mode when done
+
+### After Maintenance
+
+1. **Verify Access**: Confirm that all users can access the system
+2. **Check Functionality**: Test key features to ensure everything works
+3. **Monitor Logs**: Check system logs for any issues
+4. **User Communication**: Inform users that maintenance is complete
+
+## Troubleshooting
+
+### Cannot Access Maintenance Page
+
+If you cannot access the maintenance page:
+
+1. Ensure you are logged in as an administrator
+2. Check that the route `/admin/maintenance` is accessible
+3. Verify that maintenance mode is not blocking your access
+4. Try accessing the login page first
+
+### Maintenance Mode Won't Disable
+
+If maintenance mode won't disable:
+
+1. Verify you are logged in as an administrator
+2. Check the admin interface for error messages
+3. Verify database connectivity
+4. Check system logs for errors
+
+### Infinite Redirect Loop
+
+If you experience an infinite redirect loop:
+
+1. The system should prevent this automatically
+2. Check that you are on the root route (`/`)
+3. Verify that the error boundary is working correctly
+4. Check system logs for errors
+
+## Related Features
+
+- [Cron Jobs](/en/guides/admin-and-server/cron-jobs/) - Monitor and manage scheduled tasks
+- [Configuration Guide](/en/guides/configuring-paideia/) - Learn about system configuration
+- [Environment Variables](/en/guides/environment-variables/) - Configure system settings
+

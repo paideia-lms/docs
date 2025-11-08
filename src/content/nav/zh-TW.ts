@@ -15,6 +15,7 @@ export default navDictionary({
 	'guides.enrolments': '註冊',
 	'guides.gradebook': '成績冊',
 	'guides.notes': '筆記',
+	'guides.adminAndServer': '管理與伺服器',
 	'guides.upgrade': '升級',
 	'guides.upgrade.major': '主要版本升級指南',
 	'guides.recipes': '操作指南',

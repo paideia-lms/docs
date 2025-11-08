@@ -15,6 +15,7 @@ export default navDictionary({
 	'guides.enrolments': '登録',
 	'guides.gradebook': '成績簿',
 	'guides.notes': 'ノート',
+	'guides.adminAndServer': '管理とサーバー',
 	'guides.upgrade': 'アップグレード',
 	'guides.upgrade.major': 'メジャーアップグレードガイド',
 	'guides.recipes': '実装レシピ',
