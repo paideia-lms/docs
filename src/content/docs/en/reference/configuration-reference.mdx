@@ -234,11 +234,25 @@ EMAIL_FROM_NAME=Your School Name
 **Sensitive:** `false`  
 **Default:** `"0"`
 
-Enables sandbox mode for development and testing. When enabled (`"1"` or `"true"`), the system will use seed data from `seed.json` for initial setup.
+Enables sandbox mode for development and testing. When enabled (`"1"` or `"true"`), the system will:
+
+- Automatically reset the database on server startup with seed data from `seed.json`
+- Schedule daily database resets via cron job (at midnight)
+- Provide manual reset capability via `paideia sandbox reset` CLI command
+
+**Zero Downtime Reset**: The sandbox reset process achieves **zero downtime** by selectively deleting user data while preserving system tables (job logs, migrations, etc.). The application continues operating normally during the reset process, unlike `migrate fresh` which drops the entire database and causes downtime.
 
 ```env
 SANDBOX_MODE=1
 ```
+
+:::info[Zero Downtime]
+When sandbox mode is enabled, database resets preserve system tables (`payload-jobs`, `payload-jobs-log`, `payload-migrations`, etc.) while only deleting user data. This allows the application to continue operating during resets, achieving zero downtime.
+:::
+
+:::caution[Development and Testing Only]
+Sandbox mode is designed for development and testing environments. It should **never** be enabled in production environments as it will automatically delete all user data on a daily schedule.
+:::
 
 ### CORS Configuration
 
@@ -256,6 +270,7 @@ CORS_ORIGINS=http://localhost:3000,https://yourdomain.com
 ```
 
 **Special values:**
+
 - Empty string: Defaults to `http://localhost:3000` and `http://localhost:3001`
 - `"*"`: Allows all origins
 - Comma-separated URLs: Allows specific origins
@@ -276,12 +291,20 @@ CSRF_ORIGINS=http://localhost:3000,https://yourdomain.com
 ```
 
 **Special values:**
+
 - Empty string: Defaults to `http://localhost:3000` and `"localhost"`
 - Comma-separated URLs/domains: Allows specific origins
 
 ## Seed Data Configuration
 
 When `SANDBOX_MODE` is enabled, Paideia LMS can use seed data from a `seed.json` file to populate the database with initial test data. This file should be placed at the path where you run the application.
+
+**Reset Behavior**: When sandbox mode resets the database (on startup or via cron job), it uses a **zero downtime** approach that:
+
+- Preserves system tables (`payload-jobs`, `payload-jobs-log`, `payload-migrations`, etc.)
+- Selectively deletes only user data (users, courses, enrollments, submissions, etc.)
+- Re-seeds the database with fresh data from `seed.json`
+- Allows the application to continue operating during the reset process
 
 ### Seed Data Schema
 
@@ -386,6 +409,7 @@ Predefined user accounts for testing.
 - `additionalStudents` - Array of additional student accounts
 
 Each user object requires:
+
 - `email` - User email address
 - `password` - User password
 - `firstName` - User first name
@@ -399,6 +423,7 @@ Each user object requires:
 Array of courses to create.
 
 Each course object requires:
+
 - `title` - Course title
 - `description` - Course description
 - `slug` - Course URL slug
@@ -418,6 +443,7 @@ Modules to create for testing.
 - `additional` - Array of additional modules
 
 Each additional module can be one of:
+
 - **Page** (`type: "page"`)
   - `title`, `description`, `status`, `content`
 - **Quiz** (`type: "quiz"`)
@@ -437,6 +463,7 @@ Each additional module can be one of:
 Array of course sections to create.
 
 Each section object requires:
+
 - `title` - Section title
 - `description` - Section description
 
@@ -454,6 +481,7 @@ For complex and structured settings (usually system configuration), Paideia LMS 
 ### Configuration File Priority
 
 The `paideia.config.json` file has the highest priority for system settings. Values defined in this file will:
+
 - **Always override** values stored in the database
 - **Lock the edit field** in the UI - administrators cannot change settings that are defined in the config file
 
@@ -478,6 +506,7 @@ For example, if the system name is defined in `paideia.config.json`, the system 
 ### Configuration File Behavior
 
 When a setting is defined in `paideia.config.json`:
+
 - The setting value is read from the file
 - The setting is locked in the UI (input field is disabled)
 - Administrators cannot override the value through the UI

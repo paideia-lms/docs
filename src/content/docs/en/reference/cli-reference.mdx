@@ -45,8 +45,8 @@ The following message will display in your terminal:
 ║                                                       ║
 ╚═══════════════════════════════════════════════════════╝
 
-Paideia LMS - 0.5.4
-                                   Paideia CLI Commands                                   
+Paideia LMS - 0.5.5
+                                   Paideia CLI Commands
 ┌────────────────────────┬───────────────────────────────────────────────────────────────┐
 │ Command                │ Description                                                   │
 ├────────────────────────┼───────────────────────────────────────────────────────────────┤
@@ -56,6 +56,7 @@ Paideia LMS - 0.5.4
 │ paideia migrate up     │ Run pending migrations                                        │
 │ paideia migrate fresh  │ Drop all database entities and re-run migrations from scratch │
 │ paideia migrate dump   │ Dump database to SQL file                                     │
+│ paideia sandbox reset  │ Reset sandbox database (only when SANDBOX_MODE is enabled)   │
 └────────────────────────┴───────────────────────────────────────────────────────────────┘
 ```
 
@@ -122,6 +123,7 @@ paideia migrate up
 ```
 
 **Use Cases**:
+
 - Apply database schema changes after updating Paideia LMS
 - Run new migrations in production
 - Update database structure after pulling code changes
@@ -139,6 +141,7 @@ paideia migrate fresh --force-accept-warning
 ```
 
 **Use Cases**:
+
 - Complete database reset during development
 - Start with a clean database
 - Rebuild database from scratch
@@ -167,6 +170,7 @@ paideia migrate dump --output my-backup.sql
 **Filename Format**: If no filename is specified, dumps are named `paideia-dump-{timestamp}.sql`.
 
 **Use Cases**:
+
 - Create database backups before major changes
 - Export database for migration to another server
 - Create backups for disaster recovery
@@ -179,6 +183,68 @@ paideia migrate dump
 
 # ✅ Database dump completed: paideia_data/paideia-dump-2025-11-02T10-30-45-123Z.sql
 ```
+
+## Sandbox Commands
+
+Paideia LMS provides sandbox management commands for development and testing environments.
+
+### `paideia sandbox reset`
+
+Manually resets the sandbox database when `SANDBOX_MODE` is enabled. This command deletes all user data (students, courses, etc.) while preserving system tables (job logs, migrations, etc.), achieving zero downtime during the reset process.
+
+```bash
+# Reset sandbox database (only works when SANDBOX_MODE is enabled)
+paideia sandbox reset
+```
+
+**Requirements**:
+
+- `SANDBOX_MODE` environment variable must be set to `"1"` or `"true"`
+- If sandbox mode is disabled, the command will exit silently
+
+**What It Does**:
+
+- Deletes all user data collections (users, courses, enrollments, submissions, etc.)
+- Preserves system tables (`payload-jobs`, `payload-jobs-log`, `payload-migrations`, etc.)
+- Re-seeds the database with fresh data from `seed.json` (if available)
+- Achieves **zero downtime** - the application continues operating during the reset
+
+**Use Cases**:
+
+- Manual database reset during development
+- Testing database reset functionality
+- Resetting test data without restarting the server
+- Clearing user data while preserving system state
+
+**Example Output**:
+
+```bash
+paideia sandbox reset
+
+╔═══════════════════════════════════════════════════════╗
+║                                                       ║
+║      ██████╗  █████╗ ██╗██████╗ ██████╗██╗ █████╗     ║
+║      ██╔══██╗██╔══██╗██║██╔══██╗██╔═══╝██║██╔══██╗    ║
+║      ██████╔╝███████║██║██║  ██║██████╗██║███████║    ║
+║      ██╔═══╝ ██╔══██║██║██║  ██║██╔═══╝██║██╔══██║    ║
+║      ██║     ██║  ██║██║██████╔╝██████╗██║██║  ██║    ║
+║      ╚═╝     ╚═╝  ╚═╝╚═╝╚═════╝ ╚═════╝╚═╝╚═╝  ╚═╝    ║
+║                                                       ║
+║               Learning Management System              ║
+║                                                       ║
+╚═══════════════════════════════════════════════════════╝
+
+🔄 Resetting sandbox database...
+✅ Sandbox database reset completed successfully!
+```
+
+:::info[Zero Downtime]
+The sandbox reset process achieves **zero downtime** by preserving system tables during the reset. The application continues operating normally while user data is being cleared and reseeded. This is different from `migrate fresh`, which drops the entire database and causes downtime.
+:::
+
+:::caution[Sandbox Mode Only]
+This command only works when `SANDBOX_MODE` is enabled. It will not execute if sandbox mode is disabled, ensuring it cannot accidentally be run in production environments.
+:::
 
 ## Command Flags
 
@@ -201,6 +267,7 @@ paideia migrate --help
 Skips confirmation prompts for destructive operations. Use with caution.
 
 **Available for**:
+
 - `paideia migrate fresh`
 
 **Example**:
@@ -225,12 +292,14 @@ paideia migrate dump -o backup-before-update.sql
 ### Database Migrations
 
 1. **Always Backup First**: Create a database dump before running migrations in production
+
    ```bash
    paideia migrate dump -o backup-before-migration.sql
    paideia migrate up
    ```
 
 2. **Check Status**: Verify migration status before and after applying migrations
+
    ```bash
    paideia migrate status
    ```
@@ -242,6 +311,7 @@ paideia migrate dump -o backup-before-update.sql
 ### Database Backups
 
 1. **Regular Backups**: Schedule regular database dumps
+
    ```bash
    # Example cron job for daily backups
    0 2 * * * cd /path/to/paideia && paideia migrate dump -o daily-$(date +\%Y-\%m-\%d).sql
@@ -287,6 +357,7 @@ fi
 All CLI commands work seamlessly with compiled single binary deployments:
 
 1. **Development**: Run commands directly
+
    ```bash
    bun server/index.ts migrate status
    ```
@@ -298,6 +369,7 @@ All CLI commands work seamlessly with compiled single binary deployments:
    ```
 
 The CLI mode works with compiled binaries because:
+
 - Migrations are bundled into the binary at compile time
 - No filesystem dependencies for migration utilities
 - All commands work identically in compiled and non-compiled modes
