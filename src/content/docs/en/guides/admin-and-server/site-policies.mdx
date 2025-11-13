@@ -1,0 +1,238 @@
+---
+title: Site Policies
+description: Configure media storage limits and upload restrictions for your Paideia LMS site.
+i18nReady: true
+---
+
+Site Policies allow administrators to configure system-wide settings for media storage quotas and file upload limits. These policies help manage storage usage across the platform and ensure consistent upload restrictions for all users.
+
+## Overview
+
+Site Policies provide:
+
+- **User Media Storage Quota**: Set maximum storage allowed per user
+- **Site Upload Limit**: Set maximum file size for all uploads
+- **Unlimited Options**: Support for unlimited storage and upload sizes
+- **Quick Presets**: Common values for quick configuration
+- **Custom Values**: Precise control with custom byte values
+
+## Accessing Site Policies
+
+There are two ways to access the Site Policies page:
+
+### Method 1: Via Admin Dashboard
+
+1. Log in as an administrator
+2. Navigate to **Site Admin** in the top navigation
+3. Click on the **"General"** tab in the site administration menu
+4. Scroll to the **"Security"** section
+5. Click **"Site security settings"**
+6. You'll be taken to the Site Policies page at `/admin/sitepolicies`
+
+### Method 2: Direct Navigation
+
+1. Log in as an administrator
+2. Navigate directly to `/admin/sitepolicies` in your browser
+
+![Site Policies Page](/gallery/admin-sitepolicies.webp)
+
+## User Media Storage Quota
+
+The User Media Storage Total setting controls how much storage space each user can use for their media files.
+
+### Setting Storage Quota
+
+1. Navigate to the Site Policies page
+2. Find the **"User Media Storage Total"** section
+3. Select a preset value from the dropdown, or choose **"Custom..."** to enter a specific value
+4. Click **"Save changes"** to apply
+
+### Preset Options
+
+Quick preset options include:
+
+- **Unlimited**: No storage limit (null value)
+- **100 MB**: 100 megabytes per user
+- **500 MB**: 500 megabytes per user
+- **1 GB**: 1 gigabyte per user
+- **5 GB**: 5 gigabytes per user
+- **10 GB**: 10 gigabytes per user (default)
+- **50 GB**: 50 gigabytes per user
+- **100 GB**: 100 gigabytes per user
+- **Custom**: Enter a specific value in bytes
+
+### Custom Values
+
+To set a custom storage quota:
+
+1. Select **"Custom..."** from the dropdown
+2. Enter the value in bytes in the number input field
+3. The system will display the formatted value (e.g., "10 GB") when a preset is selected
+4. Click **"Save changes"** to apply
+
+### Default Value
+
+The default storage quota is **10 GB** (10 * 1024 * 1024 * 1024 bytes) per user.
+
+### Unlimited Storage
+
+To allow unlimited storage per user:
+
+1. Select **"Unlimited"** from the dropdown
+2. The value will be set to `null`
+3. Users will see "Unlimited" in their Media Drive
+4. Click **"Save changes"** to apply
+
+## Site Upload Limit
+
+The Site Upload Limit setting controls the maximum file size allowed for all uploads across the platform.
+
+### Setting Upload Limit
+
+1. Navigate to the Site Policies page
+2. Find the **"Site Upload Limit"** section
+3. Select a preset value from the dropdown, or choose **"Custom..."** to enter a specific value
+4. Click **"Save changes"** to apply
+
+### Preset Options
+
+Quick preset options include:
+
+- **Unlimited**: No upload size limit (null value)
+- **1 MB**: 1 megabyte maximum
+- **5 MB**: 5 megabytes maximum
+- **10 MB**: 10 megabytes maximum
+- **20 MB**: 20 megabytes maximum (default)
+- **50 MB**: 50 megabytes maximum
+- **100 MB**: 100 megabytes maximum
+- **500 MB**: 500 megabytes maximum
+- **1 GB**: 1 gigabyte maximum
+- **Custom**: Enter a specific value in bytes
+
+### Custom Values
+
+To set a custom upload limit:
+
+1. Select **"Custom..."** from the dropdown
+2. Enter the value in bytes in the number input field
+3. The system will display the formatted value (e.g., "20 MB") when a preset is selected
+4. Click **"Save changes"** to apply
+
+### Default Value
+
+The default upload limit is **20 MB** (20 * 1024 * 1024 bytes).
+
+### Unlimited Uploads
+
+To allow unlimited upload sizes:
+
+1. Select **"Unlimited"** from the dropdown
+2. The value will be set to `null`
+3. All file uploads will be allowed regardless of size
+4. Click **"Save changes"** to apply
+
+## How Policies Are Applied
+
+### Storage Quota Enforcement
+
+The storage quota is displayed to users in their Media Drive:
+
+- **Donut Chart**: Shows used vs available storage when a limit is set
+- **Allowance Text**: Displays the configured limit or "Unlimited"
+- **Real-Time Updates**: Chart updates as users upload or delete files
+
+The quota applies to all media files uploaded by a user, including:
+
+- User avatars
+- Assignment attachments
+- Note images
+- Course thumbnails
+- Discussion attachments
+- Any other media files
+
+### Upload Limit Enforcement
+
+The upload limit is enforced at the point of upload across all routes:
+
+- **User Media Drive**: File uploads respect the limit
+- **Assignment Submissions**: File attachments respect the limit
+- **Note Images**: Image uploads respect the limit
+- **Course Thumbnails**: Thumbnail uploads respect the limit
+- **User Avatars**: Avatar uploads respect the limit
+
+When a file exceeds the limit:
+
+1. The upload is rejected
+2. An error message is displayed showing the maximum allowed size
+3. The file size is formatted for readability (e.g., "File size exceeds maximum allowed size of 20 MB")
+
+## Best Practices
+
+### Setting Storage Quotas
+
+- **Consider User Needs**: Set quotas based on typical usage patterns
+- **Start Conservative**: Begin with lower quotas and increase as needed
+- **Monitor Usage**: Review storage usage reports to adjust quotas
+- **Account for Growth**: Plan for increased usage over time
+- **Unlimited for Small Sites**: Consider unlimited storage for small deployments
+
+### Setting Upload Limits
+
+- **Balance Usability and Storage**: Set limits that allow necessary file types
+- **Consider File Types**: Different content types may need different limits
+- **Network Considerations**: Very large limits may cause timeout issues
+- **Security**: Reasonable limits help prevent abuse
+- **Default Values**: 20 MB is a good default for most use cases
+
+### Policy Management
+
+- **Document Changes**: Keep records of policy changes
+- **Notify Users**: Inform users when policies change
+- **Test Changes**: Verify that policy changes work as expected
+- **Monitor Impact**: Watch for issues after policy changes
+
+## Troubleshooting
+
+### Policies Not Applying
+
+If policies don't seem to be applying:
+
+1. Verify you saved the changes (click "Save changes" button)
+2. Refresh the page to see updated values
+3. Check that you're viewing the correct policy settings
+4. Verify database connectivity
+5. Check system logs for errors
+
+### Users Hitting Quota Limits
+
+If users are hitting quota limits:
+
+1. Review current storage usage in Admin Media Management
+2. Consider increasing the quota if appropriate
+3. Help users identify and delete unused files
+4. Provide guidance on file optimization
+
+### Upload Errors
+
+If users are getting upload errors:
+
+1. Verify the upload limit is set appropriately
+2. Check that file sizes are within the limit
+3. Review error messages for specific issues
+4. Test uploads with different file types and sizes
+
+### Unlimited Settings Not Working
+
+If unlimited settings aren't working:
+
+1. Verify that "Unlimited" was selected and saved
+2. Check that the value is `null` in the database
+3. Refresh the page to see updated settings
+4. Verify system globals are being fetched correctly
+
+## Related Features
+
+- [Media Management](/en/guides/media-management/) - Learn how users manage their media files
+- [Admin Media Management](/en/guides/admin-and-server/admin-media-management/) - View and manage all system media
+- [Maintenance Mode](/en/guides/admin-and-server/maintenance-mode/) - Learn about other system-wide settings
+

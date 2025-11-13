@@ -1,0 +1,262 @@
+---
+title: Appearance Settings
+description: Customize your Paideia LMS site appearance by adding external CSS stylesheets that are automatically injected into all pages.
+i18nReady: true
+---
+
+Appearance Settings allow administrators to configure multiple external CSS stylesheets that are automatically injected into the HTML `<head>` of all pages. This enables site-wide appearance customization without modifying core code, similar to Moodle's appearance customization feature.
+
+## Overview
+
+Appearance Settings provide:
+
+- **External CSS Stylesheets**: Add multiple stylesheet URLs
+- **Order Control**: Reorder stylesheets to control CSS cascade precedence
+- **URL Validation**: Automatic validation of HTTP/HTTPS URLs
+- **Easy Management**: Add, remove, and reorder stylesheets through a simple interface
+- **Global Application**: Stylesheets are applied to all pages automatically
+
+## Accessing Appearance Settings
+
+There are two ways to access the Appearance Settings page:
+
+### Method 1: Via Admin Dashboard
+
+1. Log in as an administrator
+2. Navigate to **Site Admin** in the top navigation
+3. Click on the **"Appearance"** tab in the site administration menu
+4. Click **"Additional CSS"** in the Appearance section
+5. You'll be taken to the Appearance Settings page at `/admin/appearance`
+
+### Method 2: Direct Navigation
+
+1. Log in as an administrator
+2. Navigate directly to `/admin/appearance` in your browser
+
+## Adding CSS Stylesheets
+
+To add a new CSS stylesheet:
+
+1. Navigate to the Appearance Settings page
+2. Click the **"Add Stylesheet"** button
+3. Enter the stylesheet URL in the text input field
+4. The URL must be a valid HTTP or HTTPS URL
+5. Click **"Save changes"** to apply
+
+### URL Format
+
+Stylesheet URLs must:
+
+- **Protocol**: Use `http://` or `https://` (HTTPS recommended)
+- **Format**: Be a valid URL format
+- **Accessibility**: Be publicly accessible (no authentication required)
+- **CORS**: Have appropriate CORS headers if needed
+
+Example URLs:
+
+```
+https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css
+https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css
+https://example.com/custom-theme.css
+```
+
+### URL Validation
+
+The system validates URLs at multiple levels:
+
+1. **Field-Level Validation**: Checks URL format using JavaScript `URL` constructor
+2. **Server-Side Validation**: Validates all URLs before saving
+3. **Client-Side Validation**: Real-time feedback in the form
+
+Invalid URLs will show an error message: "Must be a valid HTTP or HTTPS URL"
+
+## Reordering Stylesheets
+
+The order of stylesheets matters for CSS cascade precedence. Later stylesheets can override earlier ones.
+
+### Moving Stylesheets Up
+
+To move a stylesheet earlier in the list:
+
+1. Find the stylesheet you want to move
+2. Click the **"Up"** button (↑) next to the stylesheet
+3. The stylesheet will move up one position
+4. Click **"Save changes"** to apply the new order
+
+### Moving Stylesheets Down
+
+To move a stylesheet later in the list:
+
+1. Find the stylesheet you want to move
+2. Click the **"Down"** button (↓) next to the stylesheet
+3. The stylesheet will move down one position
+4. Click **"Save changes"** to apply the new order
+
+### Button States
+
+- **Up Button**: Disabled on the first stylesheet (cannot move up further)
+- **Down Button**: Disabled on the last stylesheet (cannot move down further)
+- **Active Buttons**: Enabled for stylesheets in the middle
+
+## CSS Cascade Precedence
+
+Stylesheets are loaded in the order they are configured:
+
+1. **First Stylesheet**: Loads first, has lowest priority
+2. **Subsequent Stylesheets**: Load in order, each can override previous ones
+3. **Last Stylesheet**: Loads last, has highest priority
+
+This allows you to:
+
+- **Load Base Styles First**: Foundation stylesheets (e.g., Bootstrap)
+- **Load Theme Overrides Second**: Theme-specific styles
+- **Load Customizations Last**: Site-specific customizations (highest priority)
+
+### Example Cascade
+
+```
+1. Bootstrap CSS (base framework)
+2. Theme CSS (theme overrides)
+3. Custom CSS (site-specific customizations) ← Highest priority
+```
+
+## Removing Stylesheets
+
+To remove a stylesheet:
+
+1. Find the stylesheet you want to remove
+2. Click the **"Delete"** button (trash icon) next to the stylesheet
+3. The stylesheet will be removed from the list
+4. Click **"Save changes"** to apply
+
+:::caution
+Removing a stylesheet will immediately stop it from loading on all pages. Make sure you want to remove it before saving changes.
+:::
+
+## Empty State
+
+When no stylesheets are configured:
+
+- **Empty State Message**: "No stylesheets configured. Click 'Add Stylesheet' to add one."
+- **Add Button**: Available to add the first stylesheet
+- **No Impact**: Pages will load normally without additional stylesheets
+
+## How Stylesheets Are Loaded
+
+### Loading Order
+
+Stylesheets are injected into the HTML `<head>` in this order:
+
+1. **Mantine Core Styles**: Base framework styles (via `@mantine/core/styles.css` import)
+2. **Highlight.js Stylesheet**: Code highlighting theme (theme-aware)
+3. **Additional CSS Stylesheets**: Your configured stylesheets (in configured order) ← New
+4. **Page-Specific Styles**: Any page-specific styles
+
+### HTML Structure
+
+The stylesheets appear in the HTML as:
+
+```html
+<head>
+  <!-- Mantine styles -->
+  <link rel="stylesheet" href="/mantine-styles.css" />
+  
+  <!-- Highlight.js styles -->
+  <link rel="stylesheet" href="/highlight-theme.css" />
+  
+  <!-- Your configured stylesheets -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://example.com/custom.css" />
+  
+  <!-- Page content -->
+</head>
+```
+
+## Best Practices
+
+### Stylesheet Selection
+
+- **Use CDNs**: Prefer CDN-hosted stylesheets for reliability and performance
+- **HTTPS Only**: Use HTTPS URLs for security
+- **Minified Versions**: Use minified CSS files for better performance
+- **Version Pinning**: Consider using versioned URLs for stability
+
+### Organization
+
+- **Logical Order**: Order stylesheets from general to specific
+- **Documentation**: Keep notes on what each stylesheet does
+- **Testing**: Test stylesheet combinations before deploying
+- **Backup**: Document your stylesheet configuration
+
+### Performance
+
+- **Limit Count**: Avoid adding too many stylesheets (affects page load time)
+- **Optimize Order**: Place most important stylesheets first
+- **Monitor Impact**: Check page load performance after adding stylesheets
+- **Use Async**: Consider async loading for non-critical stylesheets (future feature)
+
+### Maintenance
+
+- **Regular Review**: Periodically review and remove unused stylesheets
+- **Update URLs**: Keep stylesheet URLs up to date
+- **Test Changes**: Test appearance after adding or reordering stylesheets
+- **Version Control**: Track stylesheet changes in your documentation
+
+## Troubleshooting
+
+### Stylesheets Not Loading
+
+If stylesheets aren't loading:
+
+1. Verify the URL is accessible (open in browser)
+2. Check that the URL uses HTTP or HTTPS protocol
+3. Verify CORS headers allow loading from your domain
+4. Check browser console for loading errors
+5. Verify stylesheets are saved and page is refreshed
+
+### Styles Not Applying
+
+If styles aren't applying:
+
+1. Check stylesheet order (later stylesheets override earlier ones)
+2. Verify CSS specificity (your styles may need higher specificity)
+3. Check browser developer tools for CSS conflicts
+4. Ensure stylesheet is loading (check Network tab)
+5. Verify stylesheet content is correct
+
+### Invalid URL Errors
+
+If you get invalid URL errors:
+
+1. Ensure URL starts with `http://` or `https://`
+2. Verify URL format is correct
+3. Check for typos in the URL
+4. Test URL in a browser to ensure it's accessible
+5. Remove any special characters that might break the URL
+
+### Order Not Persisting
+
+If stylesheet order doesn't persist:
+
+1. Verify you clicked "Save changes" after reordering
+2. Refresh the page to see updated order
+3. Check that changes were saved in the database
+4. Verify you have admin permissions
+5. Check system logs for errors
+
+### Performance Issues
+
+If page load is slow:
+
+1. Reduce the number of stylesheets
+2. Use minified CSS files
+3. Consider combining stylesheets
+4. Use CDN-hosted stylesheets for better caching
+5. Monitor network tab for slow-loading stylesheets
+
+## Related Features
+
+- [Site Policies](/en/guides/admin-and-server/site-policies/) - Configure other system-wide settings
+- [Admin Media Management](/en/guides/admin-and-server/admin-media-management/) - Manage media files
+- [Maintenance Mode](/en/guides/admin-and-server/maintenance-mode/) - Learn about other admin features
+

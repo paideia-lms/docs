@@ -1,0 +1,327 @@
+---
+title: Media Management
+description: Learn how to manage your media files, upload content, and track media usage in Paideia LMS.
+i18nReady: true
+---
+
+The Media Drive is your personal storage space for all media files in Paideia LMS. Every file you upload is associated with your account, allowing you to view, organize, download, rename, and delete your media files. The Media Drive serves as the foundation for media uploads across assignments, notes, and other content types.
+
+## Why Paideia Media Drive is Unique
+
+Paideia's built-in Media Drive is a powerful feature that sets it apart from traditional Learning Management Systems. Unlike most LMS platforms that rely on external storage integrations (such as OneDrive, Google Drive, or Dropbox), Paideia provides a fully integrated media management system built directly into the platform.
+
+### Built-In Integration
+
+**Traditional LMS Limitations:**
+- Most LMS platforms require integration with external cloud storage services
+- External drives are separate systems from the LMS
+- Permission and access control issues often arise when integration is not properly configured
+- Students and instructors face difficulties accessing files due to permission mismatches
+- File sharing becomes complex when crossing system boundaries
+
+**Paideia's Advantage:**
+- **Native Integration**: The media drive is built directly into the LMS, not a separate system
+- **Automatic Permissions**: All permissions and access control are automatically configured by the system
+- **No Permission Issues**: Since everything is within the same system, there are no cross-system permission conflicts
+- **Seamless Access**: Students and instructors can access files without dealing with external authentication
+- **Unified Experience**: All media operations work consistently across the entire platform
+
+### Virtually Unlimited Storage
+
+Paideia uses S3-compatible storage (such as AWS S3, MinIO, or other S3-compatible services), which provides:
+
+- **Scalable Storage**: Storage capacity scales with your needs
+- **Cost-Effective**: Pay only for what you use
+- **Reliable**: Enterprise-grade storage infrastructure
+- **No Hard Limits**: Unlike external integrations with storage quotas, Paideia's S3-based storage is virtually unlimited
+
+Administrators can configure storage quotas per user if needed, but the underlying storage system can scale to accommodate any amount of data.
+
+### Comprehensive Management
+
+For administrators, Paideia provides detailed statistics and management tools:
+
+- **Storage Analytics**: See which users are using how much storage
+- **File Type Analysis**: Understand what types of files consume the most storage
+- **Usage Tracking**: Monitor media file usage across the platform
+- **Orphaned File Detection**: Identify and clean up unused files
+- **System-Wide View**: Manage all media files from a single interface
+
+These statistics are invaluable for:
+- **Capacity Planning**: Understanding storage growth trends
+- **Resource Management**: Identifying users with high storage usage
+- **Cost Optimization**: Finding opportunities to optimize storage usage
+- **System Health**: Monitoring overall system media usage
+
+## Overview
+
+The Media Drive provides:
+
+- **Personal Storage**: All your uploaded media files in one place
+- **Multiple View Modes**: Card view and table view for different preferences
+- **File Operations**: Upload, download, rename, and delete files
+- **Storage Quota**: Visual display of your storage usage and limits
+- **Media Preview**: Inline previews for images, audio, video, and PDF files
+- **Usage Tracking**: See where your media files are being used before deletion
+- **Batch Operations**: Select and delete multiple files at once
+
+## Accessing Your Media Drive
+
+There are two ways to access your Media Drive:
+
+### Method 1: Via User Menu
+
+1. Click on your user profile in the top navigation bar
+2. Select **"Media"** from the dropdown menu
+3. You'll be taken to your Media Drive page at `/user/media`
+
+### Method 2: Via User Layout Tabs
+
+1. Navigate to any user profile page (your own or another user's)
+2. Click on the **"Media"** tab in the user layout navigation
+3. The Media Drive page will display all your media files
+
+![User Media Drive](/gallery/user-media-drive.webp)
+
+## Uploading Files
+
+To upload media files to your drive:
+
+1. Navigate to your Media Drive page
+2. Click the **"+ Upload"** button in the header
+3. Select one or more files from your computer
+4. The files will be uploaded automatically
+
+### Supported File Types
+
+The Media Drive accepts various file types including:
+
+- **Images**: JPEG, PNG, GIF, WebP, SVG
+- **Audio**: MP3, WAV, OGG, M4A
+- **Video**: MP4, WebM, OGG, MOV
+- **Documents**: PDF, DOC, DOCX, XLS, XLSX, PPT, PPTX
+- **Text**: TXT, MD
+- **Archives**: ZIP, RAR, 7Z
+
+### Upload Limits
+
+Upload file sizes are limited by the site-wide upload limit configured by administrators. If you attempt to upload a file that exceeds the limit, you'll see an error message indicating the maximum allowed file size.
+
+:::tip
+The upload limit is displayed in the error message if your file is too large. Contact your administrator if you need to upload larger files.
+:::
+
+## Viewing Media
+
+The Media Drive offers two view modes for displaying your files:
+
+### Card View
+
+Card view displays your media files as visual cards with:
+
+- **Thumbnails**: Image previews or file type icons
+- **File Information**: Name, size, creation date
+- **Quick Actions**: Checkbox for selection, action menu (three dots)
+- **Inline Previews**: Audio and video players for media files
+
+
+### Table View
+
+Table view displays your media files in a data table format with:
+
+- **Columns**: Filename, size, created date, actions
+- **Sortable Columns**: Click column headers to sort
+- **Row Selection**: Checkboxes for selecting multiple files
+- **Compact Display**: More files visible at once
+
+Switch between views using the **"Card"** and **"Table"** toggle buttons in the header.
+
+## Previewing Media
+
+The Media Drive supports inline and full-size previews for various file types:
+
+### Inline Previews
+
+- **Images**: Thumbnails displayed in card view
+- **Audio**: Audio player with controls in card view
+- **Video**: Video player with controls (max 150px height) in card view
+
+### Full-Size Preview Modal
+
+Access the preview modal by clicking the **"Preview"** option in the action menu (three dots) on any media file. The modal supports:
+
+- **Images**: Full-size image with proper scaling
+- **Audio**: Full audio player with all controls
+- **Video**: Full video player (max 80vh height) with all controls
+- **PDF**: Browser-native PDF viewer via iframe
+
+## Downloading Files
+
+To download a media file:
+
+1. Click the action menu (three dots) on the file card or table row
+2. Select **"Download"**
+3. The file will download with its original filename
+
+Files are downloaded with proper `Content-Disposition` headers to ensure the correct filename is used.
+
+## Renaming Files
+
+To rename a media file:
+
+1. Click the action menu (three dots) on the file
+2. Select **"Rename"**
+3. Enter the new filename in the modal dialog
+4. Click **"Save"** to confirm
+
+The rename operation updates both the database record and the S3 storage file, ensuring consistency across the system.
+
+:::caution
+Filenames must be unique. If you try to rename a file to a name that already exists, the operation will fail with an error message.
+:::
+
+## Deleting Files
+
+You can delete files individually or in batches:
+
+### Single File Deletion
+
+1. Click the action menu (three dots) on the file
+2. Select **"Delete"**
+3. Confirm the deletion in the dialog
+4. The file will be removed from both the database and S3 storage
+
+### Batch Deletion
+
+1. Select multiple files using the checkboxes (card view) or row selection (table view)
+2. Click the **"Delete Selected"** button that appears
+3. Confirm the deletion in the dialog
+4. All selected files will be deleted
+
+:::danger
+Deletion is permanent and cannot be undone. Make sure to check media usage before deleting files that might be in use.
+:::
+
+## Storage Quota
+
+The Media Drive displays your storage usage with a visual donut chart:
+
+### When Storage Limit is Set
+
+- **Used Storage**: Shows how much storage you've used
+- **Available Storage**: Shows how much storage remains
+- **Chart Label**: Displays "X / Y" (used / limit)
+- **Allowance Text**: Shows your total storage allowance
+
+### When Storage is Unlimited
+
+- **Used Storage**: Shows only how much storage you've used
+- **Chart Label**: Displays only the used amount
+- **Allowance Text**: Shows "Unlimited"
+
+The storage quota is configured by administrators and applies to all media files you upload, including those used in assignments, notes, and other content.
+
+## Media Usage Tracking
+
+Before deleting media files, you can check where they're being used:
+
+### Viewing Media Usage
+
+1. Click the action menu (three dots) on any media file
+2. Select **"Show Usage"**
+3. A modal will display all locations where the file is referenced
+
+### Usage Information
+
+The usage modal shows:
+
+- **Total Usages**: Number of places the file is referenced
+- **Usage Details**: Collection name, document ID, and field path for each usage
+
+Common usage locations include:
+
+- **User Avatars**: `users` collection, `avatar` field
+- **Course Thumbnails**: `courses` collection, `thumbnail` field
+- **Assignment Attachments**: `assignment-submissions` collection, `attachments[].file` field
+- **Discussion Attachments**: `discussion-submissions` collection, `attachments[].file` field
+- **Content Media**: `courses`, `pages`, `notes` collections, `media` relationship field
+
+### Deletion Protection
+
+If you attempt to delete a media file that is still in use, the system will:
+
+1. Check for all usages before deletion
+2. Prevent deletion if any usages are found
+3. Display an error message with the media ID and usage count
+4. Require you to remove all references before deletion
+
+This protection prevents accidental deletion of files that are still referenced in your content.
+
+![Media Usage Tracking](/gallery/user-media-drive-check-usage.webp)
+
+## Best Practices
+
+### Organizing Your Media
+
+- **Use Descriptive Filenames**: Name files clearly to make them easy to find
+- **Upload as Needed**: Upload files when you need them, rather than in bulk
+- **Check Usage Before Deleting**: Always check usage before deleting files
+- **Monitor Storage**: Keep an eye on your storage quota to avoid hitting limits
+
+### File Management
+
+- **Regular Cleanup**: Periodically review and delete unused files
+- **Batch Operations**: Use batch deletion for cleaning up multiple files at once
+- **Preview Before Use**: Use the preview feature to verify files before using them in content
+
+### Storage Management
+
+- **Optimize File Sizes**: Compress images and videos when possible
+- **Use Appropriate Formats**: Choose file formats that balance quality and size
+- **Monitor Quota**: Check your storage usage regularly to stay within limits
+
+## Troubleshooting
+
+### Cannot Upload Files
+
+If you cannot upload files:
+
+1. Check that your file size is within the upload limit
+2. Verify that the file type is supported
+3. Ensure you have available storage quota (if limits are set)
+4. Check your internet connection
+5. Contact your administrator if issues persist
+
+### Files Not Appearing
+
+If uploaded files don't appear:
+
+1. Refresh the page
+2. Check that you're viewing the correct user's media drive
+3. Verify that the upload completed successfully
+4. Check browser console for errors
+
+### Cannot Delete Files
+
+If you cannot delete files:
+
+1. Check the usage modal to see where the file is referenced
+2. Remove all references to the file before attempting deletion
+3. Verify you have permission to delete the file (you can only delete your own files)
+4. Contact your administrator if you need to delete files referenced by others
+
+### Storage Quota Issues
+
+If you're hitting storage limits:
+
+1. Check your current usage in the storage chart
+2. Delete unused files to free up space
+3. Contact your administrator to request a quota increase
+4. Consider optimizing file sizes before uploading
+
+## Related Features
+
+- [Site Policies](/en/guides/admin-and-server/site-policies/) - Learn about storage quotas and upload limits
+- [Admin Media Management](/en/guides/admin-and-server/admin-media-management/) - Administrators can view and manage all system media
+- [User Overview](/en/basics/user-overview/) - Learn about user roles and permissions
+

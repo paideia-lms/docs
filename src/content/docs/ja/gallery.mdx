@@ -102,6 +102,24 @@ import GalleryLightbox from '~/components/GalleryLightbox.astro';
 	]}
 />
 
+## メディア管理
+
+<GalleryLightbox
+	galleryId="gallery-media"
+	images={[
+		{
+			src: '/gallery/user-media-drive.webp',
+			title: 'ユーザーメディアドライブ',
+			alt: 'ユーザーメディアドライブ',
+		},
+		{
+			src: '/gallery/user-media-drive-check-usage.webp',
+			title: 'メディア使用状況追跡',
+			alt: 'メディア使用状況追跡',
+		},
+	]}
+/>
+
 ## 管理
 
 <GalleryLightbox
@@ -141,6 +159,16 @@ import GalleryLightbox from '~/components/GalleryLightbox.astro';
 			src: '/gallery/maintenance-mode.webp',
 			title: 'サイト管理者 - メンテナンスモード',
 			alt: 'サイト管理者メンテナンスモード',
+		},
+		{
+			src: '/gallery/admin-sitepolicies.webp',
+			title: 'サイト管理者 - サイトポリシー',
+			alt: 'サイト管理者サイトポリシー',
+		},
+		{
+			src: '/gallery/admin-system-media.webp',
+			title: 'サイト管理者 - システムメディア',
+			alt: 'サイト管理者システムメディア',
 		},
 	]}
 />

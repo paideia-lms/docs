@@ -1,0 +1,342 @@
+---
+title: Admin Media Management
+description: View and manage all media files across your Paideia LMS site, including system-wide statistics and orphaned file cleanup.
+i18nReady: true
+---
+
+The Admin Media Management page provides administrators with a comprehensive view of all media files in the system. You can view system-wide statistics, filter by user, manage media files, and clean up orphaned files that exist in storage but aren't tracked in the database.
+
+## Why Admin Media Statistics Matter
+
+Paideia's built-in media management system provides administrators with powerful analytics and insights that are essential for effective platform management. Unlike LMS platforms that rely on external storage integrations, Paideia's integrated system gives you complete visibility and control over media usage.
+
+### Comprehensive Storage Analytics
+
+The statistics provided by Admin Media Management are invaluable for:
+
+- **Capacity Planning**: Understanding storage growth trends helps you plan for future capacity needs
+- **Resource Management**: Identifying which users are consuming the most storage allows you to manage resources effectively
+- **File Type Analysis**: Knowing which file types (images, videos, documents, etc.) consume the most storage helps you optimize storage policies
+- **Cost Optimization**: Understanding storage patterns helps you make informed decisions about storage costs and optimization strategies
+- **System Health Monitoring**: Tracking overall media usage helps you monitor system health and identify potential issues early
+
+### Real-World Management Benefits
+
+These statistics enable administrators to:
+
+- **Make Data-Driven Decisions**: Base storage policies and quotas on actual usage data rather than estimates
+- **Identify Power Users**: Find users who may need additional storage or guidance on file management
+- **Optimize Storage Costs**: Understand what types of content drive storage costs and adjust policies accordingly
+- **Plan Infrastructure**: Use historical data to predict future storage needs
+- **Troubleshoot Issues**: Quickly identify unusual storage patterns that might indicate problems
+
+The ability to see exactly which users are using how much storage and what file types are consuming the most space is a powerful management tool that helps administrators make informed decisions about resource allocation and system optimization.
+
+## Overview
+
+Admin Media Management provides:
+
+- **System-Wide View**: See all media files across the entire platform
+- **User Filtering**: Filter media files by specific users
+- **Media Statistics**: Visual charts showing media distribution and storage usage
+- **Creator Information**: See who uploaded each file with profile links
+- **Orphaned Media Cleanup**: Identify and remove files not tracked in the database
+- **Bulk Operations**: Select and delete multiple files at once
+
+## Accessing Admin Media Management
+
+There are two ways to access the Admin Media Management page:
+
+### Method 1: Via Admin Dashboard
+
+1. Log in as an administrator
+2. Navigate to **Site Admin** in the top navigation
+3. Click on the **"Server"** tab in the site administration menu
+4. Click **"Media management"** in the Server section
+5. You'll be taken to the Admin Media Management page at `/admin/media`
+
+### Method 2: Direct Navigation
+
+1. Log in as an administrator
+2. Navigate directly to `/admin/media` in your browser
+
+![Admin System Media](/gallery/admin-system-media.webp)
+
+## System-Wide View
+
+The Admin Media Management page displays all media files in the system by default. You can see:
+
+- **Total File Count**: Number of media files across all users
+- **Total Storage**: Combined size of all media files
+- **Media Distribution**: Breakdown by file type (images, videos, audio, etc.)
+- **Storage Visualization**: Comparison of user storage vs system storage
+
+### View Modes
+
+Like the user Media Drive, you can switch between two view modes:
+
+- **Card View**: Visual cards with thumbnails and file information
+- **Table View**: Data table format with sortable columns
+
+Switch between views using the **"Card"** and **"Table"** toggle buttons in the header.
+
+## User Filtering
+
+To view media files for a specific user:
+
+1. Find the **"Filter by User"** section at the top of the page
+2. Click the user selector dropdown
+3. Type to search for a user by name or email
+4. Select the user from the dropdown
+5. The page will update to show only that user's media files
+
+### Filtering Behavior
+
+When a user is selected:
+
+- **Media List**: Shows only files uploaded by that user
+- **Statistics**: Updates to show user-specific statistics
+- **Storage Chart**: Compares user storage against total system storage
+- **URL Updates**: The URL includes the user ID for shareable links
+
+To view all media again:
+
+1. Clear the user filter (remove the selected user)
+2. The page will refresh to show all system media
+
+## Media Statistics
+
+The Admin Media Management page provides comprehensive statistics about media usage:
+
+### Media by Type
+
+A pie chart displays the distribution of media files by type:
+
+- **Images**: JPEG, PNG, GIF, WebP, SVG files
+- **Videos**: MP4, WebM, OGG, MOV files
+- **Audio**: MP3, WAV, OGG, M4A files
+- **PDFs**: PDF documents
+- **Text**: TXT, MD files
+- **Documents**: DOC, DOCX, XLS, XLSX, PPT, PPTX files
+- **Archives**: ZIP, RAR, 7Z files
+- **Other**: Unrecognized file types
+
+Each segment is color-coded for easy identification.
+
+### Total Storage
+
+A donut chart displays storage usage:
+
+- **When Viewing All Media**: Shows total system storage
+- **When Viewing a User**: Shows user storage (blue) vs system storage (green) for comparison
+
+The chart includes:
+
+- **Used Storage**: Amount of storage currently in use
+- **Available Storage**: Remaining storage (when viewing a user with limits)
+- **Total Storage**: Combined storage across all users
+
+### Summary Statistics
+
+Below the charts, you'll see:
+
+- **Total Files**: Number of media files in the current view
+- **Total Size**: Combined size of all files (formatted for readability)
+
+## Storage Visualization
+
+The storage visualization adapts based on the current view:
+
+### System-Wide View
+
+When viewing all media:
+
+- **Chart Type**: Single donut chart
+- **Display**: Total system storage
+- **Label**: "Total Storage"
+- **Color**: Blue
+
+### User-Specific View
+
+When viewing a specific user's media:
+
+- **Chart Type**: Comparison donut chart
+- **Display**: User storage (blue) vs System storage (green)
+- **Labels**: Both values displayed
+- **Purpose**: Helps understand individual user usage relative to system total
+
+:::tip
+The storage comparison helps identify users with unusually high storage usage and provides context for quota management decisions.
+:::
+
+## Creator Information
+
+Each media file displays information about who uploaded it:
+
+### In Card View
+
+- **Creator Avatar**: Small avatar image (20px) next to creator name
+- **Creator Name**: Clickable link to user profile
+- **Profile Link**: Navigates to `/user/profile/:id`
+
+### In Table View
+
+- **Created By Column**: Shows avatar (24px) and creator name
+- **Clickable Name**: Links to user profile page
+- **Consistent Display**: Same information as card view
+
+### Benefits
+
+Creator information helps:
+
+- **Identify Upload Sources**: Know who uploaded each file
+- **Quick Navigation**: Jump to user profiles directly
+- **Accountability**: Track file ownership
+- **Support**: Help users manage their files
+
+## Orphaned Media Cleanup
+
+Orphaned media files are files that exist in S3 storage but are not tracked in the database. These can accumulate over time and waste storage space.
+
+### Understanding Orphaned Files
+
+Orphaned files can occur when:
+
+- Files are uploaded but database records fail to create
+- Database records are deleted but S3 files remain
+- Manual S3 operations bypass the database
+- System errors during file operations
+
+### Viewing Orphaned Files
+
+The Orphaned Media Files section displays:
+
+- **Total Count**: Number of orphaned files
+- **Total Size**: Combined size of orphaned files
+- **File List**: Table showing filename and size
+- **Selection**: Checkboxes for selecting files to delete
+
+### Selective Deletion
+
+To delete specific orphaned files:
+
+1. Check the boxes next to files you want to delete
+2. Click **"Delete Selected"** button
+3. Confirm the deletion
+4. Selected files will be removed from S3 storage
+
+### Bulk Pruning
+
+To delete all orphaned files at once:
+
+1. Review the orphaned files list
+2. Click the **"Prune All"** button (red button with trash icon)
+3. Confirm the bulk deletion
+4. All orphaned files will be removed from S3 storage
+
+:::caution
+Bulk pruning deletes all orphaned files. Make sure to review the list before proceeding, as this action cannot be undone.
+:::
+
+### Safety Features
+
+The orphaned media cleanup includes safety features:
+
+- **Validation**: Verifies files are actually orphaned before deletion
+- **Batch Processing**: Efficiently processes large numbers of files
+- **Error Handling**: Continues processing even if some deletions fail
+- **Detailed Results**: Reports which files were deleted and any errors
+
+## Managing Media Files
+
+As an administrator, you can perform all the same operations as users:
+
+### Viewing Files
+
+- **Card View**: Visual cards with thumbnails
+- **Table View**: Data table with sortable columns
+- **Preview**: Full-size preview modal for all file types
+
+### File Operations
+
+- **Download**: Download any media file
+- **Rename**: Rename files (updates both database and S3)
+- **Delete**: Delete files individually or in batches
+- **Show Usage**: View where files are being used
+
+### Permissions
+
+Administrators can:
+
+- **View All Files**: Access any user's media files
+- **Delete Any File**: Bypass user-specific permissions
+- **Manage Orphaned Files**: Clean up storage issues
+- **View System Statistics**: See platform-wide usage
+
+## Best Practices
+
+### Regular Monitoring
+
+- **Review Statistics**: Check storage and file distribution regularly
+- **Monitor Growth**: Watch for unusual increases in storage usage
+- **Identify Trends**: Understand how media usage changes over time
+- **Plan Capacity**: Use statistics to plan storage capacity
+
+### Orphaned File Management
+
+- **Regular Cleanup**: Periodically check for and remove orphaned files
+- **Investigate Causes**: If orphaned files appear frequently, investigate the cause
+- **Monitor Storage**: Orphaned files waste storage space
+- **Bulk Operations**: Use bulk pruning for efficient cleanup
+
+### User Support
+
+- **Storage Quotas**: Help users understand their storage limits
+- **File Management**: Guide users on organizing their media
+- **Troubleshooting**: Assist with upload and deletion issues
+- **Usage Tracking**: Help users identify where files are being used
+
+## Troubleshooting
+
+### Statistics Not Updating
+
+If statistics don't update:
+
+1. Refresh the page to reload data
+2. Check that media files are being created correctly
+3. Verify database connectivity
+4. Check system logs for errors
+
+### Orphaned Files Not Detected
+
+If orphaned files aren't detected:
+
+1. Verify S3 connectivity
+2. Check that the bucket is accessible
+3. Review system logs for S3 errors
+4. Ensure proper permissions are configured
+
+### Cannot Delete Files
+
+If you cannot delete files:
+
+1. Check that files aren't in use (show usage modal)
+2. Verify you have admin permissions
+3. Check for system errors in logs
+4. Try deleting files individually if batch fails
+
+### User Filter Not Working
+
+If user filtering doesn't work:
+
+1. Verify the user exists in the system
+2. Check that the user has uploaded media files
+3. Refresh the page
+4. Try clearing and reapplying the filter
+
+## Related Features
+
+- [Media Management](/en/guides/media-management/) - Learn how users manage their media files
+- [Site Policies](/en/guides/admin-and-server/site-policies/) - Configure storage quotas and upload limits
+- [Maintenance Mode](/en/guides/admin-and-server/maintenance-mode/) - Learn about other admin features
+
