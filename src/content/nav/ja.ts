@@ -12,6 +12,7 @@ export default navDictionary({
 	'guides.userRoles': 'ユーザーとロール',
 	'guides.ui': 'ユーザーモジュール',
 	'guides.content': 'コース',
+	'guides.content.courseModules': 'コースモジュール',
 	'guides.enrolments': '登録',
 	'guides.gradebook': '成績簿',
 	'guides.notes': 'ノート',

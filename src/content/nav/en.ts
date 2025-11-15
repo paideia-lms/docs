@@ -10,6 +10,7 @@ export default {
 	'guides.userRoles': 'User and roles',
 	'guides.ui': 'User modules',
 	'guides.content': 'Courses',
+	'guides.content.courseModules': 'Course Modules',
 	'guides.enrolments': 'Enrolments',
 	'guides.gradebook': 'Gradebook',
 	'guides.notes': 'Notes',

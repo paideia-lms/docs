@@ -57,7 +57,17 @@ export const sidebar = [
 				],
 			}),
 			group('guides.content', {
-				items: ['basics/course-overview', 'basics/adding-modules-to-courses'],
+				items: [
+					'basics/course-overview',
+					'basics/adding-modules-to-courses',
+					group('guides.content.courseModules', {
+						items: [
+							'basics/course-modules/assignment',
+							'basics/course-modules/quiz',
+							'basics/course-modules/discussion',
+						],
+					}),
+				],
 			}),
 			group('guides.enrolments', {
 				items: ['guides/enrolments-overview', 'guides/enrolments-overview/groups'],

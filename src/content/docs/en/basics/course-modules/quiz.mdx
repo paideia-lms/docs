@@ -1,0 +1,146 @@
+---
+title: Course Module - Quiz
+description: Learn about quiz modules in courses, course-specific settings, and managing student quiz attempts.
+i18nReady: true
+---
+
+import ReadMore from '~/components/ReadMore.astro';
+
+When a **Quiz** module is linked to a course, it becomes a **course module** with course-specific settings. Students enrolled in the course can take the quiz and create quiz attempts (submissions), which are automatically graded or manually reviewed by instructors.
+
+## What is a Course Module?
+
+A course module is an activity module that has been linked to a specific course. When you link a quiz module to a course:
+
+- The module becomes accessible to students enrolled in that course
+- Course-specific settings can override or extend the module's default configuration
+- Students can create quiz attempts tied to that specific course module
+- Instructors can view and manage all quiz attempts within the course context
+
+## Course-Specific Settings
+
+When a quiz module is added to a course, you can configure course-specific settings that apply only to that course:
+
+### Timing Settings
+
+- **Open date**: When students can start taking the quiz
+- **Close date**: When the quiz is no longer available
+- **Time limit**: Course-specific time limits (for regular quizzes)
+- **Nested quiz timers**: Independent timers for each section (for container quizzes)
+
+### Attempt Settings
+
+- **Attempt limits**: Course-specific attempt restrictions
+- **Attempt scoring**: How to handle multiple attempts (highest, latest, or average)
+- **Access control**: Sequential or free-order access for container quizzes
+
+### Module Name Override
+
+- **Custom name**: Override the default module name for this course
+- Useful when the same quiz serves different purposes in different courses
+
+## Student Quiz Attempts
+
+Students enrolled in the course can create quiz attempts (submissions). Each attempt is tied to:
+
+- The **course module** (the quiz as it appears in this course)
+- The **student** who created the attempt
+- The **attempt date** and time
+- The **answers** provided by the student
+
+### Taking a Quiz
+
+Students can take the quiz by:
+
+1. Navigating to the quiz module in the course
+2. Clicking "Start Quiz" or "Take Quiz"
+3. Answering questions according to the quiz configuration
+4. Submitting their answers
+
+### Quiz Types
+
+Quizzes can be configured as:
+
+- **Regular Quiz**: Single continuous quiz with pages of questions
+- **Container Quiz**: Multi-section exam with independent sections
+
+### Question Types
+
+Students may encounter various question types:
+
+- **Multiple choice**: Select one correct answer
+- **Short answer**: Type a brief response
+- **Long answer**: Write a longer response
+- **Fill in the blank**: Complete sentences with missing words
+- **Choice (checkbox)**: Select multiple correct answers
+- **Ranking**: Arrange items in order
+- **Matrix**: Select options in a table format
+- **Whiteboard**: Draw responses using a canvas
+
+### Auto-Grading
+
+Many question types are automatically graded:
+
+- **Objective questions**: Multiple choice, short answer (with matching), etc.
+- **Immediate feedback**: Students can see results for auto-graded questions
+- **Partial credit**: Some scoring configurations allow partial credit
+
+## Viewing and Managing Quiz Attempts
+
+Instructors can view and manage all quiz attempts for the course module:
+
+### Attempt List
+
+- **All attempts**: View all student quiz attempts
+- **Filter by student**: Filter attempts by specific students
+- **Filter by status**: Filter by in progress, submitted, or graded
+- **Sort options**: Sort by student name, attempt date, or score
+- **Search**: Find specific attempts
+
+### Individual Attempt View
+
+When viewing a quiz attempt, instructors can:
+
+- **View answers**: See all student responses
+- **Review auto-grading**: Check automatic scoring results
+- **Manual grading**: Grade questions that require manual evaluation
+- **Adjust scores**: Modify auto-graded scores if needed
+- **Provide feedback**: Add comments on specific questions or overall
+- **View attempt history**: See all previous attempts from the student
+
+### Scoring Configurations
+
+Quiz attempts are scored based on the quiz's scoring configuration:
+
+- **Simple**: All-or-nothing points
+- **Weighted**: Partial credit with weight multipliers
+- **Rubric**: Manual grading using rubrics
+- **Manual**: Instructor assigns points manually
+- **Partial Match**: Text matching with configurable threshold
+- **Ranking**: Points based on correct order
+- **Matrix**: Points per row in matrix questions
+
+## Attempt Status
+
+Quiz attempts can have different statuses:
+
+- **In Progress**: Student is currently taking the quiz
+- **Submitted**: Student has submitted their answers
+- **Auto-Graded**: Automatically scored questions have been evaluated
+- **Graded**: All questions have been graded (including manual grading)
+- **Returned**: Results have been returned to the student
+
+## Best Practices
+
+When working with quiz course modules:
+
+- **Set appropriate time limits**: Allow students enough time to complete all questions
+- **Test the quiz**: Take the quiz yourself before publishing to students
+- **Review auto-grading**: Verify that auto-grading configurations are correct
+- **Provide feedback**: Add feedback for questions, especially for incorrect answers
+- **Monitor attempts**: Check for students who haven't completed the quiz
+- **Use container quizzes**: For complex exams with multiple sections
+- **Configure access control**: Use sequential order for exams that must be taken in order
+
+<ReadMore>Learn more about [adding modules to courses](/en/basics/adding-modules-to-courses/) and [quiz modules](/en/guides/user-modules/quiz/).</ReadMore>
+

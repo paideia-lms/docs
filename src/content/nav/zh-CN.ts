@@ -12,6 +12,7 @@ export default navDictionary({
 	'guides.userRoles': '用户和角色',
 	'guides.ui': '用户模块',
 	'guides.content': '课程',
+	'guides.content.courseModules': '课程模块',
 	'guides.enrolments': '注册',
 	'guides.gradebook': '成绩册',
 	'guides.notes': '笔记',
