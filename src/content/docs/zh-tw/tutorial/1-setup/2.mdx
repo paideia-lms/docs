@@ -1,0 +1,77 @@
+---
+type: tutorial
+title: 下載並安裝 Paideia LMS
+description: |-
+  Paideia LMS 入門教程 —
+  下載並安裝 Paideia LMS 二進位檔案
+---
+import Checklist from '~/components/Checklist.astro';
+import Box from '~/components/tutorial/Box.astro';
+import PreCheck from '~/components/tutorial/PreCheck.astro';
+import { Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+import Badge from "~/components/Badge.astro"
+
+<PreCheck>
+  - 下載適用於你平台的 Paideia LMS 二進位檔案
+  - 使二進位檔案可執行
+  - 驗證安裝
+</PreCheck>
+
+## 下載 Paideia LMS 二進位檔案
+
+單二進位安裝是啟動 Paideia LMS 最快的方法。Paideia LMS 作為包含所需一切的單個可執行檔案分發。
+
+<Steps>
+1. 下載適用於你平台的二進位檔案：
+
+   <Tabs>
+     <TabItem label="macOS ARM64">
+       ```bash
+       curl -L -o paideia https://github.com/paideia-lms/paideia/releases/latest/download/paideia-macos-arm64
+       chmod +x paideia
+       xattr -c paideia
+       ```
+     </TabItem>
+     <TabItem label="Linux ARM64">
+       ```bash
+       curl -L -o paideia https://github.com/paideia-lms/paideia/releases/latest/download/paideia-linux-arm64
+       chmod +x paideia
+       ```
+     </TabItem>
+     <TabItem label="Linux x64">
+       ```bash
+       curl -L -o paideia https://github.com/paideia-lms/paideia/releases/latest/download/paideia-linux-x64
+       chmod +x paideia
+       ```
+     </TabItem>
+   </Tabs>
+
+2. 透過檢查版本來驗證安裝：
+
+   ```bash
+   ./paideia version
+   ```
+
+   你應該看到 Paideia LMS 版本號，確認二進位檔案正常工作。
+</Steps>
+
+:::tip[替代方案：Docker Compose]
+
+如果你更喜歡使用 Docker Compose 進行包含 PostgreSQL 和 MinIO 的完整設置，請參閱[安裝和設置指南](/zh-tw/install-and-setup/#docker-compose-安裝)中的 Docker Compose 說明。
+:::
+
+<Box icon="check-list">
+
+## 任務清單
+
+<Checklist>
+- [ ] 我已經下載了 Paideia LMS 二進位檔案。
+- [ ] 我已經使二進位檔案可執行。
+- [ ] 我可以透過 `./paideia version` 驗證安裝。
+</Checklist>
+</Box>
+
+### 相關資源
+
+- <p>[安裝和設置指南](/zh-tw/install-and-setup/) <Badge class="neutral-badge" text="內部連結" /> — 包含 Docker Compose 選項的完整安裝指南</p>
+

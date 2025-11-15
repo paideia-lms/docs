@@ -1,0 +1,136 @@
+---
+type: tutorial
+title: 準備環境
+description: |-
+  Paideia LMS 入門教程 —
+  安裝完成本教程所需的先決條件和工具
+---
+import Checklist from '~/components/Checklist.astro';
+import Box from '~/components/tutorial/Box.astro';
+import MultipleChoice from '~/components/tutorial/MultipleChoice.astro';
+import Option from '~/components/tutorial/Option.astro';
+import PreCheck from '~/components/tutorial/PreCheck.astro';
+import { Steps } from '@astrojs/starlight/components';
+import Badge from "~/components/Badge.astro"
+
+<PreCheck>
+  - 安裝運行 Paideia LMS 所需的工具和先決條件
+</PreCheck>
+
+## 獲取所需的先決條件
+
+### 作業系統
+
+Paideia LMS 運行在 **macOS**（ARM64 或 x64）或 **Linux**（ARM64 或 x64）上。確保你可以存取相容的作業系統。
+
+### 終端
+
+你將使用**命令列（終端）**來下載、安裝和運行 Paideia LMS，並配置環境。
+
+你可以透過作業系統的本地終端程式存取命令列。常見的應用程式包括 **Terminal**（macOS/Linux）、**命令提示字元**（Windows）和 **Termux**（Android）。其中一些可能已經在你的裝置上了。
+
+### PostgreSQL 資料庫
+
+Paideia LMS 需要 **PostgreSQL** 資料庫。你需要以下之一：
+- 本地 PostgreSQL 安裝
+- 存取遠端 PostgreSQL 資料庫
+- Docker Compose（包含 PostgreSQL）
+
+要檢查是否在本地安裝了 PostgreSQL，請運行：
+
+```sh
+psql --version
+
+# 輸出範例
+psql (PostgreSQL) 18.0
+```
+
+如果你沒有安裝 PostgreSQL，你可以：
+- 在本地安裝 PostgreSQL
+- 使用 Docker Compose（我們將在安裝步驟中介紹）
+- 使用雲端 PostgreSQL 服務
+
+### S3 相容儲存
+
+Paideia LMS 需要用於檔案儲存的 **S3 相容儲存**。你需要以下之一：
+- MinIO（S3 相容儲存）- 包含在 Docker Compose 中
+- S3 相容服務（AWS S3、DigitalOcean Spaces 等）
+- 本地 MinIO 安裝
+
+### 程式碼編輯器（可選）
+
+雖然不是必需的，但**程式碼編輯器**對於編輯配置檔案很有幫助。
+
+:::tip[我們將使用……]
+本教程將使用 **VS Code**，但你可以使用適合你作業系統的任何編輯器。
+:::
+
+<Steps>
+1. [下載並安裝 VS Code](https://code.visualstudio.com/#alt-downloads) 或選擇的其他程式碼編輯器（可選）。
+</Steps>
+
+<Box icon="question-mark">
+
+### 小測試
+
+下面哪個是……
+1. Paideia LMS 所需的資料庫系統？
+
+    <MultipleChoice>
+      <Option>
+        MySQL
+      </Option>
+      <Option isCorrect>
+        PostgreSQL
+      </Option>
+      <Option>
+        MongoDB
+      </Option>
+    </MultipleChoice>
+
+2. Paideia LMS 所需的儲存系統？
+
+    <MultipleChoice>
+      <Option>
+        本地檔案系統
+      </Option>
+      <Option isCorrect>
+        S3 相容儲存
+      </Option>
+      <Option>
+        Google Drive
+      </Option>
+    </MultipleChoice>
+
+3. 運行命令的應用程式？
+    <MultipleChoice>
+      <Option>
+        VS Code
+      </Option>
+      <Option isCorrect>
+        終端
+      </Option>
+      <Option>
+        瀏覽器
+      </Option>
+    </MultipleChoice>
+
+</Box>
+
+<Box icon="check-list">
+
+## 任務清單
+
+<Checklist>
+- [ ] 我可以在終端中存取命令列。
+- [ ] PostgreSQL 可用（或使用 Docker Compose）。
+- [ ] S3 相容儲存可用（或使用 Docker Compose）。
+- [ ] 我有一個像 VS Code 這樣的程式碼編輯器（可選）。
+</Checklist>
+</Box>
+
+### 相關資源
+
+- <p>[PostgreSQL 文件](https://www.postgresql.org/docs/) <Badge class="neutral-badge" text="外部連結" /> — PostgreSQL 官方文件</p>
+- <p>[MinIO 文件](https://min.io/docs/) <Badge class="neutral-badge" text="外部連結" /> — MinIO S3 相容儲存文件</p>
+

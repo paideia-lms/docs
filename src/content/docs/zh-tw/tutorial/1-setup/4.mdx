@@ -1,0 +1,96 @@
+---
+type: tutorial
+title: 運行資料庫遷移
+description: |-
+  Paideia LMS 入門教程 —
+  運行資料庫遷移以設置資料庫架構
+---
+import Checklist from '~/components/Checklist.astro';
+import Box from '~/components/tutorial/Box.astro';
+import PreCheck from '~/components/tutorial/PreCheck.astro';
+import { Steps } from '@astrojs/starlight/components';
+import Badge from "~/components/Badge.astro"
+
+<PreCheck>
+  - 檢查遷移狀態
+  - 運行資料庫遷移
+  - 驗證遷移是否成功完成
+</PreCheck>
+
+## 運行資料庫遷移
+
+Paideia LMS 使用資料庫遷移來設置和更新資料庫架構。當你首次運行 Paideia LMS 時，遷移會在啟動時自動應用。但是，你也可以使用 CLI 手動運行遷移。
+
+### 檢查遷移狀態
+
+<Steps>
+1. 檢查當前遷移狀態：
+
+   ```bash
+   ./paideia migrate status
+   ```
+
+   這將顯示哪些遷移已應用，哪些待處理。
+</Steps>
+
+### 運行遷移
+
+<Steps>
+2. 運行所有待處理的遷移：
+
+   ```bash
+   ./paideia migrate up
+   ```
+
+   這將應用所有尚未執行的遷移。
+
+   :::note[自動遷移]
+   當你使用 `./paideia server` 啟動 Paideia LMS 時，遷移會在啟動時自動應用。只有在啟動伺服器之前想要應用遷移時，才需要手動運行遷移。
+   :::
+
+3. 驗證遷移是否成功完成：
+
+   ```bash
+   ./paideia migrate status
+   ```
+
+   所有遷移現在應該顯示為「已應用」。
+</Steps>
+
+### 資料庫備份
+
+<Steps>
+4. （可選）在繼續之前創建資料庫備份：
+
+   ```bash
+   ./paideia migrate dump -o backup-before-setup.sql
+   ```
+
+   這將創建資料庫的備份，如果需要可以恢復。
+</Steps>
+
+:::tip[遷移最佳實踐]
+
+- 在應用遷移前後始終檢查遷移狀態
+- 在生產環境中運行遷移之前創建備份
+- 首先在開發環境中測試遷移
+- 查看 [CLI 參考](/zh-tw/reference/cli-reference/) 了解更多遷移命令
+:::
+
+<Box icon="check-list">
+
+## 任務清單
+
+<Checklist>
+- [ ] 我可以檢查遷移狀態。
+- [ ] 我可以運行資料庫遷移。
+- [ ] 我已經驗證遷移成功完成。
+- [ ] 我已經創建了資料庫備份（可選）。
+</Checklist>
+</Box>
+
+### 相關資源
+
+- <p>[CLI 參考](/zh-tw/reference/cli-reference/) <Badge class="neutral-badge" text="內部連結" /> — Paideia LMS CLI 命令的完整參考</p>
+- <p>[升級 Paideia LMS](/zh-tw/upgrade/) <Badge class="neutral-badge" text="內部連結" /> — 升級和管理遷移的指南</p>
+

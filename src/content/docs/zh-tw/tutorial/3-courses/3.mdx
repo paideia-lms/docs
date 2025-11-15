@@ -1,0 +1,145 @@
+---
+type: tutorial
+title: 管理學生註冊
+description: |-
+  教程：開始使用 Paideia LMS —
+  在您的課程中註冊學生並管理他們的角色和存取權限
+i18nReady: true
+---
+import Box from '~/components/tutorial/Box.astro';
+import Checklist from '~/components/Checklist.astro';
+import MultipleChoice from '~/components/tutorial/MultipleChoice.astro';
+import Option from '~/components/tutorial/Option.astro';
+import PreCheck from '~/components/tutorial/PreCheck.astro';
+import { Steps } from '@astrojs/starlight/components';
+import Badge from "~/components/Badge.astro"
+
+現在您的課程有內容了，是時候註冊學生了！註冊將使用者連接到課程，並定義他們在該課程中的權限。
+
+<PreCheck>
+  - 在您的課程中註冊使用者
+  - 分配註冊角色（學生、教師、助教、管理員）
+  - 管理註冊狀態
+</PreCheck>
+
+## 在您的課程中註冊使用者
+
+<Steps>
+1. 導航到課程註冊管理介面。通常可以透過在您的課程中點擊「註冊」或「管理學生」找到。
+
+2. 點擊「添加註冊」或「註冊使用者」。
+
+3. 選擇要註冊的使用者：
+   - 按姓名或電子郵件搜尋使用者
+   - 選擇要註冊的使用者
+   - 選擇他們的註冊角色（見下面的角色）
+
+4. 設置註冊詳細資訊：
+   - **角色**：從學生、教師、助教（TA）或管理員中選擇
+   - **狀態**：設置為活動（預設）、非活動、已完成或已退出
+   - **小組**（可選）：將使用者分配到小組（我們將在下一步中介紹）
+
+5. 保存註冊。
+
+   :::tip[註冊角色]
+   Paideia LMS 有四種不同的註冊角色：
+   - **學生**：標準學習者角色
+   - **教師**：具有完全課程控制權的主要講師
+   - **助教（TA）**：具有有限講師權限的支援角色
+   - **管理員**：管理支援角色
+   :::
+</Steps>
+
+## 理解註冊角色
+
+<Steps>
+6. 了解每個角色可以做什麼：
+
+   **學生**：
+   - 查看課程內容
+   - 提交作業
+   - 參加測驗
+   - 參與討論
+
+   **教師**：
+   - 管理所有課程內容
+   - 評分學生作業
+   - 管理註冊
+   - 存取課程設置
+
+   **助教（TA）**：
+   - 評分學生作業
+   - 查看課程設置
+   - 協助課程管理任務
+
+   **管理員**：
+   - 管理註冊
+   - 存取課程設置
+   - 查看報告和分析
+</Steps>
+
+## 管理註冊狀態
+
+<Steps>
+7. 根據需要更新註冊狀態：
+
+   - **活動**（預設）：使用者已註冊並正在參與
+   - **非活動**：註冊暫時暫停
+   - **已完成**：使用者已成功完成課程
+   - **已退出**：使用者已退出課程
+
+8. 查看註冊資訊：
+   - 在註冊介面中查看所有課程參與者
+   - 查看使用者詳細資訊（姓名、電子郵件）
+   - 檢查當前角色和狀態
+   - 查看最後存取資訊
+</Steps>
+
+<Box icon="question-mark">
+### 測試您的知識
+
+1. 哪個註冊角色具有完全課程控制權並可以評分學生作業？
+
+    <MultipleChoice>
+      <Option>
+        學生
+      </Option>
+      <Option isCorrect>
+        教師
+      </Option>
+      <Option>
+        管理員
+      </Option>
+    </MultipleChoice>
+
+2. 使用者註冊時的預設註冊狀態是什麼？
+
+    <MultipleChoice>
+      <Option isCorrect>
+        活動
+      </Option>
+      <Option>
+        非活動
+      </Option>
+      <Option>
+        已完成
+      </Option>
+    </MultipleChoice>
+</Box>
+
+<Box icon="check-list">
+## 任務清單
+
+<Checklist>
+- [ ] 我可以在我的課程中註冊使用者。
+- [ ] 我了解不同的註冊角色。
+- [ ] 我可以管理註冊狀態。
+- [ ] 我準備好將學生組織到小組中了！
+</Checklist>
+</Box>
+
+### 相關資源
+
+- [註冊概述](/zh-tw/guides/enrolments-overview/) - 了解更多關於註冊和課程角色的資訊
+- [使用者概述](/zh-tw/basics/user-overview/) - 了解系統範圍角色與課程角色
+

@@ -1,0 +1,106 @@
+---
+type: tutorial
+title: 配置環境
+description: |-
+  Paideia LMS 入門教程 —
+  設置資料庫和儲存，並配置環境變數
+---
+
+import Checklist from '~/components/Checklist.astro';
+import Box from '~/components/tutorial/Box.astro';
+import PreCheck from '~/components/tutorial/PreCheck.astro';
+import { Steps } from '@astrojs/starlight/components';
+
+<PreCheck>
+  - 設置 PostgreSQL 資料庫
+  - 配置 S3 相容儲存
+  - 設置環境變數
+</PreCheck>
+
+## 配置環境
+
+在運行 Paideia LMS 之前，你需要設置資料庫和儲存，並配置環境變數。
+
+### 設置 PostgreSQL
+
+<Steps>
+1. 確保 PostgreSQL 正在運行且可存取。如果你使用 Docker Compose，PostgreSQL 將包含在內。
+
+2. 為 Paideia LMS 創建資料庫：
+
+   ```bash
+   createdb paideia_db
+   ```
+
+   或者，如果你使用遠端資料庫，請透過資料庫管理工具創建。
+</Steps>
+
+### 設置 S3 相容儲存
+
+<Steps>
+3. 設置 MinIO 或其他 S3 相容儲存服務。如果你使用 Docker Compose，MinIO 將包含在內。
+
+   對於本地 MinIO 設置，你可以使用 Docker：
+
+   ```bash
+   docker run -d \
+     -p 9000:9000 \
+     -p 9001:9001 \
+     -e MINIO_ROOT_USER=paideia_minio \
+     -e MINIO_ROOT_PASSWORD=paideia_minio_secret \
+     minio/minio server /data --console-address ":9001"
+   ```
+
+4. 為 Paideia LMS 創建儲存桶。存取 `http://localhost:9001` 的 MinIO 控制台，創建一個名為 `paideia-bucket` 的儲存桶。
+</Steps>
+
+### 配置環境變數
+
+<Steps>
+5. 在運行 Paideia LMS 之前設置環境變數：
+
+   ```bash
+   export DATABASE_URL="postgresql://user:password@localhost:5432/paideia_db"
+   export S3_URL="http://localhost:9000"
+   export S3_ACCESS_KEY="paideia_minio"
+   export S3_SECRET_KEY="paideia_minio_secret"
+   export S3_BUCKET="paideia-bucket"
+   export PAYLOAD_SECRET="your-secure-random-string-here"
+   ```
+
+   :::caution[安全性]
+   確保在生產環境中為 `PAYLOAD_SECRET` 使用安全的隨機字串。你可以使用以下命令生成：
+   
+   ```bash
+   openssl rand -base64 32
+   ```
+   :::
+
+6. 可選地，你可以在與二進位檔案相同的目錄中創建 `.env` 檔案：
+
+   ```bash
+   cat > .env << EOF
+   DATABASE_URL=postgresql://user:password@localhost:5432/paideia_db
+   S3_URL=http://localhost:9000
+   S3_ACCESS_KEY=paideia_minio
+   S3_SECRET_KEY=paideia_minio_secret
+   S3_BUCKET=paideia-bucket
+   PAYLOAD_SECRET=your-secure-random-string-here
+   EOF
+   ```
+</Steps>
+
+恭喜！你的環境現在已經配置好，可以運行 Paideia LMS 了！
+
+<Box icon="check-list">
+
+## 任務清單
+
+<Checklist>
+- [ ] 我已經設置了 PostgreSQL 資料庫。
+- [ ] 我已經配置了 S3 相容儲存。
+- [ ] 我已經設置了環境變數。
+- [ ] 我準備好運行 Paideia LMS 了！
+</Checklist>
+</Box>
+

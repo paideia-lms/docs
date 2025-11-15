@@ -1,0 +1,125 @@
+---
+type: tutorial
+title: 啟動 Paideia LMS 並存取你的實例
+description: |-
+  Paideia LMS 入門教程 —
+  啟動 Paideia LMS 伺服器並在瀏覽器中存取你的實例
+---
+import Checklist from '~/components/Checklist.astro';
+import Box from '~/components/tutorial/Box.astro';
+import MultipleChoice from '~/components/tutorial/MultipleChoice.astro';
+import Option from '~/components/tutorial/Option.astro';
+import PreCheck from '~/components/tutorial/PreCheck.astro';
+import { Steps } from '@astrojs/starlight/components';
+import Badge from "~/components/Badge.astro"
+
+<PreCheck>
+  - 啟動 Paideia LMS 伺服器
+  - 在瀏覽器中存取 Paideia LMS
+  - 創建管理員帳戶
+</PreCheck>
+
+## 啟動 Paideia LMS
+
+現在你的環境已經配置好了，你可以啟動 Paideia LMS 伺服器。
+
+<Steps>
+1. 啟動 Paideia LMS 伺服器：
+
+   ```bash
+   ./paideia server
+   ```
+
+   或者簡單地：
+
+   ```bash
+   ./paideia
+   ```
+
+   伺服器將啟動並在配置的埠上監聽（預設：後端 API 為 `3001`，前端為 `3000`）。
+
+2. 等待伺服器啟動。你應該在終端中看到 Paideia LMS 正在運行的確認資訊。
+
+   :::tip[伺服器啟動]
+   如果有待處理的遷移，伺服器將在啟動時自動運行資料庫遷移。
+   :::
+</Steps>
+
+## 存取 Paideia LMS
+
+<Steps>
+3. 打開瀏覽器並導航到 `http://localhost:3000`（或透過 `FRONTEND_PORT` 環境變數配置的埠）。
+
+   你應該看到 Paideia LMS 登入頁面。
+
+4. 首次存取時，系統會提示你創建管理員帳戶。按照螢幕上的說明創建管理員使用者。
+
+   :::caution[首次設置]
+   確保記住你的管理員憑證！你需要它們來登入和管理你的 Paideia LMS 實例。
+   :::
+
+5. 創建管理員帳戶後，登入以存取 Paideia LMS 儀表板。
+</Steps>
+
+恭喜！你現在已經運行並可以存取 Paideia LMS 了！
+
+## 驗證安裝
+
+<Steps>
+6. 探索 Paideia LMS 介面：
+
+   - 檢查儀表板
+   - 瀏覽不同的部分
+   - 驗證所有功能都可以存取
+
+7. 檢查 API 端點：
+
+   導航到 `http://localhost:3001` 以驗證 API 正在運行（你應該看到 API 文件或健康檢查回應）。
+</Steps>
+
+:::tip[運行 Paideia LMS]
+
+當 Paideia LMS 伺服器正在運行時，你可以：
+- 在 `http://localhost:3000` 存取 Web 介面
+- 在 `http://localhost:3001` 存取 API
+- 透過在終端中按 <kbd>Ctrl + C</kbd> 隨時停止伺服器
+
+伺服器將繼續運行，直到你停止它或關閉終端。
+:::
+
+<Box icon="question-mark">
+
+### 小測試
+
+你想在更改配置後重新啟動 Paideia LMS。應該採取哪些步驟？
+
+  <MultipleChoice>
+    <Option>
+      打開終端，運行 `./paideia migrate fresh`，然後存取我的 localhost URL。
+    </Option>
+    <Option isCorrect>
+      使用 Ctrl+C 停止伺服器，更新環境變數，然後再次運行 `./paideia server`。
+    </Option>
+    <Option>
+      在 Web 介面中更改設置，然後重啟電腦。
+    </Option>
+  </MultipleChoice>
+ </Box>
+
+<Box icon="check-list">
+
+## 任務清單
+
+<Checklist>
+- [ ] 我可以啟動 Paideia LMS 伺服器。
+- [ ] 我可以在瀏覽器中存取 Paideia LMS。
+- [ ] 我已經創建了管理員帳戶。
+- [ ] 我準備好創建第一個課程了！
+</Checklist>
+</Box>
+
+### 相關資源
+
+- <p>[安裝和設置指南](/zh-tw/install-and-setup/) <Badge class="neutral-badge" text="內部連結" /> — 完整的安裝和配置指南</p>
+- <p>[CLI 參考](/zh-tw/reference/cli-reference/) <Badge class="neutral-badge" text="內部連結" /> — 所有 CLI 命令的參考</p>
+
